@@ -54,10 +54,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="wx_config" domainObjectName="WxConfigDO"
+        <table tableName="ct_config" domainObjectName="CtConfigDO"
                enableCountByExample="true" enableUpdateByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"
-               enableDeleteByPrimaryKey="false">
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
         </table>
     </context>
