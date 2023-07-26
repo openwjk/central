@@ -1,0 +1,33 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+spring:
+  application:
+    name: central
+  datasource:
+    name: central
+    url: jdbc:mysql://172.17.0.8:3306/central
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: false
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#下面这些内容是为了让MyBatis映射
+#指定Mybatis的Mapper文件
+mybatis:
+  mapper-locations: classpath:com/openwjk/central/dao/mapper/*xml
+  #指定Mybatis的实体目录
+  type-aliases-package: com/openwjk/central/dao/model
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- mvn mybatis-generator:generate -->
+    <!-- 配置一个代码生成操作，如果生成的目录或是数据库不一样，只需要参考增加一个context节点即可 -->
+    <context id="generate" targetRuntime="MyBatis3">
+        <!--防止生成重复代码-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!--生成Mapper注解-->
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
+        <!--序列化-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否去除自动生成日期的注释 true：是 ： false:否 -->
+            <property name="suppressDate" value="false"/>
+            <!-- 是否添加数据库内的注释 true：是 ： false:否 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://mysql.openwjk.com:3306/central"
+                        userId="root" password="123456">
+        </jdbcConnection>
+        <!--不使用BigDecimal类型 java类型解析器-->
+        <javaTypeResolver>
+            <!-- 默认情况下数据库中的 decimal，bigInt 在 Java 对应是 sql 下的 BigDecimal 类 -->
+            <!-- 不是 double 和 long 类型 -->
+            <!-- 使用常用的基本类型代替 sql 包下的引用类型 -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 配置model生成位置 -->
+        <javaModelGenerator targetPackage="com.openwjk.central.dao.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 配置sqlmap生成位置 -->
+        <sqlMapGenerator targetPackage="com.openwjk.central.dao.mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 配置mapper接口生成位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.openwjk.central.dao.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="wx_config" domainObjectName="WxConfigDO"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true"
+               enableDeleteByPrimaryKey="false">
+            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
+        </table>
+    </context>
+</generatorConfiguration>
