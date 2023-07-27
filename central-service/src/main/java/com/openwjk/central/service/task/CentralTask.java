@@ -25,6 +25,11 @@ public class CentralTask {
     @Autowired
     CtConfigDOMapper configDOMapper;
 
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void runTask() {
+
+    }
+
     @Scheduled(cron = "0 0 9 * * ?")
     public void birthdayReminder() {
         ChineseCalendar calendar = ChineseCalendar.as(new Date());
