@@ -7,7 +7,7 @@ import com.openwjk.central.service.enums.ScheduledEnum;
 import com.openwjk.central.service.enums.WeChatRobotEnum;
 import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.service.ScheduledService;
-import com.openwjk.central.service.utils.ChineseCalendar;
+import com.openwjk.commons.utils.ChineseCalendar;
 import com.openwjk.commons.utils.DateUtil;
 import com.openwjk.commons.utils.HttpClientUtil;
 import org.apache.commons.collections4.CollectionUtils;
