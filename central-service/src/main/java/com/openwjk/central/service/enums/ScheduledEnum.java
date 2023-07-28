@@ -2,24 +2,21 @@ package com.openwjk.central.service.enums;
 
 /**
  * @author wangjunkai
- * @description 微信机器人
- * @date 2023/7/27 21:35
+ * @description 定时任务
+ * @date 2023/7/28 12:05
  */
-public enum WeChatRobotEnum {
-    WLCJDIYS("WLCJDIYS", CtConfigGroupEnum.COM_WE_CHAT_ROBOT, "群:万里长江第一帅>机器人"),
-    ZY("ZY", CtConfigGroupEnum.COM_WE_CHAT_ROBOT, "群:只因>只因战士");
+public enum ScheduledEnum {
+    BIRTHDAY_REMINDER("BIRTHDAY_REMINDER", CtConfigGroupEnum.SCHEDULED_TASK, "生日提醒定时任务"),
+    ;
 
-    WeChatRobotEnum(String code, CtConfigGroupEnum group, String desc) {
+    ScheduledEnum(String code, CtConfigGroupEnum group, String desc) {
         this.code = code;
         this.group = group;
         this.desc = desc;
     }
 
-    //编码
     private String code;
-    //组编码
     private CtConfigGroupEnum group;
-    //描述
     private String desc;
 
     public String getCode() {
@@ -44,5 +41,14 @@ public enum WeChatRobotEnum {
 
     public void setGroup(CtConfigGroupEnum group) {
         this.group = group;
+    }
+
+    public static ScheduledEnum get(String code) {
+        for (ScheduledEnum each : ScheduledEnum.values()) {
+            if (each.code.equals(code)) {
+                return each;
+            }
+        }
+        return null;
     }
 }

@@ -6,7 +6,7 @@ spring:
     name: central
   datasource:
     name: central
-    url: jdbc:mysql://172.17.0.8:3306/central
+    url: jdbc:mysql://localhost:3306/central
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
