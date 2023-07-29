@@ -2,7 +2,7 @@ package com.openwjk.central.service.task;
 
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.service.enums.CtConfigGroupEnum;
-import com.openwjk.central.service.enums.ScheduledEnum;
+import com.openwjk.central.service.enums.ScheduledTaskEnum;
 import com.openwjk.central.service.factory.ScheduledFactory;
 import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.helper.ScheduledHelper;
@@ -32,7 +32,7 @@ public class CentralTask {
         if (CollectionUtils.isEmpty(configDOS)) return;
         for (CtConfigDO configDO : configDOS) {
             if (scheduledHelper.checkIsRun(configDO.getValue(), date)) {
-                ScheduledService scheduledService = scheduledFactory.getScheduledService(ScheduledEnum.get(configDO.getCode()));
+                ScheduledService scheduledService = scheduledFactory.getScheduledService(ScheduledTaskEnum.get(configDO.getCode()));
                 scheduledService.execute(date);
             }
         }

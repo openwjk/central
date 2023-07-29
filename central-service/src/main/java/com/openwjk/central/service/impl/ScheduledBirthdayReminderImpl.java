@@ -3,7 +3,7 @@ package com.openwjk.central.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.service.domain.BirthDayDomain;
-import com.openwjk.central.service.enums.ScheduledEnum;
+import com.openwjk.central.service.enums.ScheduledTaskEnum;
 import com.openwjk.central.service.enums.WeChatRobotEnum;
 import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.service.ScheduledService;
@@ -36,8 +36,8 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     ConfigHelper configHelper;
 
     @Override
-    public ScheduledEnum getCode() {
-        return ScheduledEnum.BIRTHDAY_REMINDER;
+    public ScheduledTaskEnum getCode() {
+        return ScheduledTaskEnum.BIRTHDAY_REMINDER;
     }
 
     @Override

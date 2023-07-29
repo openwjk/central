@@ -1,6 +1,6 @@
 package com.openwjk.central.service.factory;
 
-import com.openwjk.central.service.enums.ScheduledEnum;
+import com.openwjk.central.service.enums.ScheduledTaskEnum;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.exception.CommonsException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,20 +24,20 @@ public class ScheduledFactory {
     @Autowired
     private List<ScheduledService> scheduledServiceList;
 
-    private Map<ScheduledEnum, ScheduledService> scheduledServiceMap;
+    private Map<ScheduledTaskEnum, ScheduledService> scheduledServiceMap;
 
     @PostConstruct
     private void init() {
         this.scheduledServiceMap = new HashMap<>();
         for (ScheduledService scheduledService : scheduledServiceList) {
-            ScheduledEnum scheduledEnum = scheduledService.getCode();
+            ScheduledTaskEnum scheduledEnum = scheduledService.getCode();
             if (Objects.nonNull(scheduledEnum)) {
                 scheduledServiceMap.put(scheduledEnum, scheduledService);
             }
         }
     }
 
-    public ScheduledService getScheduledService(ScheduledEnum scheduledEnum) {
+    public ScheduledService getScheduledService(ScheduledTaskEnum scheduledEnum) {
         ScheduledService indexCodeService = scheduledServiceMap.get(scheduledEnum);
         if (indexCodeService != null) {
             return indexCodeService;

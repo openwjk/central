@@ -5,11 +5,11 @@ package com.openwjk.central.service.enums;
  * @description 定时任务
  * @date 2023/7/28 12:05
  */
-public enum ScheduledEnum {
+public enum ScheduledTaskEnum {
     BIRTHDAY_REMINDER("BIRTHDAY_REMINDER", CtConfigGroupEnum.SCHEDULED_TASK, "生日提醒定时任务"),
     ;
 
-    ScheduledEnum(String code, CtConfigGroupEnum group, String desc) {
+    ScheduledTaskEnum(String code, CtConfigGroupEnum group, String desc) {
         this.code = code;
         this.group = group;
         this.desc = desc;
@@ -43,8 +43,8 @@ public enum ScheduledEnum {
         this.group = group;
     }
 
-    public static ScheduledEnum get(String code) {
-        for (ScheduledEnum each : ScheduledEnum.values()) {
+    public static ScheduledTaskEnum get(String code) {
+        for (ScheduledTaskEnum each : ScheduledTaskEnum.values()) {
             if (each.code.equals(code)) {
                 return each;
             }
