@@ -1,6 +1,6 @@
 package com.openwjk.central;
 
-import com.openwjk.central.service.service.SystemService;
+
 import com.openwjk.central.web.controller.SystemController;
 import org.junit.Test;
 import org.junit.runner.RunWith;

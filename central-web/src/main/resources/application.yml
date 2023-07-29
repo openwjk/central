@@ -24,6 +24,11 @@ spring:
       testOnReturn: false
       poolPreparedStatements: false
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  mvc:
+    pathmatch:
+      #解决与swagger出现空指针异常问题
+      matching-strategy: ant_path_matcher
+
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件
 mybatis:
