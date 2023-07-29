@@ -25,7 +25,7 @@ public class CentralTask {
     @Autowired
     ScheduledFactory scheduledFactory;
 
-    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void runTask() {
         Date date = DateUtil.getNow();
         List<CtConfigDO> configDOS = configHelper.getConfigByGroup(CtConfigGroupEnum.SCHEDULED_TASK.getCode());

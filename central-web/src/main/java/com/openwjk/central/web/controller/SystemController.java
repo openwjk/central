@@ -1,9 +1,8 @@
 package com.openwjk.central.web.controller;
 
 import com.openwjk.central.service.service.SystemService;
-import com.openwjk.central.web.domain.SystemDomain;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/")
-@Slf4j
 @ApiOperation("系统控制层")
+@Log4j2
 public class SystemController {
-
     @Autowired
     SystemService systemService;
 
@@ -28,10 +26,4 @@ public class SystemController {
         return systemService.checkRun();
     }
 
-    @PostMapping("/check")
-    @ApiOperation("检测系统是否运行2")
-    public String checkTest(@RequestBody SystemDomain domain) {
-        log.info("success.");
-        return systemService.checkRun();
-    }
 }
