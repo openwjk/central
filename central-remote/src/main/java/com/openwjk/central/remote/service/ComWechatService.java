@@ -12,4 +12,6 @@ public interface ComWechatService {
     CommonQueryRespDTO sendTextRobot(ComWechatRobotReqDTO robot);
 
     CommonQueryRespDTO sendMarkDownRobot(ComWechatRobotReqDTO robot);
+
+    CommonQueryRespDTO getAppAccessToken(ComWechatRobotReqDTO robot);
 }

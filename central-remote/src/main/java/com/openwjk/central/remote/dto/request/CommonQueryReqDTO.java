@@ -15,6 +15,7 @@ public class CommonQueryReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private RemoteTypeEnum remoteTypeEnum;
     private Object queryDTO;
+    private String cacheKey;
 
 
     public CommonQueryReqDTO(Object queryDTO, RemoteTypeEnum remoteTypeEnum) {

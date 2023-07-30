@@ -1,6 +1,6 @@
 package com.openwjk.central.remote.dto.request;
 
-import com.openwjk.central.commons.enums.ComWeChatRobotEnum;
+import com.openwjk.central.commons.enums.ComWechatRobotEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +21,9 @@ public class ComWechatRobotReqDTO implements Serializable {
     private String verbalTrick;
     private List<String> mentionedList;
     private List<String> mentionedMobileList;
-    private ComWeChatRobotEnum robotEnum;
+    private ComWechatRobotEnum robotEnum;
 
-    public ComWechatRobotReqDTO(String verbalTrick, ComWeChatRobotEnum robotEnum) {
+    public ComWechatRobotReqDTO(String verbalTrick, ComWechatRobotEnum robotEnum) {
         this.verbalTrick = verbalTrick;
         this.robotEnum = robotEnum;
     }

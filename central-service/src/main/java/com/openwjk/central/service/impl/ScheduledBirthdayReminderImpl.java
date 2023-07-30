@@ -1,7 +1,7 @@
 package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.openwjk.central.commons.enums.ComWeChatRobotEnum;
+import com.openwjk.central.commons.enums.ComWechatRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
@@ -73,7 +73,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
                 verbalTrick = verbalTrick.replace("%s", arg);
             }
         }
-        comWechatService.sendTextRobot(new ComWechatRobotReqDTO(verbalTrick,ComWeChatRobotEnum.GNLQ));
+        comWechatService.sendTextRobot(new ComWechatRobotReqDTO(verbalTrick, ComWechatRobotEnum.WLCJDIYS));
     }
 
 }

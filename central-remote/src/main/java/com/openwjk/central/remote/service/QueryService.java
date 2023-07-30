@@ -6,6 +6,7 @@ import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
 import com.openwjk.central.remote.enums.RespTypeEnum;
 import com.openwjk.central.remote.factory.RemoteFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class QueryService {
     @Autowired
     RemoteFactory remoteFactory;
-
+    @Cacheable(cacheNames = "default",key = "#queryReqDTO.cacheKey")
     public CommonQueryRespDTO query(CommonQueryReqDTO queryReqDTO) {
         CommonQueryRespDTO respDTO = new CommonQueryRespDTO();
         try {

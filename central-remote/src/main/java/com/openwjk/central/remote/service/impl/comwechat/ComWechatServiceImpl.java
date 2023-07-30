@@ -38,4 +38,9 @@ public class ComWechatServiceImpl implements ComWechatService {
         CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT);
         return queryService.query(reqDTO);
     }
+
+    @Override
+    public CommonQueryRespDTO getAppAccessToken(ComWechatRobotReqDTO robot) {
+        return null;
+    }
 }
