@@ -1,6 +1,6 @@
 package com.openwjk.central.service.factory;
 
-import com.openwjk.central.service.enums.ScheduledTaskEnum;
+import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.exception.CommonsException;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,7 @@
 package com.openwjk.central.service.service;
 
-import com.openwjk.central.service.enums.ScheduledTaskEnum;
+
+import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 
 import java.util.Date;
 

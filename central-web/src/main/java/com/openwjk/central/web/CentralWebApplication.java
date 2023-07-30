@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 
 @SpringBootApplication
-@ComponentScan("com.openwjk")
+@ComponentScan("com.openwjk.central")
 @EnableScheduling
 @EnableSwagger2WebMvc
 @MapperScan(basePackages = {"com.openwjk.central.dao.mapper"}, annotationClass = Mapper.class)

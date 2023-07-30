@@ -1,11 +1,11 @@
 package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.openwjk.central.commons.enums.ComWeChatRobotEnum;
+import com.openwjk.central.commons.enums.CtConfigGroupEnum;
+import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.service.domain.BirthDayDomain;
-import com.openwjk.central.service.enums.CtConfigGroupEnum;
-import com.openwjk.central.service.enums.ScheduledTaskEnum;
-import com.openwjk.central.service.enums.WeChatRobotEnum;
 import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
@@ -79,7 +79,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
         map.put("msgtype", "text");
         map.put("text", textMap);
         textMap.put("content", verbalTrick);
-        CtConfigDO weChatRobotConfig = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), WeChatRobotEnum.WLCJDIYS.getCode());
+        CtConfigDO weChatRobotConfig = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), ComWeChatRobotEnum.WLCJDIYS.getCode());
         HttpClientUtil.httpPost(weChatRobotConfig.getValue(), JSON.toJSONString(map), StandardCharsets.UTF_8.name());
     }
 

@@ -1,8 +1,8 @@
 package com.openwjk.central.service.task;
 
+import com.openwjk.central.commons.enums.CtConfigGroupEnum;
+import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
-import com.openwjk.central.service.enums.CtConfigGroupEnum;
-import com.openwjk.central.service.enums.ScheduledTaskEnum;
 import com.openwjk.central.service.factory.ScheduledFactory;
 import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.helper.ScheduledHelper;

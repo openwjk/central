@@ -62,8 +62,18 @@
             </dependency>
             <dependency>
                 <groupId>com.openwjk</groupId>
+                <artifactId>central-remote</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openwjk</groupId>
+                <artifactId>central-commons</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openwjk</groupId>
                 <artifactId>commons</artifactId>
-                <version>0.0.2</version>
+                <version>0.0.3-SNAPSHOT</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
             <dependency>

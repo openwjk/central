@@ -1,17 +1,16 @@
-package com.openwjk.central.service.enums;
+package com.openwjk.central.commons.enums;
 
 /**
  * @author wangjunkai
  * @description 微信机器人
  * @date 2023/7/27 21:35
  */
-public enum WeChatRobotEnum {
-    WLCJDIYS("WLCJDIYS", CtConfigGroupEnum.COM_WE_CHAT_ROBOT, "群:万里长江第一帅>机器人"),
-    ZY("ZY", CtConfigGroupEnum.COM_WE_CHAT_ROBOT, "群:只因>只因战士");
+public enum ComWeChatRobotEnum {
+    WLCJDIYS("WLCJDIYS", "群:万里长江第一帅>机器人"),
+    ZY("ZY", "群:只因>只因战士");
 
-    WeChatRobotEnum(String code, CtConfigGroupEnum group, String desc) {
+    ComWeChatRobotEnum(String code,  String desc) {
         this.code = code;
-        this.group = group;
         this.desc = desc;
     }
 
@@ -36,13 +35,5 @@ public enum WeChatRobotEnum {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public CtConfigGroupEnum getGroup() {
-        return group;
-    }
-
-    public void setGroup(CtConfigGroupEnum group) {
-        this.group = group;
     }
 }

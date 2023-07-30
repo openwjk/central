@@ -1,4 +1,4 @@
-package com.openwjk.central.service.enums;
+package com.openwjk.central.commons.enums;
 
 /**
  * @author wangjunkai
