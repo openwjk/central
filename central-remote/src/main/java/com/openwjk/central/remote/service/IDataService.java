@@ -11,7 +11,7 @@ import com.openwjk.central.remote.enums.RemoteTypeEnum;
 public interface IDataService<REQ,RESP> {
     RemoteTypeEnum getCode();
 
-    Context buildRequest(REQ req);
+    void buildRequest(REQ req,Context context);
 
     RESP buildResponse(String resp);
 }

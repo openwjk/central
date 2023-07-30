@@ -2,24 +2,21 @@ package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.enums.ComWeChatRobotEnum;
-import com.openwjk.central.commons.enums.CtConfigGroupEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
+import com.openwjk.central.remote.helper.ConfigHelper;
+import com.openwjk.central.remote.service.impl.comwechat.ComWechatServiceImpl;
 import com.openwjk.central.service.domain.BirthDayDomain;
-import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
 import com.openwjk.commons.utils.DateUtil;
-import com.openwjk.commons.utils.HttpClientUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +32,8 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
 
     @Autowired
     ConfigHelper configHelper;
+    @Autowired
+    ComWechatServiceImpl comWechatService;
 
     @Override
     public ScheduledTaskEnum getCode() {
@@ -74,13 +73,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
                 verbalTrick = verbalTrick.replace("%s", arg);
             }
         }
-        Map<String, Object> map = new HashMap<>();
-        Map<String, String> textMap = new HashMap<>();
-        map.put("msgtype", "text");
-        map.put("text", textMap);
-        textMap.put("content", verbalTrick);
-        CtConfigDO weChatRobotConfig = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), ComWeChatRobotEnum.WLCJDIYS.getCode());
-        HttpClientUtil.httpPost(weChatRobotConfig.getValue(), JSON.toJSONString(map), StandardCharsets.UTF_8.name());
+        comWechatService.sendTextRobot(new ComWechatRobotReqDTO(verbalTrick,ComWeChatRobotEnum.GNLQ));
     }
 
 }

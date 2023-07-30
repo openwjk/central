@@ -7,7 +7,7 @@ package com.openwjk.central.commons.enums;
  */
 public enum ComWeChatRobotEnum {
     WLCJDIYS("WLCJDIYS", "群:万里长江第一帅>机器人"),
-    ZY("ZY", "群:只因>只因战士");
+    GNLQ("GNLQ", "群:给你两拳>机器人");
 
     ComWeChatRobotEnum(String code,  String desc) {
         this.code = code;

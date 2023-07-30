@@ -21,9 +21,10 @@ public class QueryService {
     public CommonQueryRespDTO query(CommonQueryReqDTO queryReqDTO) {
         CommonQueryRespDTO respDTO = new CommonQueryRespDTO();
         try {
+            Context context = new Context();
             IDataService dataService = remoteFactory.getDataService(queryReqDTO.getRemoteTypeEnum());
             IRemoteService remoteService = remoteFactory.getRemoteService(queryReqDTO.getRemoteTypeEnum());
-            Context context = dataService.buildRequest(queryReqDTO.getQueryDTO());
+            dataService.buildRequest(queryReqDTO.getQueryDTO(),context);
             String response = remoteService.callRemote(context);
             respDTO.setRespEntry(dataService.buildResponse(response));
         } catch (Exception e) {

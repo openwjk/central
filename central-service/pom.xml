@@ -19,6 +19,11 @@
         </dependency>
         <dependency>
             <groupId>com.openwjk</groupId>
+            <artifactId>central-remote</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.openwjk</groupId>
             <artifactId>central-dao</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

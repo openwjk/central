@@ -26,6 +26,10 @@
             <groupId>com.openwjk</groupId>
             <artifactId>central-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.openwjk</groupId>
+            <artifactId>central-dao</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

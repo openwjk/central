@@ -3,8 +3,8 @@ package com.openwjk.central.service.task;
 import com.openwjk.central.commons.enums.CtConfigGroupEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.service.factory.ScheduledFactory;
-import com.openwjk.central.service.helper.ConfigHelper;
 import com.openwjk.central.service.helper.ScheduledHelper;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.DateUtil;
@@ -25,7 +25,7 @@ public class CentralTask {
     @Autowired
     ScheduledFactory scheduledFactory;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     public void runTask() {
         Date date = DateUtil.getNow();
         List<CtConfigDO> configDOS = configHelper.getConfigByGroup(CtConfigGroupEnum.SCHEDULED_TASK.getCode());

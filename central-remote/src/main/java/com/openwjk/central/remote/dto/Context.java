@@ -15,4 +15,5 @@ public class Context {
     private Map<String,String> headParam;
     private Map<String,String> urlParam;
     private String bodyParam;
+    private String url;
 }

@@ -1,4 +1,4 @@
-package com.openwjk.central.service.helper;
+package com.openwjk.central.remote.helper;
 
 import com.google.common.collect.Lists;
 import com.openwjk.central.dao.mapper.CtConfigDOMapper;
