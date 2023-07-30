@@ -6,17 +6,15 @@ package com.openwjk.central.service.enums;
  * @date 2023/7/28 12:05
  */
 public enum ScheduledTaskEnum {
-    BIRTHDAY_REMINDER("BIRTHDAY_REMINDER", CtConfigGroupEnum.SCHEDULED_TASK, "生日提醒定时任务"),
+    BIRTHDAY_REMINDER("BIRTHDAY_REMINDER",  "生日提醒定时任务"),
     ;
 
-    ScheduledTaskEnum(String code, CtConfigGroupEnum group, String desc) {
+    ScheduledTaskEnum(String code, String desc) {
         this.code = code;
-        this.group = group;
         this.desc = desc;
     }
 
     private String code;
-    private CtConfigGroupEnum group;
     private String desc;
 
     public String getCode() {
@@ -33,14 +31,6 @@ public enum ScheduledTaskEnum {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public CtConfigGroupEnum getGroup() {
-        return group;
-    }
-
-    public void setGroup(CtConfigGroupEnum group) {
-        this.group = group;
     }
 
     public static ScheduledTaskEnum get(String code) {
