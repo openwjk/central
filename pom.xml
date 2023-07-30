@@ -11,6 +11,8 @@
         <module>central-web</module>
         <module>central-service</module>
         <module>central-dao</module>
+        <module>central-remote</module>
+        <module>central-commons</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

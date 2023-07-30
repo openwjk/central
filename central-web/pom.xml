@@ -47,10 +47,6 @@
             <artifactId>central-service</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.openwjk</groupId>
-            <artifactId>commons</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

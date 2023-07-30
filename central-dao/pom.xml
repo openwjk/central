@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.openwjk</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>central-commons</artifactId>
         </dependency>
     </dependencies>
 
