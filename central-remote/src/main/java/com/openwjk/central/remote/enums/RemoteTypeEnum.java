@@ -7,7 +7,8 @@ package com.openwjk.central.remote.enums;
  */
 public enum RemoteTypeEnum {
     COM_WECHAT_TEXT_ROBOT("COM_WECHAT_TEXT_ROBOT","企业微信机器人发送文本消息"),
-    COM_WECHAT_MARK_DOWN_ROBOT("COM_WECHAT_MARK_DOWN_ROBOT","企业微信机器人发送markdown消息");
+    COM_WECHAT_MARK_DOWN_ROBOT("COM_WECHAT_MARK_DOWN_ROBOT","企业微信机器人发送markdown消息"),
+    COM_WECHAT_APP_NOTICE("COM_WECHAT_APP_NOTICE","企业微信应用：通知");
 
     RemoteTypeEnum(String code, String desc) {
         this.code = code;

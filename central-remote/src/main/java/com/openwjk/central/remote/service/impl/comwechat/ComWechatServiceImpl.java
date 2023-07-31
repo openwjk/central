@@ -41,6 +41,10 @@ public class ComWechatServiceImpl implements ComWechatService {
 
     @Override
     public CommonQueryRespDTO getAppAccessToken(ComWechatRobotReqDTO robot) {
-        return null;
+        if (robot == null || StringUtils.isBlank(robot.getVerbalTrick()) || robot.getRobotEnum() == null) {
+            throw new CommonsException("param is invalid");
+        }
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT);
+        return queryService.query(reqDTO);
     }
 }
