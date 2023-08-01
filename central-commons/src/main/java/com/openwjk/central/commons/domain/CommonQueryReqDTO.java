@@ -1,6 +1,5 @@
-package com.openwjk.central.remote.dto.request;
+package com.openwjk.central.commons.domain;
 
-import com.openwjk.central.remote.enums.RemoteTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,14 +12,18 @@ import java.io.Serializable;
 @Data
 public class CommonQueryReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private RemoteTypeEnum remoteTypeEnum;
+    private String remoteType;
     private Object queryDTO;
+    private String cacheService;
     private String cacheKey;
+    private Boolean enterCache;
 
 
-    public CommonQueryReqDTO(Object queryDTO, RemoteTypeEnum remoteTypeEnum) {
+    public CommonQueryReqDTO(Object queryDTO, String cacheKey, String remoteType) {
         this.queryDTO = queryDTO;
-        this.remoteTypeEnum = remoteTypeEnum;
+        this.cacheKey = cacheKey;
+        this.remoteType = remoteType;
+        this.enterCache = true;
     }
 
 }

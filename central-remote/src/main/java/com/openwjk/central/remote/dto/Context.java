@@ -1,6 +1,8 @@
 package com.openwjk.central.remote.dto;
 
+import com.openwjk.central.remote.dto.request.RequestDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
@@ -10,10 +12,12 @@ import java.util.Map;
  * @date 2023/7/30 10:16
  */
 @Data
+@NoArgsConstructor
 public class Context {
-    private Map<String,String> formParam;
-    private Map<String,String> headParam;
-    private Map<String,String> urlParam;
-    private String bodyParam;
-    private String url;
+    private RequestDTO requestDTO;
+    private Object queryDTO;
+
+    public Context(Object queryDTO) {
+        this.queryDTO = queryDTO;
+    }
 }

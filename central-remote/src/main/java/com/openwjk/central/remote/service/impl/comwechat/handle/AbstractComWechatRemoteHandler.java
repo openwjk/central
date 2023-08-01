@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 public abstract class AbstractComWechatRemoteHandler implements IRemoteService {
     @Override
     public String callRemote(Context context) {
-        String response = HttpClientUtil.httpPost(context.getUrl(), context.getBodyParam(), StandardCharsets.UTF_8.name());
+        String response = HttpClientUtil.httpPost(context.getRequestDTO().getUrl(), context.getRequestDTO().getBodyParam(), StandardCharsets.UTF_8.name());
         return response;
     }
 }

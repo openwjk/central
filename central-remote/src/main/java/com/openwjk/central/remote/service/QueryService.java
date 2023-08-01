@@ -1,13 +1,16 @@
 package com.openwjk.central.remote.service;
 
+import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.remote.dto.Context;
-import com.openwjk.central.remote.dto.request.CommonQueryReqDTO;
-import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
-import com.openwjk.central.remote.enums.RespTypeEnum;
+import com.openwjk.central.commons.domain.CommonQueryReqDTO;
+import com.openwjk.central.remote.enums.RemoteTypeEnum;
 import com.openwjk.central.remote.factory.RemoteFactory;
+import com.openwjk.commons.utils.StackTraceUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
 
 /**
  * @author wangjunkai
@@ -15,21 +18,22 @@ import org.springframework.stereotype.Service;
  * @date 2023/7/30 10:08
  */
 @Service
+@Log4j2
 public class QueryService {
     @Autowired
     RemoteFactory remoteFactory;
-    @Cacheable(cacheNames = "default",key = "#queryReqDTO.cacheKey")
-    public CommonQueryRespDTO query(CommonQueryReqDTO queryReqDTO) {
-        CommonQueryRespDTO respDTO = new CommonQueryRespDTO();
+
+    public <RESPONSE extends Serializable> CacheableResultDTO<RESPONSE> query(CommonQueryReqDTO queryReqDTO) {
+        CacheableResultDTO respDTO = new CacheableResultDTO();
         try {
-            Context context = new Context();
-            IDataService dataService = remoteFactory.getDataService(queryReqDTO.getRemoteTypeEnum());
-            IRemoteService remoteService = remoteFactory.getRemoteService(queryReqDTO.getRemoteTypeEnum());
-            dataService.buildRequest(queryReqDTO.getQueryDTO(),context);
+            Context context = new Context(queryReqDTO.getQueryDTO());
+            IDataService dataService = remoteFactory.getDataService(RemoteTypeEnum.get(queryReqDTO.getRemoteType()));
+            IRemoteService remoteService = remoteFactory.getRemoteService(RemoteTypeEnum.get(queryReqDTO.getRemoteType()));
+            dataService.buildRequest(context);
             String response = remoteService.callRemote(context);
-            respDTO.setRespEntry(dataService.buildResponse(response));
+            respDTO.setEntity(dataService.buildResponse(response));
         } catch (Exception e) {
-            respDTO.setRespType(RespTypeEnum.FAIL);
+            log.error(StackTraceUtil.getStackTrace(e));
         }
         return respDTO;
     }

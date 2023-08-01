@@ -24,13 +24,13 @@ import java.util.Map;
  * @date 2023/7/30 11:00
  */
 @Service
-public class TextRobotDataHandler implements IDataService {
+public class AccessTokenDataHandler implements IDataService {
     @Autowired
     ConfigHelper configHelper;
 
     @Override
     public RemoteTypeEnum getCode() {
-        return RemoteTypeEnum.COM_WECHAT_TEXT_ROBOT;
+        return RemoteTypeEnum.COM_WECHAT_ACCESS_TOKEN;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TextRobotDataHandler implements IDataService {
         map.put("text", textMap);
         textMap.put("content", robot.getVerbalTrick());
         requestDTO.setBodyParam(JSON.toJSONString(map));
-        CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), robot.getRobotEnum().getCode());
+        CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_APP.name(), robot.getRobotEnum().getCode());
         requestDTO.setUrl(config.getValue());
         context.setRequestDTO(requestDTO);
     }

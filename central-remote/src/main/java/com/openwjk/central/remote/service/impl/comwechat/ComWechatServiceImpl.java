@@ -1,12 +1,15 @@
 package com.openwjk.central.remote.service.impl.comwechat;
 
+import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
-import com.openwjk.central.remote.dto.request.CommonQueryReqDTO;
+import com.openwjk.central.commons.domain.CommonQueryReqDTO;
 import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
 import com.openwjk.central.remote.enums.RemoteTypeEnum;
+import com.openwjk.central.remote.enums.RespTypeEnum;
 import com.openwjk.central.remote.service.ComWechatService;
-import com.openwjk.central.remote.service.QueryService;
+import com.openwjk.central.remote.service.CommonCacheQueryService;
 import com.openwjk.commons.exception.CommonsException;
+import com.openwjk.commons.utils.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +22,20 @@ import org.springframework.stereotype.Service;
 @Service("comWechatService")
 public class ComWechatServiceImpl implements ComWechatService {
     @Autowired
-    QueryService queryService;
+    CommonCacheQueryService queryService;
 
     @Override
-    public CommonQueryRespDTO sendTextRobot(ComWechatRobotReqDTO robot) {
+    public CommonQueryRespDTO<Boolean> sendTextRobot(ComWechatRobotReqDTO robot) {
         if (robot == null || StringUtils.isBlank(robot.getVerbalTrick()) || robot.getRobotEnum() == null) {
             throw new CommonsException("param is invalid");
         }
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, RemoteTypeEnum.COM_WECHAT_TEXT_ROBOT);
-        return queryService.query(reqDTO);
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, Constant.EMPTY_STR, RemoteTypeEnum.COM_WECHAT_TEXT_ROBOT.name());
+        CacheableResultDTO<Boolean> resultDTO = queryService.query(reqDTO);
+        if (resultDTO.getEntity()) {
+            return new CommonQueryRespDTO<>(RespTypeEnum.SUCCESS,resultDTO.getEntity());
+        }else {
+            return new CommonQueryRespDTO<>(RespTypeEnum.FAIL);
+        }
     }
 
     @Override
@@ -35,8 +43,13 @@ public class ComWechatServiceImpl implements ComWechatService {
         if (robot == null || StringUtils.isBlank(robot.getVerbalTrick()) || robot.getRobotEnum() == null) {
             throw new CommonsException("param is invalid");
         }
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT);
-        return queryService.query(reqDTO);
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, Constant.EMPTY_STR, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT.name());
+        CacheableResultDTO<Boolean> resultDTO = queryService.query(reqDTO);
+        if (resultDTO.getEntity()) {
+            return new CommonQueryRespDTO<>(RespTypeEnum.SUCCESS,resultDTO.getEntity());
+        }else {
+            return new CommonQueryRespDTO<>(RespTypeEnum.FAIL);
+        }
     }
 
     @Override
@@ -44,7 +57,12 @@ public class ComWechatServiceImpl implements ComWechatService {
         if (robot == null || StringUtils.isBlank(robot.getVerbalTrick()) || robot.getRobotEnum() == null) {
             throw new CommonsException("param is invalid");
         }
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT);
-        return queryService.query(reqDTO);
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, Constant.EMPTY_STR, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT.name());
+        CacheableResultDTO<Boolean> resultDTO = queryService.query(reqDTO);
+        if (resultDTO.getEntity()) {
+            return new CommonQueryRespDTO<>(RespTypeEnum.SUCCESS,resultDTO.getEntity());
+        }else {
+            return new CommonQueryRespDTO<>(RespTypeEnum.FAIL);
+        }
     }
 }

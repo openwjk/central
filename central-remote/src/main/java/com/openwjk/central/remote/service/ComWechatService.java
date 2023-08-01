@@ -9,9 +9,9 @@ import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
  * @date 2023/7/30 8:25
  */
 public interface ComWechatService {
-    CommonQueryRespDTO sendTextRobot(ComWechatRobotReqDTO robot);
+    CommonQueryRespDTO<Boolean> sendTextRobot(ComWechatRobotReqDTO robot);
 
-    CommonQueryRespDTO sendMarkDownRobot(ComWechatRobotReqDTO robot);
+    CommonQueryRespDTO<Boolean> sendMarkDownRobot(ComWechatRobotReqDTO robot);
 
-    CommonQueryRespDTO getAppAccessToken(ComWechatRobotReqDTO robot);
+    CommonQueryRespDTO<Boolean> getAppAccessToken(ComWechatRobotReqDTO robot);
 }
