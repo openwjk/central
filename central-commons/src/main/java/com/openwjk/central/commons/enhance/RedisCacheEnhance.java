@@ -5,7 +5,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.lang.Nullable;
+
 
 /**
  * @author wangjunkai
@@ -31,6 +33,21 @@ public class RedisCacheEnhance extends RedisCache {
         } else {
             super.put(key, value);
         }
+    }
+
+    @Override
+    public ValueWrapper get(Object key) {
+        ValueWrapper wrapper = super.get(key);
+        if (wrapper == null) {
+            return null;
+        }
+        Object value = wrapper.get();
+        if (value instanceof CacheableResultDTO) {
+            ((CacheableResultDTO) value).setFromCache(Boolean.TRUE);
+        } else {
+            // nothing to do
+        }
+        return wrapper;
     }
 
 }

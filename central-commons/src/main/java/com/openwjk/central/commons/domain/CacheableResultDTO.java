@@ -16,6 +16,7 @@ public class CacheableResultDTO<E extends Serializable> implements Serializable 
     private static final long serialVersionUID = 1L;
     private Long expire;
     private Boolean enterCache;
+    private Boolean fromCache;
     private E entity;
 
     public CacheableResultDTO(E entity) {

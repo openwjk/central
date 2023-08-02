@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <Properties>
+        <Property name="LOG_HOME">E:\\logs</Property>
+    </Properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %c (%F:%L) %m%n" />
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="${LOG_HOME}/central.log"
+                     filePattern="${LOG_HOME}/central-%d{MM-dd-yyyy}.log.gz">
+            <PatternLayout pattern="%d %-5p [%t] %c (%F:%L) %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="DebugRollingFile" fileName="${LOG_HOME}/debug-central.log"
+                     filePattern="${LOG_HOME}/debug-central-%d{MM-dd-yyyy}.log.gz">
+            <PatternLayout pattern="%d %-5p [%t] %c (%F:%L) %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            </Filters>
+        </RollingFile>
+        <RollingFile name="InfoAboveRollingFile" fileName="${LOG_HOME}/info-above-central.log"
+                     filePattern="${LOG_HOME}/info-above-central-%d{MM-dd-yyyy}.log.gz">
+            <PatternLayout pattern="%d %-5p [%t] %c (%F:%L) %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <logger name="org.springframework" level="ERROR" additivity="true" includeLocation="true">
+        </logger>
+        <logger name="org.mybatis" level="ERROR" additivity="true" includeLocation="true">
+        </logger>
+        <logger name="com.alibaba.druid" level="ERROR" additivity="true" includeLocation="true">
+        </logger>
+        <logger name="org.apache.ibatis" level="ERROR" additivity="true" includeLocation="true">
+        </logger>
+
+        <root level="INFO" includeLocation="true">
+            <appender-ref ref="Console" />
+            <appender-ref ref="RollingFile" />
+            <appender-ref ref="DebugRollingFile"/>
+            <appender-ref ref="InfoAboveRollingFile"/>
+        </root>
+    </loggers>
+</configuration>

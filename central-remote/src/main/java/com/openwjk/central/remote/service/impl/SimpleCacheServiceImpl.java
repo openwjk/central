@@ -6,6 +6,7 @@ import com.openwjk.central.commons.service.ICacheService;
 import com.openwjk.central.remote.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @description
  * @date 2023/8/1 15:34
  */
+@Service
 public class SimpleCacheServiceImpl implements ICacheService {
     private static final String CODE = "simpleCache";
     private static final Long DEFAULT_CACHE_EXPIRE = 86400L;
