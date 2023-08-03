@@ -1,4 +1,4 @@
-package com.openwjk.central.remote.service.impl.comwechat.handle;
+package com.openwjk.central.remote.service.impl.comwcrobot.handle;
 
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.service.IRemoteService;

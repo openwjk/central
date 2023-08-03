@@ -6,7 +6,7 @@ import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
-import com.openwjk.central.remote.service.impl.comwechat.ComWechatServiceImpl;
+import com.openwjk.central.remote.service.impl.comwcrobot.ComWcRobotServiceImpl;
 import com.openwjk.central.service.domain.BirthDayDomain;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
@@ -33,7 +33,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     @Autowired
     ConfigHelper configHelper;
     @Autowired
-    ComWechatServiceImpl comWechatService;
+    ComWcRobotServiceImpl comWechatService;
 
     @Override
     public ScheduledTaskEnum getCode() {

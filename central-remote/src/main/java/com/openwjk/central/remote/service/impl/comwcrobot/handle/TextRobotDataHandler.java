@@ -1,4 +1,4 @@
-package com.openwjk.central.remote.service.impl.comwechat.handle;
+package com.openwjk.central.remote.service.impl.comwcrobot.handle;
 
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.domain.CacheableResultDTO;
@@ -22,16 +22,16 @@ import java.util.Map;
 /**
  * @author wangjunkai
  * @description
- * @date 2023/7/30 11:01
+ * @date 2023/7/30 11:00
  */
 @Service
-public class MarkDownRobotDataHandler implements IDataService {
+public class TextRobotDataHandler implements IDataService {
     @Autowired
     ConfigHelper configHelper;
 
     @Override
     public RemoteTypeEnum getCode() {
-        return RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT;
+        return RemoteTypeEnum.COM_WECHAT_TEXT_ROBOT;
     }
 
     @Override
@@ -39,10 +39,10 @@ public class MarkDownRobotDataHandler implements IDataService {
         ComWechatRobotReqDTO robot = (ComWechatRobotReqDTO) context.getQueryDTO();
         RequestDTO requestDTO = new RequestDTO();
         Map<String, Object> map = new HashMap<>();
-        Map<String, String> markdownMap = new HashMap<>();
-        map.put("msgtype", "markdown");
-        map.put("markdown", markdownMap);
-        markdownMap.put("content", robot.getVerbalTrick());
+        Map<String, String> textMap = new HashMap<>();
+        map.put("msgtype", "text");
+        map.put("text", textMap);
+        textMap.put("content", robot.getVerbalTrick());
         requestDTO.setBodyParam(JSON.toJSONString(map));
         CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), robot.getRobotEnum().getCode());
         requestDTO.setUrl(config.getValue());
@@ -62,6 +62,6 @@ public class MarkDownRobotDataHandler implements IDataService {
                 return true;
             }
         }
-        return true;
+        return false;
     }
 }
