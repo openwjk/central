@@ -32,18 +32,10 @@ public class RedisTest {
 
     @Test
     public void test() {
-        for(int i=0;i<100000;i++){
-            String id=RandomCodeUtil.generateCode(10);
-            CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null,id,"test");
-            System.out.println(id);
-            systemService.redisTest(reqDTO);
-        }
+        String id = RandomCodeUtil.generateCode(10);
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null, id, "test");
+        System.out.println(id);
+        systemService.redisTest(reqDTO);
     }
-
-    public static void main(String[] args) {
-        BirthDayDomain dayDomain = new BirthDayDomain();
-        System.out.println(dayDomain instanceof BaseDomain);
-    }
-
 
 }

@@ -22,7 +22,7 @@ public class SystemServiceImpl implements SystemService {
         reqDTO1.setVerbalTrick("1111");
         resultDTO.setEntity(reqDTO1);
         resultDTO.setEnterCache(true);
-        resultDTO.setExpire(86400L);
+        resultDTO.setExpire(3600L);
         return resultDTO;
     }
 
