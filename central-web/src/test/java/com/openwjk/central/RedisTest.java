@@ -1,13 +1,17 @@
 package com.openwjk.central;
 
+import com.openwjk.central.commons.domain.CommonQueryReqDTO;
 import com.openwjk.central.commons.utils.RedisUtil;
+import com.openwjk.central.commons.domain.BaseDomain;
+import com.openwjk.central.service.domain.BirthDayDomain;
 import com.openwjk.central.service.service.SystemService;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -22,12 +26,24 @@ public class RedisTest {
     RedisUtil redisUtil;
     @Autowired
     SystemService systemService;
+    @Autowired
+    @Qualifier("pool")
+    ThreadPoolTaskExecutor taskExecutor;
 
     @Test
     public void test() {
-        String id=RandomCodeUtil.generateCode(10);
-        System.out.println(id);
-        systemService.redisTest(id);
+        for(int i=0;i<100000;i++){
+            String id=RandomCodeUtil.generateCode(10);
+            CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null,id,"test");
+            System.out.println(id);
+            systemService.redisTest(reqDTO);
+        }
     }
+
+    public static void main(String[] args) {
+        BirthDayDomain dayDomain = new BirthDayDomain();
+        System.out.println(dayDomain instanceof BaseDomain);
+    }
+
 
 }

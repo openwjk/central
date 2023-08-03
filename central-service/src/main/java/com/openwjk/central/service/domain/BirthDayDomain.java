@@ -1,5 +1,6 @@
 package com.openwjk.central.service.domain;
 
+import com.openwjk.central.commons.domain.BaseDomain;
 import lombok.Data;
 
 import java.util.List;

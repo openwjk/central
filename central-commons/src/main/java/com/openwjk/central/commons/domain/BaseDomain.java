@@ -1,4 +1,4 @@
-package com.openwjk.central.service.domain;
+package com.openwjk.central.commons.domain;
 
 import java.io.Serializable;
 

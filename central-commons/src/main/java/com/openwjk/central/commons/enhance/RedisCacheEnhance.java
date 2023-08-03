@@ -8,6 +8,8 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.lang.Nullable;
 
+import java.time.Duration;
+
 
 /**
  * @author wangjunkai
@@ -25,7 +27,11 @@ public class RedisCacheEnhance extends RedisCache {
         if (value instanceof CacheableResultDTO) {
             CacheableResultDTO resultDTO = ((CacheableResultDTO) value);
             if (resultDTO.getEnterCache()) {
-                super.put(key, value);
+                Object cacheValue = preProcessCacheValue(value);
+                if (!isAllowNullValues() && cacheValue == null) {
+                    throw new IllegalArgumentException(String.format("Cache '%s' does not allow 'null' values. Avoid storing null via '@Cacheable(unless=\"#result == null\")' or configure RedisCache to allow 'null' via RedisCacheConfiguration.", getName()));
+                }
+                getNativeCache().put(getName(), createAndConvertCacheKey(key), serializeCacheValue(cacheValue), Duration.ofSeconds(resultDTO.getExpire()));
             } else {
                 // don't cache
                 log.info("call RedisCacheEnhance.put, value.enterCache = false, key:[{}], value:[{}]", key.toString(), value.toString());
@@ -33,6 +39,10 @@ public class RedisCacheEnhance extends RedisCache {
         } else {
             super.put(key, value);
         }
+    }
+
+    private byte[] createAndConvertCacheKey(Object key) {
+        return serializeCacheKey(createCacheKey(key));
     }
 
     @Override

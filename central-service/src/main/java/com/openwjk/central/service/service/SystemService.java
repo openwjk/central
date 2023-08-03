@@ -1,7 +1,10 @@
 package com.openwjk.central.service.service;
 
+import com.openwjk.central.commons.domain.CacheableResultDTO;
+import com.openwjk.central.commons.domain.CommonQueryReqDTO;
+
 public interface SystemService {
     String checkRun();
 
-    String redisTest(String id);
+    CacheableResultDTO redisTest(CommonQueryReqDTO reqDTO);
 }
