@@ -13,6 +13,7 @@ import com.openwjk.central.remote.service.IDataService;
 import com.openwjk.commons.utils.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,6 +26,9 @@ import java.util.Map;
  */
 @Service
 public class AccessTokenDataHandler implements IDataService {
+    @Value("${comwechat.accessToken.url}")
+    private String url;
+
     @Autowired
     ConfigHelper configHelper;
 

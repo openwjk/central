@@ -42,4 +42,7 @@ mybatis:
   mapper-locations: classpath:com/openwjk/central/dao/mapper/*xml
   #指定Mybatis的实体目录
   type-aliases-package: com/openwjk/central/dao/model
+comwechat:
+  accessToken:
+    url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
 
