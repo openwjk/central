@@ -1,6 +1,8 @@
 package com.openwjk.central.remote.service.impl.comwechat;
 
 import com.openwjk.central.commons.domain.CacheableResultDTO;
+import com.openwjk.central.commons.enums.ComWechatAppEnum;
+import com.openwjk.central.commons.enums.ComWechatRobotEnum;
 import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
 import com.openwjk.central.commons.domain.CommonQueryReqDTO;
 import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
@@ -53,11 +55,11 @@ public class ComWechatServiceImpl implements ComWechatService {
     }
 
     @Override
-    public CommonQueryRespDTO getAppAccessToken(ComWechatRobotReqDTO robot) {
-        if (robot == null || StringUtils.isBlank(robot.getVerbalTrick()) || robot.getRobotEnum() == null) {
+    public CommonQueryRespDTO getAppAccessToken(ComWechatAppEnum appEnum) {
+        if (appEnum == null) {
             throw new CommonsException("param is invalid");
         }
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(robot, Constant.EMPTY_STR, RemoteTypeEnum.COM_WECHAT_MARK_DOWN_ROBOT.name());
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(appEnum, appEnum.name(), RemoteTypeEnum.COM_WECHAT_ACCESS_TOKEN.name());
         CacheableResultDTO<Boolean> resultDTO = queryService.query(reqDTO);
         if (resultDTO.getEntity()) {
             return new CommonQueryRespDTO<>(RespTypeEnum.SUCCESS,resultDTO.getEntity());

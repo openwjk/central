@@ -19,7 +19,7 @@ import java.io.Serializable;
  */
 @Service
 @Log4j2
-public class QueryService {
+public class CommonQueryService {
     @Autowired
     RemoteFactory remoteFactory;
 
@@ -32,6 +32,10 @@ public class QueryService {
             dataService.buildRequest(context);
             String response = remoteService.callRemote(context);
             respDTO.setEntity(dataService.buildResponse(response));
+            if (queryReqDTO.getEnterCache()) {
+                respDTO.setEnterCache(true);
+                dataService.setExpire(respDTO);
+            }
         } catch (Exception e) {
             log.error(StackTraceUtil.getStackTrace(e));
         }

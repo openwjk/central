@@ -3,7 +3,7 @@ package com.openwjk.central.remote.service.impl;
 import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.commons.domain.CommonQueryReqDTO;
 import com.openwjk.central.commons.service.ICacheService;
-import com.openwjk.central.remote.service.QueryService;
+import com.openwjk.central.remote.service.CommonQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class SimpleCacheServiceImpl implements ICacheService {
     private static final String CODE = "simpleCache";
     private static final Long DEFAULT_CACHE_EXPIRE = 86400L;
     @Autowired
-    private QueryService queryService;
+    private CommonQueryService queryService;
 
     protected <RESP extends Serializable> CacheableResultDTO<RESP> before(CommonQueryReqDTO queryDTO) {
         return null;

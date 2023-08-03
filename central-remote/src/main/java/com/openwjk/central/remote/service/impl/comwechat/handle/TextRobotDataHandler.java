@@ -1,6 +1,7 @@
 package com.openwjk.central.remote.service.impl.comwechat.handle;
 
 import com.alibaba.fastjson2.JSON;
+import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.commons.enums.CtConfigGroupEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.remote.dto.Context;
@@ -46,6 +47,11 @@ public class TextRobotDataHandler implements IDataService {
         CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_ROBOT.name(), robot.getRobotEnum().getCode());
         requestDTO.setUrl(config.getValue());
         context.setRequestDTO(requestDTO);
+    }
+
+    @Override
+    public void setExpire(CacheableResultDTO resultDTO) {
+
     }
 
     @Override

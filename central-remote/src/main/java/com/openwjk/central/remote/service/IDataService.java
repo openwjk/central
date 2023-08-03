@@ -1,5 +1,6 @@
 package com.openwjk.central.remote.service;
 
+import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.enums.RemoteTypeEnum;
 
@@ -14,6 +15,8 @@ public interface IDataService {
     RemoteTypeEnum getCode();
 
     void buildRequest(Context context);
+
+    void setExpire(CacheableResultDTO resultDTO);
 
     <RESP extends Serializable> RESP buildResponse(String resp);
 }

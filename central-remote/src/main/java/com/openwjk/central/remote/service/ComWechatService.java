@@ -1,5 +1,6 @@
 package com.openwjk.central.remote.service;
 
+import com.openwjk.central.commons.enums.ComWechatAppEnum;
 import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
 import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
 
@@ -13,5 +14,5 @@ public interface ComWechatService {
 
     CommonQueryRespDTO<Boolean> sendMarkDownRobot(ComWechatRobotReqDTO robot);
 
-    CommonQueryRespDTO<Boolean> getAppAccessToken(ComWechatRobotReqDTO robot);
+    CommonQueryRespDTO<Boolean> getAppAccessToken(ComWechatAppEnum appEnum);
 }
