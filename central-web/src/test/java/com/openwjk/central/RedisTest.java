@@ -1,8 +1,12 @@
 package com.openwjk.central;
 
+import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.domain.CommonQueryReqDTO;
+import com.openwjk.central.commons.enums.ComWechatAppEnum;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.commons.domain.BaseDomain;
+import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
+import com.openwjk.central.remote.service.impl.comwechat.ComWechatServiceImpl;
 import com.openwjk.central.service.domain.BirthDayDomain;
 import com.openwjk.central.service.service.SystemService;
 import com.openwjk.commons.utils.RandomCodeUtil;
@@ -27,13 +31,19 @@ public class RedisTest {
     @Autowired
     SystemService systemService;
     @Autowired
-    @Qualifier("pool")
-    ThreadPoolTaskExecutor taskExecutor;
+    @Qualifier("comWechatService")
+    ComWechatServiceImpl comWechatService;
+
+    @Test
+    public void getAccessToke() {
+        CommonQueryRespDTO respDTO = comWechatService.getAppAccessToken(ComWechatAppEnum.NOTIFICATION);
+        System.out.println(JSON.toJSONString(respDTO));
+    }
 
     @Test
     public void test() {
         String id = RandomCodeUtil.generateCode(10);
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null, id, "test");
+        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null, "simpleCache",id, "test");
         System.out.println(id);
         systemService.redisTest(reqDTO);
     }

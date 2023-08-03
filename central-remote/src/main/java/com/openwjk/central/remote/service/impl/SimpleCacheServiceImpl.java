@@ -32,7 +32,7 @@ public class SimpleCacheServiceImpl implements ICacheService {
     }
 
     @Override
-    @Cacheable(key = "#queryDTO.cacheKey")
+    @Cacheable(cacheNames = "default",key = "#queryDTO.cacheKey")
     public <RESP extends Serializable> CacheableResultDTO<RESP> process(CommonQueryReqDTO queryDTO) {
         CacheableResultDTO<RESP> resultDTO = before(queryDTO);
         if (resultDTO == null) {

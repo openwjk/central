@@ -19,11 +19,18 @@ public class CommonQueryReqDTO implements Serializable {
     private Boolean enterCache;
 
 
-    public CommonQueryReqDTO(Object queryDTO, String cacheKey, String remoteType) {
+    public CommonQueryReqDTO(Object queryDTO, String cacheService, String cacheKey, String remoteType) {
         this.queryDTO = queryDTO;
+        this.cacheService = cacheService;
         this.cacheKey = cacheKey;
         this.remoteType = remoteType;
         this.enterCache = true;
+    }
+    public CommonQueryReqDTO(Object queryDTO, String cacheService, String remoteType,Boolean enterCache) {
+        this.queryDTO = queryDTO;
+        this.cacheService = cacheService;
+        this.remoteType = remoteType;
+        this.enterCache = enterCache;
     }
 
 }
