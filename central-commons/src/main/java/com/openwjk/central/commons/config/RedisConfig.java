@@ -46,7 +46,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
+        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
 
         template.setValueSerializer(serializer);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
