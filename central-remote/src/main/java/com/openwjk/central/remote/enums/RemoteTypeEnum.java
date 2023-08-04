@@ -9,7 +9,7 @@ public enum RemoteTypeEnum {
     COM_WECHAT_TEXT_ROBOT("COM_WECHAT_TEXT_ROBOT","企业微信机器人发送文本消息"),
     COM_WECHAT_MARK_DOWN_ROBOT("COM_WECHAT_MARK_DOWN_ROBOT","企业微信机器人发送markdown消息"),
     COM_WECHAT_ACCESS_TOKEN("COM_WECHAT_ACCESS_TOKEN","企业微信accessToken"),
-    COM_WECHAT_APP_NOTICE("COM_WECHAT_APP_NOTICE","企业微信应用：通知");
+    COM_WECHAT_APP_NOTICE_TEXT_MSG("COM_WECHAT_APP_NOTICE_TEXT_MSG","企业微信应用：通知>发送文本消息");
 
     RemoteTypeEnum(String code, String desc) {
         this.code = code;

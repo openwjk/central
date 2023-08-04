@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openwjk.central.commons.enhance.RedisCacheManagerEnhance;
+import com.openwjk.central.commons.serialize.GenericFastJsonRedisSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -63,7 +64,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
+        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
         RedisSerializationContext.SerializationPair<Object> objectSerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
         configuration.serializeValuesWith(objectSerializationPair);
         RedisCacheManagerEnhance managerEnhance = new RedisCacheManagerEnhance(RedisCacheWriter.nonLockingRedisCacheWriter(lettuceConnectionFactory),

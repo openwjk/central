@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author wangjunkai
- * @description
+ * @description 企业微信机器人
  * @date 2023/7/30 9:13
  */
 @Service("comWcRobotService")

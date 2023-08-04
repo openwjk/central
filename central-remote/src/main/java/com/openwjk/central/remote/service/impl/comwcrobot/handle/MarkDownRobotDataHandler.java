@@ -50,7 +50,7 @@ public class MarkDownRobotDataHandler implements IDataService {
     }
 
     @Override
-    public void setExpire(CacheableResultDTO resultDTO) {
+    public void enterCache(CacheableResultDTO resultDTO) {
 
     }
 

@@ -7,12 +7,14 @@ import com.openwjk.central.commons.enums.ComWechatAppEnum;
 import com.openwjk.central.commons.enums.CtConfigGroupEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.remote.dto.Context;
+import com.openwjk.central.remote.dto.request.ComWcAppSendTextMsgReqDTO;
 import com.openwjk.central.remote.dto.request.RequestDTO;
+import com.openwjk.central.remote.dto.response.ComWcAppSendTextMsgRespDTO;
 import com.openwjk.central.remote.dto.response.ComWechatAccessTokenRespDTO;
 import com.openwjk.central.remote.enums.RemoteTypeEnum;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.IDataService;
-import com.openwjk.commons.utils.Constant;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +28,10 @@ import java.util.Map;
  * @date 2023/7/30 11:00
  */
 @Service
-public class AccessTokenDataHandler implements IDataService {
+@Log4j2
+public class AppSendTextMsgDataHandler implements IDataService {
 
-    @Value("${comwechat.accessToken.url}")
+    @Value("${comwechat.sendAppMsg.url}")
     private String url;
 
     @Autowired
@@ -36,35 +39,28 @@ public class AccessTokenDataHandler implements IDataService {
 
     @Override
     public RemoteTypeEnum getCode() {
-        return RemoteTypeEnum.COM_WECHAT_ACCESS_TOKEN;
+        return RemoteTypeEnum.COM_WECHAT_APP_NOTICE_TEXT_MSG;
     }
 
     @Override
     public void buildRequest(Context context) {
-        ComWechatAppEnum appEnum = (ComWechatAppEnum) context.getQueryDTO();
+        ComWcAppSendTextMsgReqDTO textMsgReqDTO = (ComWcAppSendTextMsgReqDTO) context.getQueryDTO();
         RequestDTO requestDTO = new RequestDTO();
-        CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.COM_WE_CHAT_APP.name(), appEnum.getCode());
-        Map<String, String> urlMap = JSONObject.parseObject(config.getValue(), Map.class);
-        requestDTO.setUrlParam(urlMap);
-        requestDTO.setUrl(url);
+        requestDTO.setBodyParam(JSON.toJSONString(textMsgReqDTO));
+        requestDTO.setUrl(url + textMsgReqDTO.getToken());
         context.setRequestDTO(requestDTO);
     }
 
     @Override
     public void enterCache(CacheableResultDTO resultDTO) {
-        if (resultDTO.getEntity() != null) {
-            ComWechatAccessTokenRespDTO respDTO = (ComWechatAccessTokenRespDTO) resultDTO.getEntity();
-            if (StringUtils.equals(Constant.STRING_ZERO,respDTO.getErrCode())) {
-                resultDTO.setEnterCache(Boolean.TRUE);
-                resultDTO.setExpire(7200L);
-            }
-        }
+
     }
 
     @Override
-    public ComWechatAccessTokenRespDTO buildResponse(String resp) {
+    public ComWcAppSendTextMsgRespDTO buildResponse(String resp) {
+        log.info("[{} response >>>>> {}]", RemoteTypeEnum.COM_WECHAT_APP_NOTICE_TEXT_MSG.name(), resp);
         if (StringUtils.isNotBlank(resp)) {
-            ComWechatAccessTokenRespDTO respDTO = JSON.parseObject(resp, ComWechatAccessTokenRespDTO.class);
+            ComWcAppSendTextMsgRespDTO respDTO = JSON.parseObject(resp, ComWcAppSendTextMsgRespDTO.class);
             return respDTO;
         }
         return null;

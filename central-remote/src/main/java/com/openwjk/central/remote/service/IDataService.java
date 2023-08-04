@@ -16,7 +16,7 @@ public interface IDataService {
 
     void buildRequest(Context context);
 
-    void setExpire(CacheableResultDTO resultDTO);
+    void enterCache(CacheableResultDTO resultDTO);
 
     <RESP extends Serializable> RESP buildResponse(String resp);
 }
