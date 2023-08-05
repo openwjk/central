@@ -45,4 +45,8 @@ public class RedisTest {
         systemService.redisTest(reqDTO);
     }
 
+    public static void main(String[] args) {
+        System.out.println(RandomCodeUtil.getUuId());
+    }
+
 }

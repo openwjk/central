@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.openwjk.central.commons.domain.BaseDomain;
 import com.openwjk.central.commons.enums.QwAppEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class QwAppSendTextMsgReqDTO extends BaseQwAppSendMsgReqDTO {
     @JSONField(name = "text")
     private Content text;
