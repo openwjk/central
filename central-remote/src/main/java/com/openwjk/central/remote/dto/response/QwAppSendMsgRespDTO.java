@@ -2,7 +2,6 @@ package com.openwjk.central.remote.dto.response;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.openwjk.central.commons.domain.BaseDomain;
-import com.openwjk.central.commons.enums.ComWechatAppEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComWcAppSendTextMsgRespDTO extends BaseDomain {
+public class QwAppSendMsgRespDTO extends BaseDomain {
     @JSONField(name = "errcode")
     private String errCode;
     @JSONField(name = "errmsg")

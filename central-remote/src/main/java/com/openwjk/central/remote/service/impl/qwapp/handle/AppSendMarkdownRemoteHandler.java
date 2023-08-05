@@ -1,4 +1,4 @@
-package com.openwjk.central.remote.service.impl.comwcapp.handle;
+package com.openwjk.central.remote.service.impl.qwapp.handle;
 
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.dto.request.RequestDTO;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
  * @date 2023/7/30 15:14
  */
 @Service
-public class AppSendTextMsgRemoteHandler implements IRemoteService {
+public class AppSendMarkdownRemoteHandler implements IRemoteService {
     @Override
     public RemoteTypeEnum getCode() {
-        return RemoteTypeEnum.COM_WECHAT_APP_NOTICE_TEXT_MSG;
+        return RemoteTypeEnum.QW_APP_NOTICE_MARKDOWN_MSG;
     }
 
     @Override

@@ -2,14 +2,13 @@ package com.openwjk.central.commons.enums;
 
 /**
  * @author wangjunkai
- * @description 微信机器人
+ * @description 企业微信应用
  * @date 2023/7/27 21:35
  */
-public enum ComWechatRobotEnum {
-    WLCJDIYS("WLCJDIYS", "群:万里长江第一帅>机器人"),
-    GNLQ("GNLQ", "群:给你两拳>机器人");
+public enum QwAppEnum {
+    NOTIFICATION("NOTIFICATION", "通知");
 
-    ComWechatRobotEnum(String code, String desc) {
+    QwAppEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }

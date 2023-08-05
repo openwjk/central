@@ -5,10 +5,11 @@ package com.openwjk.central.commons.enums;
  * @description 微信机器人
  * @date 2023/7/27 21:35
  */
-public enum ComWechatAppEnum {
-    NOTIFICATION("NOTIFICATION", "通知");
+public enum QwRobotEnum {
+    WLCJDIYS("WLCJDIYS", "群:万里长江第一帅>机器人"),
+    GNLQ("GNLQ", "群:给你两拳>机器人");
 
-    ComWechatAppEnum(String code, String desc) {
+    QwRobotEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }

@@ -46,7 +46,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
+        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
 
         template.setValueSerializer(serializer);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
@@ -60,11 +60,12 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
+        configuration.disableKeyPrefix();
+        configuration.disableCachingNullValues();
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-
-        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
+        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
         RedisSerializationContext.SerializationPair<Object> objectSerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
         configuration.serializeValuesWith(objectSerializationPair);
         RedisCacheManagerEnhance managerEnhance = new RedisCacheManagerEnhance(RedisCacheWriter.nonLockingRedisCacheWriter(lettuceConnectionFactory),

@@ -32,9 +32,7 @@ public class CommonQueryService {
             dataService.buildRequest(context);
             String response = remoteService.callRemote(context);
             respDTO.setEntity(dataService.buildResponse(response));
-            if (queryReqDTO.getEnterCache()) {
-                dataService.enterCache(respDTO);
-            }
+            dataService.enterCache(respDTO);
         } catch (Exception e) {
             log.error(StackTraceUtil.getStackTrace(e));
         }

@@ -1,4 +1,4 @@
-package com.openwjk.central.remote.service.impl.comwcrobot.handle;
+package com.openwjk.central.remote.service.impl.qwrobot.handle;
 
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.service.IRemoteService;
@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
  * @description
  * @date 2023/7/30 15:38
  */
-public abstract class AbstractComWechatRemoteHandler implements IRemoteService {
+public abstract class AbstractQwRemoteHandler implements IRemoteService {
     @Override
     public String callRemote(Context context) {
         String response = HttpClientUtil.httpPost(context.getRequestDTO().getUrl(), context.getRequestDTO().getBodyParam(), StandardCharsets.UTF_8.name());

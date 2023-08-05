@@ -1,12 +1,12 @@
 package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.openwjk.central.commons.enums.ComWechatRobotEnum;
+import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.CtConfigDO;
-import com.openwjk.central.remote.dto.request.ComWechatRobotReqDTO;
+import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
-import com.openwjk.central.remote.service.impl.comwcrobot.ComWcRobotServiceImpl;
+import com.openwjk.central.remote.service.impl.qwrobot.QwRobotServiceImpl;
 import com.openwjk.central.service.domain.BirthDayDomain;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
@@ -33,7 +33,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     @Autowired
     ConfigHelper configHelper;
     @Autowired
-    ComWcRobotServiceImpl comWechatService;
+    QwRobotServiceImpl qwRobotService;
 
     @Override
     public ScheduledTaskEnum getCode() {
@@ -73,7 +73,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
                 verbalTrick = verbalTrick.replace("%s", arg);
             }
         }
-        comWechatService.sendTextRobot(new ComWechatRobotReqDTO(verbalTrick, ComWechatRobotEnum.WLCJDIYS));
+        qwRobotService.sendTextRobot(new QwRobotReqDTO(verbalTrick, QwRobotEnum.WLCJDIYS));
     }
 
 }

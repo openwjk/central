@@ -42,7 +42,17 @@ mybatis:
   mapper-locations: classpath:com/openwjk/central/dao/mapper/*xml
   #指定Mybatis的实体目录
   type-aliases-package: com/openwjk/central/dao/model
-comwechat:
+
+qw:
+  #获取accessToken
   accessToken:
     url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  #发送应用消息
+  sendAppMsg:
+    url: https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=
+    #《通知》应用
+    notice:
+     agentId: 1000002
+     textToUser: WangJunKai
+     markdownToUser: WangJunKai
 

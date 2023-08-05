@@ -1,4 +1,4 @@
-package com.openwjk.central.remote.service.impl.comwcapp.handle;
+package com.openwjk.central.remote.service.impl.qwapp.handle;
 
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.enums.RemoteTypeEnum;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AccessTokenRemoteHandler implements IRemoteService {
     @Override
     public RemoteTypeEnum getCode() {
-        return RemoteTypeEnum.COM_WECHAT_ACCESS_TOKEN;
+        return RemoteTypeEnum.QW_ACCESS_TOKEN;
     }
 
     @Override

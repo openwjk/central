@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2023/8/3 21:25
  */
 @Data
-public class ComWechatAccessTokenRespDTO extends BaseDomain {
+public class QwAccessTokenRespDTO extends BaseDomain {
     @JSONField(name = "errcode")
     private String errCode;
     @JSONField(name = "errmsg")

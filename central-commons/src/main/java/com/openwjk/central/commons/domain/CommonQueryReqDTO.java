@@ -12,11 +12,10 @@ import java.io.Serializable;
 @Data
 public class CommonQueryReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String remoteType;
     private Object queryDTO;
     private String cacheService;
     private String cacheKey;
-    private Boolean enterCache;
+    private String remoteType;
 
 
     public CommonQueryReqDTO(Object queryDTO, String cacheService, String cacheKey, String remoteType) {
@@ -24,13 +23,10 @@ public class CommonQueryReqDTO implements Serializable {
         this.cacheService = cacheService;
         this.cacheKey = cacheKey;
         this.remoteType = remoteType;
-        this.enterCache = true;
     }
-    public CommonQueryReqDTO(Object queryDTO, String cacheService, String remoteType,Boolean enterCache) {
+    public CommonQueryReqDTO(Object queryDTO, String cacheService, String remoteType) {
         this.queryDTO = queryDTO;
         this.cacheService = cacheService;
         this.remoteType = remoteType;
-        this.enterCache = enterCache;
     }
-
 }

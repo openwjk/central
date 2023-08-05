@@ -32,7 +32,7 @@ public class SimpleCacheServiceImpl implements ICacheService {
     }
 
     @Override
-    @Cacheable(cacheNames = "default",key = "#queryDTO.cacheKey")
+    @Cacheable(cacheNames = "default", key = "#queryDTO.cacheKey",condition = "#queryDTO.cacheKey != null")
     public <RESP extends Serializable> CacheableResultDTO<RESP> process(CommonQueryReqDTO queryDTO) {
         CacheableResultDTO<RESP> resultDTO = before(queryDTO);
         if (resultDTO == null) {
@@ -43,10 +43,7 @@ public class SimpleCacheServiceImpl implements ICacheService {
     }
 
     protected <RESP extends Serializable> CacheableResultDTO<RESP> after(CommonQueryReqDTO queryDTO, CacheableResultDTO<RESP> resultDTO) {
-        if (!queryDTO.getEnterCache()) {
-            resultDTO.setEnterCache(Boolean.FALSE);
-        }
-        if (resultDTO != null && resultDTO.getExpire() == null) {
+        if (resultDTO != null && resultDTO.getEnterCache() && resultDTO.getExpire() == null) {
             resultDTO.setExpire(DEFAULT_CACHE_EXPIRE);
         }
         return resultDTO;

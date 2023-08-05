@@ -2,6 +2,7 @@ package com.openwjk.central.commons.enhance;
 
 import com.openwjk.central.commons.domain.CacheableResultDTO;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -9,6 +10,7 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.lang.Nullable;
 
 import java.time.Duration;
+import java.util.Objects;
 
 
 /**

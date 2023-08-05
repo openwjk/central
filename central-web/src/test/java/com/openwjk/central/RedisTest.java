@@ -2,11 +2,10 @@ package com.openwjk.central;
 
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.domain.CommonQueryReqDTO;
-import com.openwjk.central.commons.enums.ComWechatAppEnum;
+import com.openwjk.central.commons.enums.QwAppEnum;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.remote.dto.response.CommonQueryRespDTO;
-import com.openwjk.central.remote.service.impl.comwcapp.ComWcAppServiceImpl;
-import com.openwjk.central.remote.service.impl.comwcrobot.ComWcRobotServiceImpl;
+import com.openwjk.central.remote.service.impl.qwapp.QwAppServiceImpl;
 import com.openwjk.central.service.service.SystemService;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import org.junit.Test;
@@ -29,12 +28,12 @@ public class RedisTest {
     @Autowired
     SystemService systemService;
     @Autowired
-    @Qualifier("comWcAppService")
-    ComWcAppServiceImpl comWechatService;
+    @Qualifier("qwAppService")
+    QwAppServiceImpl qwAppService;
 
     @Test
     public void getAccessToke() {
-        CommonQueryRespDTO respDTO = comWechatService.getAppAccessToken(ComWechatAppEnum.NOTIFICATION);
+        CommonQueryRespDTO respDTO = qwAppService.getAppAccessToken(QwAppEnum.NOTIFICATION);
         System.out.println(JSON.toJSONString(respDTO));
     }
 

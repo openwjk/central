@@ -1,6 +1,6 @@
 package com.openwjk.central.remote.dto.request;
 
-import com.openwjk.central.commons.enums.ComWechatRobotEnum;
+import com.openwjk.central.commons.enums.QwRobotEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,14 +16,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComWechatRobotReqDTO implements Serializable {
+public class QwRobotReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String verbalTrick;
     private List<String> mentionedList;
     private List<String> mentionedMobileList;
-    private ComWechatRobotEnum robotEnum;
+    private QwRobotEnum robotEnum;
 
-    public ComWechatRobotReqDTO(String verbalTrick, ComWechatRobotEnum robotEnum) {
+    public QwRobotReqDTO(String verbalTrick, QwRobotEnum robotEnum) {
         this.verbalTrick = verbalTrick;
         this.robotEnum = robotEnum;
     }
