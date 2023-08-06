@@ -6,7 +6,7 @@ spring:
     name: central
   datasource:
     name: central
-    url: jdbc:mysql://172.17.0.8:3306/central
+    url: jdbc:mysql://mysql.openwjk.com:3306/central
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -26,7 +26,7 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
     cluster:
-      nodes: 172.17.0.9:7001,172.17.0.9:7002,172.17.0.9:7003,172.17.0.9:7004,172.17.0.9:7005,172.17.0.9:7000
+      nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
     lettuce:
       pool:
         max-active: 300
