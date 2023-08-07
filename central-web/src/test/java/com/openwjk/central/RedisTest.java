@@ -27,15 +27,6 @@ public class RedisTest {
     RedisUtil redisUtil;
     @Autowired
     SystemService systemService;
-    @Autowired
-    @Qualifier("qwAppService")
-    QwAppServiceImpl qwAppService;
-
-    @Test
-    public void getAccessToke() {
-        CommonQueryRespDTO respDTO = qwAppService.getAppAccessToken(QwAppEnum.NOTIFICATION);
-        System.out.println(JSON.toJSONString(respDTO));
-    }
 
     @Test
     public void test() {

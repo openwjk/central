@@ -32,6 +32,13 @@ public class QwAppTest {
     @Qualifier("qwAppService")
     QwAppServiceImpl qwAppService;
 
+
+    @Test
+    public void getAccessToken() {
+        CommonQueryRespDTO respDTO = qwAppService.getAppAccessToken(QwAppEnum.NOTIFICATION);
+        System.out.println(JSON.toJSONString(respDTO));
+    }
+
     @Test
     public void appSendTextMsg() {
         QwAppSendTextMsgReqDTO reqDTO = new QwAppSendTextMsgReqDTO();

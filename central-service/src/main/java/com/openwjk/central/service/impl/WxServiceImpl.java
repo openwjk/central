@@ -3,6 +3,7 @@ package com.openwjk.central.service.impl;
 import com.google.common.collect.Lists;
 import com.openwjk.central.commons.utils.wx.Sha;
 import com.openwjk.central.service.service.WxService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
  * @description
  * @date 2023/8/7 10:50
  */
+@Service
 public class WxServiceImpl implements WxService {
 
     @Override
