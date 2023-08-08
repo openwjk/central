@@ -1,6 +1,6 @@
 package com.openwjk.central.service.service;
 
-import com.openwjk.central.service.domain.req.WebhookReqVO;
+import com.openwjk.central.service.domain.req.DdnsWebhookReqVO;
 
 /**
  * @author wangjunkai
@@ -8,5 +8,5 @@ import com.openwjk.central.service.domain.req.WebhookReqVO;
  * @date 2023/8/5 10:45
  */
 public interface QwMsgService {
-    void sendDdnsMsg(WebhookReqVO reqVO);
+    void sendDdnsMsg(DdnsWebhookReqVO reqVO);
 }

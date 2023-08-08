@@ -7,6 +7,7 @@ package com.openwjk.central.commons.enums;
  */
 public enum ScheduledTaskEnum {
     BIRTHDAY_REMINDER("BIRTHDAY_REMINDER",  "生日提醒定时任务"),
+    BONUS("BONUS",  "福利"),
     ;
 
     ScheduledTaskEnum(String code, String desc) {

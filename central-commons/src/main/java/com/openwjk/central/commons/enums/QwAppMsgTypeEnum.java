@@ -6,7 +6,8 @@ package com.openwjk.central.commons.enums;
  * @date 2023/7/27 21:35
  */
 public enum QwAppMsgTypeEnum {
-    TEXT("TEXT", "text","通知");
+    TEXT("TEXT", "text","通知"),
+    MARKDOWN("MARKDOWN", "markdown","通知");
 
     QwAppMsgTypeEnum(String code, String value, String desc) {
         this.code = code;

@@ -2,7 +2,7 @@ package com.openwjk.central.web.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.service.enums.WebhookEnum;
-import com.openwjk.central.service.domain.req.WebhookReqVO;
+import com.openwjk.central.service.domain.req.DdnsWebhookReqVO;
 import com.openwjk.central.service.service.QwMsgService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +29,7 @@ public class MsgTranspondController {
 
     @PostMapping("/ddns/transpond")
     @ApiOperation("ddns预警消息转发")
-    public void transpond(@RequestBody WebhookReqVO reqVO, HttpServletResponse response) {
+    public void transpond(@RequestBody DdnsWebhookReqVO reqVO, HttpServletResponse response) {
 
         if (!WebhookEnum.contains(reqVO.getKey()) || reqVO == null || reqVO.getText() == null
                 || StringUtils.isBlank(reqVO.getText().getContent())) {

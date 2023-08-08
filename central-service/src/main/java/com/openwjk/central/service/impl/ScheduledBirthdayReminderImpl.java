@@ -7,7 +7,7 @@ import com.openwjk.central.dao.model.CtConfigDO;
 import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.impl.qwrobot.QwRobotServiceImpl;
-import com.openwjk.central.service.domain.BirthDayDomain;
+import com.openwjk.central.service.domain.ScheduleNoticeDomain;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
 import com.openwjk.commons.utils.DateUtil;
@@ -63,7 +63,7 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     }
 
     private void sendMsg(String birthDay, CtConfigDO configDO) {
-        BirthDayDomain birthDayDomain = JSON.parseObject(configDO.getValue(), BirthDayDomain.class);
+        ScheduleNoticeDomain birthDayDomain = JSON.parseObject(configDO.getValue(), ScheduleNoticeDomain.class);
         if (birthDayDomain == null || CollectionUtils.isEmpty(birthDayDomain.getArgs())) return;
         String names = birthDayDomain.getArgs().stream().collect(Collectors.joining(","));
         String verbalTrick = String.format(DEFAULT_VERBAL_TRICK, birthDay, names);

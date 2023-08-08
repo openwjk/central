@@ -16,13 +16,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WebhookReqVO extends BaseDomain {
+public class DdnsWebhookReqVO extends BaseDomain {
     @ApiModelProperty(value = "key",required = true)
     private String key;
     @ApiModelProperty(value = "消息类型",required = true)
     private String msgType;
     @ApiModelProperty(value = "内容",required = true)
     private Content text;
+    @ApiModelProperty(value = "需要通知的人的企业微信id",allowableValues="@all 或者 @id1|@id2|@id3",required = true)
+    private String toUser;
 
     @Data
     @NoArgsConstructor

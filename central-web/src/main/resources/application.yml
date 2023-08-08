@@ -53,6 +53,4 @@ qw:
     #《通知》应用
     notice:
      agentId: 1000002
-     textToUser: WangJunKai
-     markdownToUser: WangJunKai
 

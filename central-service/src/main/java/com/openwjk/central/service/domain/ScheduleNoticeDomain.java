@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2023/7/28 14:03
  */
 @Data
-public class BirthDayDomain extends BaseDomain {
+public class ScheduleNoticeDomain extends BaseDomain {
     private List<String> args;
     private String verbalTrick;
 }
