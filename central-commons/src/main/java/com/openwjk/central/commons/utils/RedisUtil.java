@@ -2,7 +2,6 @@ package com.openwjk.central.commons.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -109,8 +108,8 @@ public class RedisUtil {
      * @param key 键
      * @return 值
      */
-    public Object get(String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
+    public <V> V get(String key) {
+        return key == null ? null : (V) redisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -143,6 +142,29 @@ public class RedisUtil {
         try {
             if (time > 0) {
                 redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+            } else {
+                set(key, value);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 普通缓存放入并设置时间
+     *
+     * @param key 键
+     * @param value 值
+     * @param time 时间time要大于0 如果time小于等于0 将设置无限期
+     * @param timeUnit 时间单位
+     * @return true成功 false 失败
+     */
+    public boolean set(String key, Object value, long time, TimeUnit timeUnit) {
+        try {
+            if (time > 0) {
+                redisTemplate.opsForValue().set(key, value, time, timeUnit);
             } else {
                 set(key, value);
             }
