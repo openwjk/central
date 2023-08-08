@@ -34,7 +34,7 @@ public class CentralTask {
     public void runTask() {
         Date date = DateUtil.getNow();
         String key = CtConfigGroupEnum.SCHEDULED_TASK.getCode() + DateUtil.formatDate(date, DateUtil.FORMAT_DATE_NORMAL);
-        String value = RandomCodeUtil.generateCode(16);
+        String value = RandomCodeUtil.generateCode(Constant.INT_TEN);
         try {
             if (redisLockUtil.tryLock(key, value, Constant.INT_TEN)) {
                 List<CtConfigDO> configDOS = configHelper.getConfigByGroup(CtConfigGroupEnum.SCHEDULED_TASK.getCode());
