@@ -7,6 +7,6 @@ import com.openwjk.central.service.domain.req.WebhookReqVO;
  * @description
  * @date 2023/8/5 10:45
  */
-public interface WebhookService {
+public interface QwMsgService {
     void sendDdnsMsg(WebhookReqVO reqVO);
 }

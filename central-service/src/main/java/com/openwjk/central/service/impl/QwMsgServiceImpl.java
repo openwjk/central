@@ -5,7 +5,7 @@ import com.openwjk.central.commons.enums.QwAppMsgTypeEnum;
 import com.openwjk.central.remote.dto.request.QwAppSendTextMsgReqDTO;
 import com.openwjk.central.remote.service.QwAppService;
 import com.openwjk.central.service.domain.req.WebhookReqVO;
-import com.openwjk.central.service.service.WebhookService;
+import com.openwjk.central.service.service.QwMsgService;
 import com.openwjk.commons.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2023/8/5 10:46
  */
 @Service
-public class WebhookServiceImpl implements WebhookService {
+public class QwMsgServiceImpl implements QwMsgService {
     @Autowired
     QwAppService qwAppService;
     @Value("${qw.sendAppMsg.notice.textToUser}")
