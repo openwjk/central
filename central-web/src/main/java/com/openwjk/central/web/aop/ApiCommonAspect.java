@@ -133,11 +133,6 @@ public class ApiCommonAspect {
         }
     }
 
-    private boolean hasAnnotation(Method method, Class<? extends Annotation> annoClazz) {
-        Object anno = method.getAnnotation(annoClazz);
-        return (anno != null);
-    }
-
     private Method getTargetMethod(ProceedingJoinPoint pjp) throws NoSuchMethodException {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         return pjp.getTarget().getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
