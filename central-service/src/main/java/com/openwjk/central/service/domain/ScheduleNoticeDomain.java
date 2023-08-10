@@ -14,4 +14,5 @@ import java.util.List;
 public class ScheduleNoticeDomain extends BaseDomain {
     private List<String> args;
     private String verbalTrick;
+    private String name;
 }

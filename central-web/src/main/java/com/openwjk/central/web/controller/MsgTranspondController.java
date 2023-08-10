@@ -34,6 +34,7 @@ public class MsgTranspondController {
         if (!WebhookEnum.contains(reqVO.getKey()) || reqVO == null || reqVO.getText() == null
                 || StringUtils.isBlank(reqVO.getText().getContent())) {
             response.setStatus(403);
+            return;
         }
         log.info(JSON.toJSONString(reqVO));
         qwAppMsgService.sendDdnsMsg(reqVO);

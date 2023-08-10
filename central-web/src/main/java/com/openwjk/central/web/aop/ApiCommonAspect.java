@@ -70,11 +70,7 @@ public class ApiCommonAspect {
     }
 
     private void doApiLogBegin(String uri, Object[] args) {
-        StringBuilder params = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            params.append(String.format("args[%s]", i)).append(args[i].toString());
-        }
-        log.info("call uri: {} begin, params: {}", uri, params.toString());
+        log.info("call uri: {} begin, params: {}", uri, JSON.toJSONString(args));
     }
 
     private void doApiLogEnd(String uri, long beginTs) {
