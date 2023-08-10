@@ -2,11 +2,13 @@ package com.openwjk.central.web.aop;
 
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.annotation.RepeatReq;
+import com.openwjk.central.commons.utils.RedisLockUtil;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.service.helper.SpelHelper;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.enums.ResponseEnum;
 import com.openwjk.commons.exception.RepeatCommitException;
+import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.EncryptUtil;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +45,7 @@ public class RepeatReqAspect {
     @Autowired
     SpelHelper spelHelper;
     @Autowired
-    RedisUtil redisUtil;
+    RedisLockUtil redisLockUtil;
 
     @Around("@annotation(anni)")
     public Object aroundApi(ProceedingJoinPoint pjp, RepeatReq anni) throws Throwable {
@@ -51,13 +53,13 @@ public class RepeatReqAspect {
         String value = RandomCodeUtil.generateCode(16);
         Object result;
         try {
-            if (redisUtil.setIfAbsentAndExpire(key, value, anni.expire())) {
+            if (redisLockUtil.tryLock(key, value, anni.expire())) {
                 result = pjp.proceed();
             } else {
                 throw new RepeatCommitException(ResponseEnum.REPEAT_COMMIT.getMsg());
             }
         } finally {
-            redisUtil.del(key);
+            redisLockUtil.releaseLock(key, value);
         }
         return result;
     }
@@ -80,13 +82,13 @@ public class RepeatReqAspect {
         String ip = IpUtil.getIp(request);
         if (StringUtils.isBlank(key)) {
             if (args.length > 0) {
-                key = REPEAT_REQ + EncryptUtil.md5(ip + clazzName + methodName + JSON.toJSONString(args));
+                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName + JSON.toJSONString(args));
 
             } else {
-                key = REPEAT_REQ + EncryptUtil.md5(ip + clazzName + methodName);
+                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName);
             }
         } else {
-            key = REPEAT_REQ + EncryptUtil.md5(ip + clazzName + methodName + key);
+            key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName + key);
         }
         return key;
     }
@@ -99,7 +101,7 @@ public class RepeatReqAspect {
         try {
             return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         } catch (Exception e) {
-            log.warn("call RepeatReqAspect.getRequestObj, occur exception, maybe the request from dubbo.");
+            log.warn("call RepeatReqAspect.getRequestObj, occur exception");
             return null;
         }
     }
