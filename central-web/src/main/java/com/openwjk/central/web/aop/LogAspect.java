@@ -5,6 +5,7 @@ import com.openwjk.central.commons.utils.ThreadLocalUtil;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
+import com.openwjk.commons.exception.RepeatCommitException;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
 import com.openwjk.commons.utils.RandomCodeUtil;
@@ -31,7 +32,7 @@ import java.lang.reflect.Method;
 @Component
 @Order(0)
 @Log4j2
-public class ApiCommonAspect {
+public class LogAspect {
     @Around("(execution(* com.openwjk.central.web.controller.*.*(..)))")
     public Object aroundApi(ProceedingJoinPoint pjp) throws Throwable {
         long beginTs = DateUtil.getCurrentTimeMillis();
@@ -51,7 +52,10 @@ public class ApiCommonAspect {
 
         Object retObj;
         try {
-            retObj = pjp.proceed(args);
+            retObj = pjp.proceed();
+        } catch (RepeatCommitException e) {
+            retObj = JSON.toJSONString(
+                    new ResponseVO(ResponseEnum.REPEAT_COMMIT.getCode(), ResponseEnum.REPEAT_COMMIT.getMsg()));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             retObj = JSON.toJSONString(

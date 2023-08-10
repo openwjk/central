@@ -35,7 +35,7 @@ public class SpringBootMvcTest {
     public void aopTest() {
         DdnsWebhookReqVO reqVO = new DdnsWebhookReqVO();
         DdnsWebhookReqVO.Content content = new DdnsWebhookReqVO.Content();
-        content.setContent("xxx");
+        content.setContent("ASDFASDFD");
         reqVO.setText(content);
         reqVO.setKey("123");
         reqVO.setMsgType("text");
