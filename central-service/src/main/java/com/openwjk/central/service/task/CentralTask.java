@@ -33,7 +33,7 @@ public class CentralTask {
     @Scheduled(cron = "0/10 * * * * ?")
     public void runTask() {
         Date date = DateUtil.getNow();
-        String key = CtConfigGroupEnum.SCHEDULED_TASK.getCode() + DateUtil.formatDate(date, DateUtil.FORMAT_DATE_NORMAL);
+        String key = CtConfigGroupEnum.SCHEDULED_TASK.getCode() + DateUtil.formatDate(date, DateUtil.FORMAT_DATETIME_COMPACT_MINUTE);
         String value = RandomCodeUtil.generateCode(Constant.INT_TEN);
         try {
             if (redisLockUtil.tryLock(key, value, Constant.INT_TEN)) {
