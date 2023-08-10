@@ -1,7 +1,6 @@
 package com.openwjk.central.web.aop;
 
 import com.alibaba.fastjson2.JSON;
-import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.commons.utils.ThreadLocalUtil;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.domain.ResponseVO;
@@ -10,7 +9,6 @@ import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tomcat.util.net.IPv6Utils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,12 +18,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import sun.net.util.IPAddressUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * @author wangjunkai
