@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author wangjunkai
  * @description
@@ -30,7 +32,7 @@ public class RedisLockUtil {
                 return Boolean.FALSE;
             }
             lockKey = CacheableUtil.buildCacheKey(UNIQUE_LOCK, lockKey);
-            Boolean status = redisUtil.setIfAbsentAndExpire(lockKey, uniqueKey, expireSeconds);
+            Boolean status = redisUtil.setIfAbsentAndExpire(lockKey, uniqueKey, expireSeconds, TimeUnit.SECONDS);
             desLogger.info("tryLock:[{}] value:[{}] status:[{}]", lockKey, uniqueKey, status);
             return status != null ? status : Boolean.FALSE;
         } catch (Exception e) {

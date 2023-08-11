@@ -6,7 +6,6 @@ import com.openwjk.central.service.domain.req.DdnsWebhookReqVO;
 import com.openwjk.central.service.service.QwMsgService;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
-import com.openwjk.commons.utils.Constant;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +39,6 @@ public class MsgTranspondController {
         }
         log.info(JSON.toJSONString(reqVO));
         qwAppMsgService.sendDdnsMsg(reqVO);
-        log.info("success.");
         return new ResponseVO();
     }
 }

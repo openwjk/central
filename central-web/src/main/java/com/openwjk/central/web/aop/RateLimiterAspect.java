@@ -3,16 +3,13 @@ package com.openwjk.central.web.aop;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.RateLimiter;
 import com.openwjk.central.commons.annotation.RateLimit;
-import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.commons.utils.RedisLockUtil;
 import com.openwjk.central.service.helper.SpelHelper;
-import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.enums.ResponseEnum;
 import com.openwjk.commons.exception.RateLimitException;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.ParamCheckUtil;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,12 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 /**
@@ -38,17 +31,12 @@ import java.util.Objects;
 @Order(10)
 @Log4j2
 public class RateLimiterAspect extends AbstractAop {
-    private static final Map<String, RateLimiter> rateMap = Maps.newHashMapWithExpectedSize(1);
-    static {
-        RateLimiter rateLimiter = RateLimiter.create(Double.valueOf(Constant.STRING_THIRTY));
-        rateMap.put(Constant.DEFAULT, rateLimiter);
-    }
+    private static final Map<String, RateLimiter> rateMap = Maps.newConcurrentMap();
 
     @Autowired
     SpelHelper spelHelper;
     @Autowired
     RedisLockUtil redisLockUtil;
-
 
     @Around("execution(* com.openwjk.central.web.controller.*.*(..))")
     public Object aroundApi(ProceedingJoinPoint pjp) throws Throwable {
@@ -56,22 +44,30 @@ public class RateLimiterAspect extends AbstractAop {
         Method method = getTargetMethod(pjp);
         RateLimit anni = method.getAnnotation(RateLimit.class);
         if (anni != null && ParamCheckUtil.checkIsNumber(anni.value())) {
-            if (rateMap.containsKey(key)) {
-                rateLimit(rateMap, key);
-                pjp.proceed();
-            } else {
-                RateLimiter rateLimiter = RateLimiter.create(Double.valueOf(anni.value()));
-                rateMap.put(key, rateLimiter);
-                rateLimit(rateMap, key);
-                pjp.proceed();
-            }
+            rateLimit(rateMap, key, anni);
         } else {
-            rateLimit(rateMap, Constant.DEFAULT);
+            rateLimit(rateMap, Constant.DEFAULT, anni);
         }
         return pjp.proceed();
     }
 
-    private void rateLimit(Map<String, RateLimiter> rateMap, String key) {
+    private synchronized void putRateLimiter(String key, RateLimit anni) {
+        if (!rateMap.containsKey(key)) {
+            RateLimiter rateLimiter = RateLimiter.create(Double.parseDouble(anni == null ? Constant.STRING_THIRTY : anni.value()));
+            rateMap.put(key, rateLimiter);
+        }
+    }
+
+    private void rateLimit(Map<String, RateLimiter> rateMap, String key, RateLimit anni) {
+        if (rateMap.containsKey(key)) {
+            checkRateLimit(rateMap, key);
+        } else {
+            putRateLimiter(key, anni);
+            checkRateLimit(rateMap, key);
+        }
+    }
+
+    private void checkRateLimit(Map<String, RateLimiter> rateMap, String key) {
         if (!rateMap.get(key).tryAcquire()) {
             throw new RateLimitException(ResponseEnum.NETWORK_BUSY.getMsg());
         }

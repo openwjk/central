@@ -1,5 +1,6 @@
 package com.openwjk.central.commons.utils;
 
+import com.openwjk.commons.utils.Constant;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -15,7 +16,7 @@ public class CacheableUtil {
         StringBuilder key = new StringBuilder();
         for (String arg : args) {
             key.append(arg);
-            key.append("_");
+            key.append(Constant.BOTTOM_LINE);
         }
         if (key.length() >= 1) {
             key.deleteCharAt(key.length() - 1);
@@ -31,7 +32,7 @@ public class CacheableUtil {
         for (String arg : args) {
             if (StringUtils.isNotBlank(arg)) {
                 key.append(arg);
-                key.append("_");
+                key.append(Constant.BOTTOM_LINE);
             }
         }
         if (key.length() >= 1) {

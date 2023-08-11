@@ -28,10 +28,10 @@ public class RedisUtil {
      * @param time 时间(秒)
      * @return
      */
-    public boolean setIfAbsentAndExpire(String key,Object value, long time) {
+    public boolean setIfAbsentAndExpire(String key,Object value, long time,TimeUnit timeUnit) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().setIfAbsent(key, value, time, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
             }
             return true;
         } catch (Exception e) {
