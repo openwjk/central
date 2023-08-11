@@ -30,7 +30,7 @@ public class CentralTask {
     @Autowired
     RedisLockUtil redisLockUtil;
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void runTask() {
         Date date = DateUtil.getNow();
         String key = CtConfigGroupEnum.SCHEDULED_TASK.getCode() + DateUtil.formatDate(date, DateUtil.FORMAT_DATETIME_COMPACT_MINUTE);

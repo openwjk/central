@@ -5,6 +5,7 @@ import com.openwjk.central.commons.utils.ThreadLocalUtil;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
+import com.openwjk.commons.exception.RateLimitException;
 import com.openwjk.commons.exception.RepeatCommitException;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
@@ -32,7 +33,7 @@ import java.lang.reflect.Method;
 @Component
 @Order(0)
 @Log4j2
-public class LogAspect {
+public class LogAspect extends AbstractAop {
     @Around("(execution(* com.openwjk.central.web.controller.*.*(..)))")
     public Object aroundApi(ProceedingJoinPoint pjp) throws Throwable {
         long beginTs = DateUtil.getCurrentTimeMillis();
@@ -54,12 +55,12 @@ public class LogAspect {
         try {
             retObj = pjp.proceed();
         } catch (RepeatCommitException e) {
-            retObj = JSON.toJSONString(
-                    new ResponseVO(ResponseEnum.REPEAT_COMMIT.getCode(), ResponseEnum.REPEAT_COMMIT.getMsg()));
+            retObj = new ResponseVO(ResponseEnum.REPEAT_COMMIT.getCode(), ResponseEnum.REPEAT_COMMIT.getMsg());
+        } catch (RateLimitException e) {
+            retObj = new ResponseVO(ResponseEnum.NETWORK_BUSY.getCode(), ResponseEnum.NETWORK_BUSY.getMsg());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            retObj = JSON.toJSONString(
-                    new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg()));
+            retObj = new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg());
         }
 
         doApiLogEnd(uri, beginTs);
@@ -115,9 +116,6 @@ public class LogAspect {
         }
     }
 
-    private Class<?> getTargetClazz(ProceedingJoinPoint pjp) {
-        return pjp.getTarget().getClass();
-    }
 
     private HttpServletRequest getRequestObj() {
         try {
@@ -128,10 +126,6 @@ public class LogAspect {
         }
     }
 
-    private Method getTargetMethod(ProceedingJoinPoint pjp) throws NoSuchMethodException {
-        MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
-        return pjp.getTarget().getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
-    }
 
     private void setThreadLocal(String logId) {
         ThreadLocalUtil.setLogId(logId);

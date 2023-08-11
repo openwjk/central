@@ -37,9 +37,9 @@ import java.util.Map;
  */
 @Aspect
 @Component
-@Order(10)
+@Order(20)
 @Log4j2
-public class RepeatReqAspect {
+public class RepeatReqAspect extends AbstractAop {
     private static final ParameterNameDiscoverer DISCOVERER = new LocalVariableTableParameterNameDiscoverer();
     private static final String REPEAT_REQ = "REPEAT_REQ";
     @Autowired
@@ -67,12 +67,9 @@ public class RepeatReqAspect {
     private String getKey(ProceedingJoinPoint pjp, RepeatReq anno) throws NoSuchMethodException {
         String key;
         Method method = getTargetMethod(pjp);
-        String methodName = method.getName();
-        Class<?> clazz = getTargetClazz(pjp);
-        String clazzName = clazz.getName();
-        Object[] args = pjp.getArgs();
-        Map<String, Object> param = new HashMap<>();
         String[] paramNames = DISCOVERER.getParameterNames(method);
+        Map<String, Object> param = new HashMap<>();
+        Object[] args = pjp.getArgs();
         for (int len = 0; len < paramNames.length; len++) {
             param.put(paramNames[len], args[len]);
         }
@@ -82,20 +79,17 @@ public class RepeatReqAspect {
         String ip = IpUtil.getIp(request);
         if (StringUtils.isBlank(key)) {
             if (args.length > 0) {
-                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName + JSON.toJSONString(args));
+                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + getMethodAllPath(pjp) + JSON.toJSONString(args));
 
             } else {
-                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName);
+                key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + getMethodAllPath(pjp));
             }
         } else {
-            key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + clazzName + methodName + key);
+            key = REPEAT_REQ + Constant.BOTTOM_LINE + EncryptUtil.md5(ip + getMethodAllPath(pjp) + key);
         }
         return key;
     }
 
-    private Class<?> getTargetClazz(ProceedingJoinPoint pjp) {
-        return pjp.getTarget().getClass();
-    }
 
     private HttpServletRequest getRequestObj() {
         try {
@@ -106,8 +100,4 @@ public class RepeatReqAspect {
         }
     }
 
-    private Method getTargetMethod(ProceedingJoinPoint pjp) throws NoSuchMethodException {
-        MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
-        return pjp.getTarget().getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
-    }
 }
