@@ -11,15 +11,24 @@ import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
 import com.openwjk.commons.utils.RandomCodeUtil;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Service
+@Log4j2
 public class CentralTask {
     @Autowired
     ConfigHelper configHelper;
@@ -49,7 +58,5 @@ public class CentralTask {
         } finally {
             redisLockUtil.releaseLock(key, value);
         }
-
-
     }
 }
