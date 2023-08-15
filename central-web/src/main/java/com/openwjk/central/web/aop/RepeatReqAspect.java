@@ -49,6 +49,7 @@ public class RepeatReqAspect extends AbstractAop {
 
     @Around("@annotation(anni)")
     public Object aroundApi(ProceedingJoinPoint pjp, RepeatReq anni) throws Throwable {
+        if (anni == null) return pjp.proceed();
         String key = getKey(pjp, anni);
         String value = RandomCodeUtil.generateCode(16);
         Object result;

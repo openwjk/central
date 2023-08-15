@@ -3,7 +3,7 @@ package com.openwjk.central.remote.service.impl.qwrobot.handle;
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.commons.enums.CtConfigGroupEnum;
-import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.dto.request.RequestDTO;
@@ -44,7 +44,7 @@ public class TextRobotDataHandler implements IDataService {
         map.put("text", textMap);
         textMap.put("content", robot.getVerbalTrick());
         requestDTO.setBodyParam(JSON.toJSONString(map));
-        CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.QW_ROBOT.name(), robot.getRobotEnum().getCode());
+        ConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.QW_ROBOT.name(), robot.getRobotEnum().getCode());
         requestDTO.setUrl(config.getValue());
         context.setRequestDTO(requestDTO);
     }

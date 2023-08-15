@@ -1,9 +1,9 @@
 package com.openwjk.central.remote.helper;
 
 import com.google.common.collect.Lists;
-import com.openwjk.central.dao.mapper.CtConfigDOMapper;
-import com.openwjk.central.dao.model.CtConfigDO;
-import com.openwjk.central.dao.model.CtConfigDOExample;
+import com.openwjk.central.dao.mapper.ConfigDOMapper;
+import com.openwjk.central.dao.model.ConfigDO;
+import com.openwjk.central.dao.model.ConfigDOExample;
 import com.openwjk.commons.utils.Constant;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import java.util.List;
 @Service
 public class ConfigHelper {
     @Autowired
-    CtConfigDOMapper configDOMapper;
+    ConfigDOMapper configDOMapper;
 
-    public CtConfigDO getConfigByGroupAndCode(String groupCode, String code) {
-        CtConfigDOExample example = new CtConfigDOExample();
+    public ConfigDO getConfigByGroupAndCode(String groupCode, String code) {
+        ConfigDOExample example = new ConfigDOExample();
         example.createCriteria().andGroupCodeEqualTo(groupCode).andCodeEqualTo(code).andIsDeletedEqualTo(Constant.STR_N);
-        List<CtConfigDO> configDOS = configDOMapper.selectByExample(example);
+        List<ConfigDO> configDOS = configDOMapper.selectByExample(example);
         if (CollectionUtils.isNotEmpty(configDOS)) {
             return configDOS.get(Constant.INT_ZERO);
         }
@@ -32,10 +32,10 @@ public class ConfigHelper {
     }
 
 
-    public List<CtConfigDO> getConfigByGroup(String groupCode) {
-        CtConfigDOExample example = new CtConfigDOExample();
+    public List<ConfigDO> getConfigByGroup(String groupCode) {
+        ConfigDOExample example = new ConfigDOExample();
         example.createCriteria().andGroupCodeEqualTo(groupCode).andIsDeletedEqualTo(Constant.STR_N);
-        List<CtConfigDO> configDOS = configDOMapper.selectByExample(example);
+        List<ConfigDO> configDOS = configDOMapper.selectByExample(example);
         if (CollectionUtils.isNotEmpty(configDOS)) {
             return configDOS;
         }

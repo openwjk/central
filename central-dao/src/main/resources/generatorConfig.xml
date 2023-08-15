@@ -54,14 +54,21 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="central_batch_task" domainObjectName="CentralBatchTaskDO"
+        <table tableName="ct_account" domainObjectName="AccountDO"
                enableCountByExample="true" enableUpdateByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
-        <table tableName="ct_config" domainObjectName="CtConfigDO"
+        <table tableName="ct_account_type" domainObjectName="AccountTypeDO"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true"
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
+            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
+        </table>
+
+        <table tableName="ct_config" domainObjectName="ConfigDO"
                enableCountByExample="true" enableUpdateByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">

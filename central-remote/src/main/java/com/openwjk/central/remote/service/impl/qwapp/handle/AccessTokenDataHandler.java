@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.openwjk.central.commons.domain.CacheableResultDTO;
 import com.openwjk.central.commons.enums.QwAppEnum;
 import com.openwjk.central.commons.enums.CtConfigGroupEnum;
-import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.Context;
 import com.openwjk.central.remote.dto.request.RequestDTO;
 import com.openwjk.central.remote.dto.response.QwAccessTokenRespDTO;
@@ -43,7 +43,7 @@ public class AccessTokenDataHandler implements IDataService {
     public void buildRequest(Context context) {
         QwAppEnum appEnum = (QwAppEnum) context.getQueryDTO();
         RequestDTO requestDTO = new RequestDTO();
-        CtConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.QW_APP.name(), appEnum.getCode());
+        ConfigDO config = configHelper.getConfigByGroupAndCode(CtConfigGroupEnum.QW_APP.name(), appEnum.getCode());
         Map<String, String> urlMap = JSONObject.parseObject(config.getValue(), Map.class);
         requestDTO.setUrlParam(urlMap);
         requestDTO.setUrl(url);

@@ -3,7 +3,7 @@ package com.openwjk.central.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CtConfigDO implements Serializable {
+public class AccountTypeDO implements Serializable {
     private Long id;
 
     private String creator;
@@ -16,13 +16,11 @@ public class CtConfigDO implements Serializable {
 
     private String isDeleted;
 
-    private String groupCode;
+    private String account;
 
-    private String groupName;
+    private String uId;
 
-    private String code;
-
-    private String value;
+    private String type;
 
     private static final long serialVersionUID = 1L;
 
@@ -74,35 +72,27 @@ public class CtConfigDO implements Serializable {
         this.isDeleted = isDeleted == null ? null : isDeleted.trim();
     }
 
-    public String getGroupCode() {
-        return groupCode;
+    public String getAccount() {
+        return account;
     }
 
-    public void setGroupCode(String groupCode) {
-        this.groupCode = groupCode == null ? null : groupCode.trim();
+    public void setAccount(String account) {
+        this.account = account == null ? null : account.trim();
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getuId() {
+        return uId;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName == null ? null : groupName.trim();
+    public void setuId(String uId) {
+        this.uId = uId == null ? null : uId.trim();
     }
 
-    public String getCode() {
-        return code;
+    public String getType() {
+        return type;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 }

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.openwjk.central.dao.mapper.CtConfigDOMapper">
-  <resultMap id="BaseResultMap" type="com.openwjk.central.dao.model.CtConfigDO">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+<mapper namespace="com.openwjk.central.dao.mapper.AccountTypeDOMapper">
+  <resultMap id="BaseResultMap" type="com.openwjk.central.dao.model.AccountTypeDO">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="MODIFIER" jdbcType="VARCHAR" property="modifier" />
+    <result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="IS_DELETED" jdbcType="VARCHAR" property="isDeleted" />
-    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
-    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
-    <result column="CODE" jdbcType="VARCHAR" property="code" />
-    <result column="VALUE" jdbcType="VARCHAR" property="value" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="U_ID" jdbcType="VARCHAR" property="uId" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,17 +71,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, creator, gmt_create, modifier, gmt_modified, IS_DELETED, GROUP_CODE, GROUP_NAME, 
-    CODE, VALUE
+    ID, CREATOR, GMT_CREATE, MODIFIER, GMT_MODIFIED, IS_DELETED, ACCOUNT, U_ID, TYPE
   </sql>
-  <select id="selectByExample" parameterType="com.openwjk.central.dao.model.CtConfigDOExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.openwjk.central.dao.model.AccountTypeDOExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from ct_config
+    from ct_account_type
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,51 +91,46 @@
   <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ct_config
-    where id = #{id,jdbcType=BIGINT}
+    from ct_account_type
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <insert id="insert" parameterType="com.openwjk.central.dao.model.CtConfigDO">
-    insert into ct_config (id, creator, gmt_create, 
-      modifier, gmt_modified, IS_DELETED, 
-      GROUP_CODE, GROUP_NAME, CODE, 
-      VALUE)
+  <insert id="insert" parameterType="com.openwjk.central.dao.model.AccountTypeDO">
+    insert into ct_account_type (ID, CREATOR, GMT_CREATE, 
+      MODIFIER, GMT_MODIFIED, IS_DELETED, 
+      ACCOUNT, U_ID, TYPE)
     values (#{id,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{modifier,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=VARCHAR}, 
-      #{groupCode,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
-      #{value,jdbcType=VARCHAR})
+      #{account,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.CtConfigDO">
-    insert into ct_config
+  <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.AccountTypeDO">
+    insert into ct_account_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        id,
+        ID,
       </if>
       <if test="creator != null">
-        creator,
+        CREATOR,
       </if>
       <if test="gmtCreate != null">
-        gmt_create,
+        GMT_CREATE,
       </if>
       <if test="modifier != null">
-        modifier,
+        MODIFIER,
       </if>
       <if test="gmtModified != null">
-        gmt_modified,
+        GMT_MODIFIED,
       </if>
       <if test="isDeleted != null">
         IS_DELETED,
       </if>
-      <if test="groupCode != null">
-        GROUP_CODE,
+      <if test="account != null">
+        ACCOUNT,
       </if>
-      <if test="groupName != null">
-        GROUP_NAME,
+      <if test="uId != null">
+        U_ID,
       </if>
-      <if test="code != null">
-        CODE,
-      </if>
-      <if test="value != null">
-        VALUE,
+      <if test="type != null">
+        TYPE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -159,58 +152,52 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=VARCHAR},
       </if>
-      <if test="groupCode != null">
-        #{groupCode,jdbcType=VARCHAR},
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
       </if>
-      <if test="groupName != null">
-        #{groupName,jdbcType=VARCHAR},
+      <if test="uId != null">
+        #{uId,jdbcType=VARCHAR},
       </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.openwjk.central.dao.model.CtConfigDOExample" resultType="java.lang.Long">
-    select count(*) from ct_config
+  <select id="countByExample" parameterType="com.openwjk.central.dao.model.AccountTypeDOExample" resultType="java.lang.Long">
+    select count(*) from ct_account_type
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ct_config
+    update ct_account_type
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        ID = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.creator != null">
-        creator = #{record.creator,jdbcType=VARCHAR},
+        CREATOR = #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+        GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.modifier != null">
-        modifier = #{record.modifier,jdbcType=VARCHAR},
+        MODIFIER = #{record.modifier,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+        GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="record.isDeleted != null">
         IS_DELETED = #{record.isDeleted,jdbcType=VARCHAR},
       </if>
-      <if test="record.groupCode != null">
-        GROUP_CODE = #{record.groupCode,jdbcType=VARCHAR},
+      <if test="record.account != null">
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
       </if>
-      <if test="record.groupName != null">
-        GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
+      <if test="record.uId != null">
+        U_ID = #{record.uId,jdbcType=VARCHAR},
       </if>
-      <if test="record.code != null">
-        CODE = #{record.code,jdbcType=VARCHAR},
-      </if>
-      <if test="record.value != null">
-        VALUE = #{record.value,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -218,65 +205,60 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ct_config
-    set id = #{record.id,jdbcType=BIGINT},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      modifier = #{record.modifier,jdbcType=VARCHAR},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+    update ct_account_type
+    set ID = #{record.id,jdbcType=BIGINT},
+      CREATOR = #{record.creator,jdbcType=VARCHAR},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      MODIFIER = #{record.modifier,jdbcType=VARCHAR},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       IS_DELETED = #{record.isDeleted,jdbcType=VARCHAR},
-      GROUP_CODE = #{record.groupCode,jdbcType=VARCHAR},
-      GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
-      CODE = #{record.code,jdbcType=VARCHAR},
-      VALUE = #{record.value,jdbcType=VARCHAR}
+      ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      U_ID = #{record.uId,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.openwjk.central.dao.model.CtConfigDO">
-    update ct_config
+  <update id="updateByPrimaryKeySelective" parameterType="com.openwjk.central.dao.model.AccountTypeDO">
+    update ct_account_type
     <set>
       <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
+        CREATOR = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="modifier != null">
-        modifier = #{modifier,jdbcType=VARCHAR},
+        MODIFIER = #{modifier,jdbcType=VARCHAR},
       </if>
       <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="isDeleted != null">
         IS_DELETED = #{isDeleted,jdbcType=VARCHAR},
       </if>
-      <if test="groupCode != null">
-        GROUP_CODE = #{groupCode,jdbcType=VARCHAR},
+      <if test="account != null">
+        ACCOUNT = #{account,jdbcType=VARCHAR},
       </if>
-      <if test="groupName != null">
-        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      <if test="uId != null">
+        U_ID = #{uId,jdbcType=VARCHAR},
       </if>
-      <if test="code != null">
-        CODE = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        VALUE = #{value,jdbcType=VARCHAR},
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.openwjk.central.dao.model.CtConfigDO">
-    update ct_config
-    set creator = #{creator,jdbcType=VARCHAR},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      modifier = #{modifier,jdbcType=VARCHAR},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+  <update id="updateByPrimaryKey" parameterType="com.openwjk.central.dao.model.AccountTypeDO">
+    update ct_account_type
+    set CREATOR = #{creator,jdbcType=VARCHAR},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      MODIFIER = #{modifier,jdbcType=VARCHAR},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       IS_DELETED = #{isDeleted,jdbcType=VARCHAR},
-      GROUP_CODE = #{groupCode,jdbcType=VARCHAR},
-      GROUP_NAME = #{groupName,jdbcType=VARCHAR},
-      CODE = #{code,jdbcType=VARCHAR},
-      VALUE = #{value,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      U_ID = #{uId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

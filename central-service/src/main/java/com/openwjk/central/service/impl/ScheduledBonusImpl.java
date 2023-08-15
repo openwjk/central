@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.openwjk.central.commons.enums.QwAppEnum;
 import com.openwjk.central.commons.enums.QwAppMsgTypeEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
-import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.request.QwAppSendTextMsgReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.QwAppService;
@@ -47,7 +47,7 @@ public class ScheduledBonusImpl implements ScheduledService {
     @Override
     public void execute(Date date) {
         Date tdate = DateUtil.plusMinutes(date, Constant.INT_THREE);
-        List<CtConfigDO> configDOS = configHelper.getConfigByGroup(ScheduledTaskEnum.BONUS.getCode());
+        List<ConfigDO> configDOS = configHelper.getConfigByGroup(ScheduledTaskEnum.BONUS.getCode());
         if (CollectionUtils.isEmpty(configDOS)) return;
         List<String> verbalTrickList = Lists.newArrayList();
         for (int i = 0; i < configDOS.size(); i++) {

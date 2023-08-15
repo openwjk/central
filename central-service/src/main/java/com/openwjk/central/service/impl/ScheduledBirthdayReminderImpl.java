@@ -3,7 +3,7 @@ package com.openwjk.central.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
-import com.openwjk.central.dao.model.CtConfigDO;
+import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.impl.qwrobot.QwRobotServiceImpl;
@@ -50,19 +50,19 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     private void sendLunarCalendarBirthDay(Date date) {
         ChineseCalendar calendar = ChineseCalendar.as(date);
         String birthDay = calendar.getChinaString().substring(calendar.getChinaString().indexOf("年") + 1);
-        CtConfigDO configDO = configHelper.getConfigByGroupAndCode(getCode().name(), birthDay);
+        ConfigDO configDO = configHelper.getConfigByGroupAndCode(getCode().name(), birthDay);
         if (configDO == null) return;
         sendMsg(LUNAR + birthDay, configDO);
     }
 
     private void sendSolarCalendarBirthDay(Date date) {
         String birthDay = DateUtil.formatDate(date, FORMAT_DATE_CN_MONTH_DAY);
-        CtConfigDO configDO = configHelper.getConfigByGroupAndCode(getCode().name(), birthDay);
+        ConfigDO configDO = configHelper.getConfigByGroupAndCode(getCode().name(), birthDay);
         if (configDO == null) return;
         sendMsg(birthDay, configDO);
     }
 
-    private void sendMsg(String birthDay, CtConfigDO configDO) {
+    private void sendMsg(String birthDay, ConfigDO configDO) {
         ScheduleNoticeDomain birthDayDomain = JSON.parseObject(configDO.getValue(), ScheduleNoticeDomain.class);
         if (birthDayDomain == null || CollectionUtils.isEmpty(birthDayDomain.getArgs())) return;
         String names = birthDayDomain.getArgs().stream().collect(Collectors.joining(","));
