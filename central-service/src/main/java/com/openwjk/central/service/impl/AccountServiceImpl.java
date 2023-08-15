@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -85,6 +84,15 @@ public class AccountServiceImpl implements AccountService {
         List<AccountDO> accountDOS = accountDOMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(accountDOS)) {
             throw new ParamInvalidException("", "", null, "密码错误请重新输入");
+        }
+        AccountDO account = accountDOS.get(Constant.INT_ZERO);
+        if(account!=null&&!StringUtils.equals(Constant.STRING_ZERO,account.getStatus())){
+            if(StringUtils.equals(account.getStatus(),Constant.STRING_ONE)){
+                throw new ParamInvalidException("", "", null, "账号已被封号，禁止登录！");
+            }
+            if(StringUtils.equals(account.getStatus(),Constant.STRING_TWO)){
+                throw new ParamInvalidException("", "", null, "账号已被冻结，请解冻后再登录！");
+            }
         }
         String token = EncryptUtil.md5(RandomCodeUtil.getUuId());
         redisUtil.set(token, uId + Constant.BOTTOM_LINE + type, Constant.LONG_TEN, TimeUnit.MINUTES);

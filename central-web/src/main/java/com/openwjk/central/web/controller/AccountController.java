@@ -3,6 +3,7 @@ package com.openwjk.central.web.controller;
 import com.openwjk.central.commons.annotation.RepeatReq;
 import com.openwjk.central.service.domain.req.LoginAccountReqVO;
 import com.openwjk.central.service.service.AccountService;
+import com.openwjk.central.web.utils.CookieUtil;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.utils.Constant;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author wangjunkai
@@ -27,8 +31,10 @@ public class AccountController {
 
     @PostMapping("/login")
     @ApiOperation("账户登录")
-    public ResponseVO<String> login(LoginAccountReqVO reqVO) {
-        return new ResponseVO(accountService.loginAccount(reqVO, Constant.DEFAULT));
+    public ResponseVO<String> login(LoginAccountReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
+        String token = accountService.loginAccount(reqVO, Constant.DEFAULT);
+        CookieUtil.addCookie(response, Constant.COOKIE_KEY_TOKEN, token, request);
+        return new ResponseVO(token);
     }
 
     @PostMapping("/register")
