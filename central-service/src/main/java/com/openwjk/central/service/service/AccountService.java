@@ -11,4 +11,6 @@ public interface AccountService {
     String registerAccount(LoginAccountReqVO reqVO,String type);
 
     String loginAccount(LoginAccountReqVO reqVO,String type);
+
+    void logout(String token);
 }

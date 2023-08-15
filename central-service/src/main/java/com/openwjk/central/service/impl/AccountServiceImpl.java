@@ -86,16 +86,21 @@ public class AccountServiceImpl implements AccountService {
             throw new ParamInvalidException("", "", null, "密码错误请重新输入");
         }
         AccountDO account = accountDOS.get(Constant.INT_ZERO);
-        if(account!=null&&!StringUtils.equals(Constant.STRING_ZERO,account.getStatus())){
-            if(StringUtils.equals(account.getStatus(),Constant.STRING_ONE)){
+        if (account != null && !StringUtils.equals(Constant.STRING_ZERO, account.getStatus())) {
+            if (StringUtils.equals(account.getStatus(), Constant.STRING_ONE)) {
                 throw new ParamInvalidException("", "", null, "账号已被封号，禁止登录！");
             }
-            if(StringUtils.equals(account.getStatus(),Constant.STRING_TWO)){
+            if (StringUtils.equals(account.getStatus(), Constant.STRING_TWO)) {
                 throw new ParamInvalidException("", "", null, "账号已被冻结，请解冻后再登录！");
             }
         }
-        String token = EncryptUtil.md5(RandomCodeUtil.getUuId());
+        String token = LOGIN_PREFIX + EncryptUtil.md5(RandomCodeUtil.getUuId());
         redisUtil.set(token, uId + Constant.BOTTOM_LINE + type, Constant.LONG_TEN, TimeUnit.MINUTES);
         return token;
+    }
+
+    @Override
+    public void logout(String token) {
+        redisUtil.del(LOGIN_PREFIX + token);
     }
 }

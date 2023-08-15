@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,15 @@ public class AccountController {
         String token = accountService.loginAccount(reqVO, Constant.DEFAULT);
         CookieUtil.addCookie(response, Constant.COOKIE_KEY_TOKEN, token, request);
         return new ResponseVO(token);
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @ApiOperation(value = "用户登出", notes = "GET请求", httpMethod = "GET")
+    public ResponseVO logout(HttpServletRequest request, HttpServletResponse response) {
+        accountService.logout(CookieUtil.getCookieValueByName(request,Constant.COOKIE_KEY_TOKEN));
+        //清空cookie中的token
+        CookieUtil.addCookie(response, Constant.COOKIE_KEY_TOKEN, null, request);
+        return new ResponseVO();
     }
 
     @PostMapping("/register")
