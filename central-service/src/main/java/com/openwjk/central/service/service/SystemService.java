@@ -6,5 +6,4 @@ import com.openwjk.central.commons.domain.CommonQueryReqDTO;
 public interface SystemService {
     String checkRun();
 
-    CacheableResultDTO redisTest(CommonQueryReqDTO reqDTO);
 }

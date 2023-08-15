@@ -1,7 +1,6 @@
 package com.openwjk.central.web.controller;
 
-import com.openwjk.central.commons.utils.qw.AesException;
-import com.openwjk.central.commons.utils.qw.WXBizJsonMsgCrypt;
+import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.service.service.QwService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -29,8 +28,10 @@ public class QwController {
 
     @Autowired
     QwService qwService;
+
     @PostMapping("/verify")
     @ApiOperation("企业微信服务器校验")
+    @ApiLog(standartReturn = false)
     public void verify(@RequestParam("msg_signature") String msg_signature,
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,
@@ -46,7 +47,6 @@ public class QwController {
             throw new RuntimeException(e);
         }finally {
             out.close();
-            out = null;
         }
     }
 }

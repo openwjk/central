@@ -1,5 +1,6 @@
 package com.openwjk.central.web.controller;
 
+import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.service.service.WxService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +21,7 @@ public class WxController {
     private WxService wxService;
 
     @GetMapping("/verify")
+    @ApiLog(standartReturn = false)
     public String verify(@RequestParam("signature") String signature,
                          @RequestParam("timestamp") String timestamp,
                          @RequestParam("nonce") String nonce,

@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiLog {
     String value() default "";
-    boolean printRetObj() default true;
+    boolean standartReturn() default true;
 }

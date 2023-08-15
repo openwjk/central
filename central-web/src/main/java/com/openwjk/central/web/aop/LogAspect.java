@@ -1,6 +1,7 @@
 package com.openwjk.central.web.aop;
 
 import com.alibaba.fastjson2.JSON;
+import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.commons.utils.ThreadLocalUtil;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.domain.ResponseVO;
@@ -14,7 +15,6 @@ import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,17 +52,21 @@ public class LogAspect extends AbstractAop {
         doApiLogIp(uri, ip);
 
         Object retObj;
-        try {
+        ApiLog apiLog = targetMethod.getAnnotation(ApiLog.class);
+        if (apiLog != null && !apiLog.standartReturn()) {
             retObj = pjp.proceed();
-        } catch (RepeatCommitException e) {
-            retObj = new ResponseVO(ResponseEnum.REPEAT_COMMIT.getCode(), ResponseEnum.REPEAT_COMMIT.getMsg());
-        } catch (RateLimitException e) {
-            retObj = new ResponseVO(ResponseEnum.NETWORK_BUSY.getCode(), ResponseEnum.NETWORK_BUSY.getMsg());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            retObj = new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg());
+        } else {
+            try {
+                retObj = pjp.proceed();
+            } catch (RepeatCommitException e) {
+                retObj = new ResponseVO(ResponseEnum.REPEAT_COMMIT.getCode(), ResponseEnum.REPEAT_COMMIT.getMsg());
+            } catch (RateLimitException e) {
+                retObj = new ResponseVO(ResponseEnum.NETWORK_BUSY.getCode(), ResponseEnum.NETWORK_BUSY.getMsg());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                retObj = new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg());
+            }
         }
-
         doApiLogEnd(uri, beginTs);
 
         removeThreadLocal();
