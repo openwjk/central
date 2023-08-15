@@ -11,6 +11,8 @@ public class AccountDO implements Serializable {
 
     private String password;
 
+    private String status;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -43,5 +45,13 @@ public class AccountDO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }

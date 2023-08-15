@@ -18,6 +18,7 @@ CREATE TABLE `ct_account` (
  `IS_DELETED` varchar(1) DEFAULT 'n',
  `U_ID` varchar(32) NOT NULL COMMENT 'UID',
  `PASSWORD` varchar(32) NOT NULL COMMENT '密码',
+ `STATUS` varchar(1) NOT NULL DEFAULT '0' COMMENT '状态，0正常，1封号，2冻结',
  PRIMARY KEY (`ID`),
  UNIQUE KEY `IDX_UI` (`U_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号主ID表';

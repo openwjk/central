@@ -1,5 +1,6 @@
 package com.openwjk.central.service.impl;
 
+import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.dao.mapper.AccountDOMapper;
 import com.openwjk.central.dao.mapper.AccountTypeDOMapper;
 import com.openwjk.central.dao.model.AccountDO;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wangjunkai
@@ -29,10 +32,13 @@ import java.util.List;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
+    private static final String LOGIN_PREFIX = "LOGIN_";
     @Autowired
     private AccountDOMapper accountDOMapper;
     @Autowired
     private AccountTypeDOMapper accountTypeDOMapper;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -77,9 +83,11 @@ public class AccountServiceImpl implements AccountService {
         AccountDOExample example = new AccountDOExample();
         example.createCriteria().andUIdEqualTo(uId).andPasswordEqualTo(password).andIsDeletedEqualTo(Constant.STR_N);
         List<AccountDO> accountDOS = accountDOMapper.selectByExample(example);
-        if(CollectionUtils.isEmpty(accountDOS)){
+        if (CollectionUtils.isEmpty(accountDOS)) {
             throw new ParamInvalidException("", "", null, "密码错误请重新输入");
         }
-        return null;
+        String token = EncryptUtil.md5(RandomCodeUtil.getUuId());
+        redisUtil.set(token, uId + Constant.BOTTOM_LINE + type, Constant.LONG_TEN, TimeUnit.MINUTES);
+        return token;
     }
 }

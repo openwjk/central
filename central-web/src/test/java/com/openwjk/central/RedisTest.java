@@ -28,14 +28,6 @@ public class RedisTest {
     @Autowired
     SystemService systemService;
 
-    @Test
-    public void test() {
-        String id = RandomCodeUtil.generateCode(10);
-        CommonQueryReqDTO reqDTO = new CommonQueryReqDTO(null, "simpleCache",id, "test");
-        System.out.println(id);
-        systemService.redisTest(reqDTO);
-    }
-
     public static void main(String[] args) {
         System.out.println(RandomCodeUtil.getUuId());
     }
