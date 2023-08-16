@@ -23,6 +23,7 @@ CREATE TABLE `ct_account` (
  UNIQUE KEY `IDX_UI` (`U_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号主ID表';
 
+
 CREATE TABLE `ct_account_type` (
  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
  `CREATOR` varchar(255) NOT NULL DEFAULT 'system' COMMENT '创建人',
