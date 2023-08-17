@@ -3,6 +3,7 @@ package com.openwjk.central.web.handle;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
 import com.openwjk.commons.exception.ParamInvalidException;
+import com.openwjk.commons.exception.UnauthorizedException;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -57,6 +58,25 @@ public class GlobalExceptionHandler {
                     , String.format("value invalid, param name:[%s], value:[%s]", paramName, paramValue));
         } else {
             return new ResponseVO(ResponseEnum.PARAM_CHECK_FAIL);
+        }
+    }
+
+
+    /**
+     * token无效，返回未授权
+     *
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = UnauthorizedException.class)
+    @ResponseBody
+    public ResponseVO unauthorizedException(HttpServletRequest req, UnauthorizedException e) {
+        log.warn("call url:{}, unauthorized. e.getMessage:{}.", req.getRequestURL(), e.getMessage());
+        if (StringUtils.isNotEmpty(e.getCode()) && StringUtils.isNotEmpty(e.getResponseMsg())) {
+            return new ResponseVO(e.getCode(), e.getResponseMsg());
+        } else {
+            return new ResponseVO(ResponseEnum.UNAUTHORIZED);
         }
     }
 }

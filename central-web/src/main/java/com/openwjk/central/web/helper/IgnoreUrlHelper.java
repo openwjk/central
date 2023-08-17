@@ -2,6 +2,7 @@ package com.openwjk.central.web.helper;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.util.UrlPathHelper;
@@ -16,6 +17,7 @@ import java.util.List;
  * @description
  * @date 2023/8/17 14:45
  */
+@Component
 public class IgnoreUrlHelper {
     public static final String INIT_PARAM_KEY_IGNORE_URLS = "ignoreUrls";
 

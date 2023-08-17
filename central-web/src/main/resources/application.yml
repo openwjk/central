@@ -55,5 +55,5 @@ qw:
      agentId: 1000002
 auth:
   enable: 1
-  ignore-url: /account/login,/swagger-resources/**,/webjars/**,/error,/v2/api-docs
+  ignore-url: /account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html
 

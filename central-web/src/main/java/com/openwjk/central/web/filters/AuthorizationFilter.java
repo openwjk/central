@@ -41,6 +41,8 @@ public class AuthorizationFilter implements Filter {
     private HandlerExceptionResolver resolver;
     @Value("${auth.enable}")
     private String authEnable;
+    @Value("${auth.ignore-url}")
+    private String ignoreUrl;
     @Autowired
     AuthorizationHelper authorizationHelper;
     @Autowired
@@ -48,8 +50,7 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        String ignoreUrlStr = filterConfig.getInitParameter(IgnoreUrlHelper.INIT_PARAM_KEY_IGNORE_URLS);
-        ignoreUrls = ignoreUrlHelper.initIgnoreUrls(ignoreUrlStr);
+        ignoreUrls = ignoreUrlHelper.initIgnoreUrls(ignoreUrl);
     }
 
     @Override
