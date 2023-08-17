@@ -59,6 +59,26 @@ public class RedisUtil {
         }
     }
 
+
+    /**
+     *
+     * @param key  键
+     * @param time 时间(秒)
+     * @param timeUnit 单位
+     * @return
+     */
+    public boolean expire(String key, long time,TimeUnit timeUnit) {
+        try {
+            if (time > 0) {
+                redisTemplate.expire(key, time, timeUnit);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /**
      * 根据key 获取过期时间
      *

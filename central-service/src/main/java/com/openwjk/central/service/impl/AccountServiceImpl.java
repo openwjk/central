@@ -1,5 +1,6 @@
 package com.openwjk.central.service.impl;
 
+import com.openwjk.central.commons.utils.Constants;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.dao.mapper.AccountDOMapper;
 import com.openwjk.central.dao.mapper.AccountTypeDOMapper;
@@ -31,7 +32,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
-    private static final String LOGIN_PREFIX = "LOGIN_";
     @Autowired
     private AccountDOMapper accountDOMapper;
     @Autowired
@@ -77,7 +77,8 @@ public class AccountServiceImpl implements AccountService {
         if (CollectionUtils.isEmpty(accountTypeDOS)) {
             throw new ParamInvalidException("", "", null, "该账号不存在，请重新输入账号或注册！");
         }
-        String uId = accountTypeDOS.get(Constant.INT_ZERO).getuId();
+        AccountTypeDO accountType = accountTypeDOS.get(Constant.INT_ZERO);
+        String uId = accountType.getuId();
         String password = EncryptUtil.md5(EncryptUtil.md5(reqVO.getPassword()));
         AccountDOExample example = new AccountDOExample();
         example.createCriteria().andUIdEqualTo(uId).andPasswordEqualTo(password).andIsDeletedEqualTo(Constant.STR_N);
@@ -94,13 +95,13 @@ public class AccountServiceImpl implements AccountService {
                 throw new ParamInvalidException("", "", null, "账号已被冻结，请解冻后再登录！");
             }
         }
-        String token = LOGIN_PREFIX + EncryptUtil.md5(RandomCodeUtil.getUuId());
-        redisUtil.set(token, uId + Constant.BOTTOM_LINE + type, Constant.LONG_TEN, TimeUnit.MINUTES);
+        String token = EncryptUtil.md5(RandomCodeUtil.getUuId());
+        redisUtil.set(token, uId + Constant.SPLIT_UNION + accountType.getAccount() + Constant.SPLIT_UNION + type, Constant.LONG_THIRTY, TimeUnit.MINUTES);
         return token;
     }
 
     @Override
     public void logout(String token) {
-        redisUtil.del(LOGIN_PREFIX + token);
+        redisUtil.del(token);
     }
 }

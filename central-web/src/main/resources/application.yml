@@ -53,4 +53,7 @@ qw:
     #《通知》应用
     notice:
      agentId: 1000002
+auth:
+  enable: 1
+  ignore-url: /account/login,/swagger-resources/**,/webjars/**,/error,/v2/api-docs
 
