@@ -98,6 +98,25 @@
                 <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
                 <version>4.0.0</version>
             </dependency>
+            <!--pop3和imap4的邮件服务-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>1.6.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <!--exchange邮件服务-->
+            <dependency>
+                <groupId>com.microsoft.ews-java-api</groupId>
+                <artifactId>ews-java-api</artifactId>
+                <version>2.0</version>
+            </dependency>
+            <!--邮件解析-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-email</artifactId>
+                <version>1.5</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
