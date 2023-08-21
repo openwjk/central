@@ -1,4 +1,4 @@
-package com.openwjk.central.service.service;
+package com.openwjk.central.service.handler;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.openwjk.commons.exception.CommonsException;
@@ -27,9 +27,9 @@ import java.util.Properties;
  * @date 2023/8/18 19:29
  */
 @Service
-public class MailSendService {
+public class MailSendHandle {
     private static final String INVALID_ADDRESS_MESSAGE = "Invalid Addresses";
-    private static final Logger logger = LoggerFactory.getLogger(MailSendService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MailSendHandle.class);
 
     /**
      * 发送带附件的邮件
