@@ -3,3 +3,4 @@
 #### mybatis逆向生成工具 central-dao > Plugins > mybatis-generator
 #### swagger地址 http://localhost:8080/central/doc.html
 
+#### 忽略访问地址校验在 auth.ignore-url 中配置
