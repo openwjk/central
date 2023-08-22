@@ -1,19 +1,23 @@
 package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.openwjk.central.commons.enums.QwRobotEnum;
+import com.openwjk.central.commons.enums.QwAppEnum;
+import com.openwjk.central.commons.enums.QwAppMsgTypeEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.ConfigDO;
-import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
+import com.openwjk.central.remote.dto.request.QwAppSendTextMsgReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
+import com.openwjk.central.remote.service.QwAppService;
 import com.openwjk.central.remote.service.impl.qwrobot.QwRobotServiceImpl;
 import com.openwjk.central.service.domain.ScheduleNoticeDomain;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.ChineseCalendar;
+import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -33,7 +37,9 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
     @Autowired
     ConfigHelper configHelper;
     @Autowired
-    QwRobotServiceImpl qwRobotService;
+    QwAppService qwAppService;
+    @Value("${qw.sendAppMsg.notice.agentId}")
+    private String agentId;
 
     @Override
     public ScheduledTaskEnum getCode() {
@@ -62,9 +68,9 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
         sendMsg(birthDay, configDO);
     }
 
-    private void sendMsg(String birthDay, ConfigDO configDO) {
+    private String buildVerbalTrick(String birthDay, ConfigDO configDO) {
         ScheduleNoticeDomain birthDayDomain = JSON.parseObject(configDO.getValue(), ScheduleNoticeDomain.class);
-        if (birthDayDomain == null || CollectionUtils.isEmpty(birthDayDomain.getArgs())) return;
+        if (birthDayDomain == null || CollectionUtils.isEmpty(birthDayDomain.getArgs())) return Constant.EMPTY_STR;
         String names = birthDayDomain.getArgs().stream().collect(Collectors.joining(","));
         String verbalTrick = String.format(DEFAULT_VERBAL_TRICK, birthDay, names);
         if (StringUtils.isNotBlank(birthDayDomain.getVerbalTrick())) {
@@ -73,7 +79,22 @@ public class ScheduledBirthdayReminderImpl implements ScheduledService {
                 verbalTrick = verbalTrick.replace("%s", arg);
             }
         }
-        qwRobotService.sendTextRobot(new QwRobotReqDTO(verbalTrick, QwRobotEnum.WLCJDIYS));
+        return verbalTrick;
+    }
+
+    private void sendMsg(String birthDay, ConfigDO configDO) {
+        String verbalTrick = buildVerbalTrick(birthDay, configDO);
+        if (StringUtils.isBlank(verbalTrick)) return;
+        QwAppSendTextMsgReqDTO reqDTO = new QwAppSendTextMsgReqDTO();
+        reqDTO.setQwAppEnum(QwAppEnum.NOTIFICATION);
+        reqDTO.setToUser("@all");
+        reqDTO.setMsgType(QwAppMsgTypeEnum.TEXT.getValue());
+        reqDTO.setAgentId(agentId);
+        QwAppSendTextMsgReqDTO.Content text = new QwAppSendTextMsgReqDTO.Content();
+        text.setContent(verbalTrick);
+        reqDTO.setText(text);
+        reqDTO.setSafe(Constant.STRING_ONE);
+        qwAppService.appSendTextMsg(reqDTO);
     }
 
 }
