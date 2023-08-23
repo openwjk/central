@@ -1,6 +1,7 @@
 package com.openwjk.central.web.aop;
 
 import com.alibaba.fastjson2.JSON;
+import com.google.common.collect.Lists;
 import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.commons.utils.ThreadLocalUtil;
 import com.openwjk.central.web.utils.IpUtil;
@@ -22,7 +23,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author wangjunkai
@@ -74,7 +77,13 @@ public class LogAspect extends AbstractAop {
     }
 
     private void doApiLogBegin(String uri, Object[] args) {
-        log.info("call uri: {} begin, params: {}", uri, JSON.toJSONString(args));
+        List<Object> tempArgs = Lists.newArrayList();
+        for (Object obj : args) {
+            if (!(obj instanceof HttpServletResponse)) {
+                tempArgs.add(obj);
+            }
+        }
+        log.info("call uri: {} begin, params: {}", uri, JSON.toJSONString(tempArgs));
     }
 
     private void doApiLogEnd(String uri, long beginTs) {
