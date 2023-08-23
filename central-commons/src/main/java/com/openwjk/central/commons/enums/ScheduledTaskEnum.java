@@ -7,6 +7,7 @@ package com.openwjk.central.commons.enums;
  */
 public enum ScheduledTaskEnum {
     BIRTHDAY_REMINDER("BIRTHDAY_REMINDER",  "生日提醒定时任务"),
+    FESTIVAL_OVERTIME("FESTIVAL_OVERTIME",  "节假日及补班提醒定时任务"),
     BONUS("BONUS",  "福利"),
     ;
 
