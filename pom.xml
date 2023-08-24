@@ -51,6 +51,12 @@
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>1.3.7</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>3.2.5</version>
+            </dependency>
             <dependency>
                 <groupId>com.openwjk</groupId>
                 <artifactId>central-service</artifactId>
@@ -69,6 +75,11 @@
             <dependency>
                 <groupId>com.openwjk</groupId>
                 <artifactId>central-commons</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openwjk</groupId>
+                <artifactId>central-dubbo-swimlane</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
