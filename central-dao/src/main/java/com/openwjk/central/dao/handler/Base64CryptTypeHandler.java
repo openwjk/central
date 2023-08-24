@@ -22,7 +22,7 @@ public class Base64CryptTypeHandler implements TypeHandler<String> {
         if (Objects.nonNull(parameter))
             ps.setString(i, Base64.encodeBase64String(parameter.getBytes(StandardCharsets.UTF_8)));
         else
-            ps.setString(i, parameter);
+            ps.setNull(i, jdbcType.TYPE_CODE);
     }
 
     @Override
