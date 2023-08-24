@@ -13,6 +13,7 @@
         <module>central-dao</module>
         <module>central-remote</module>
         <module>central-commons</module>
+        <module>central-dubbo-swimlane</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
