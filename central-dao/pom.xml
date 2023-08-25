@@ -48,7 +48,11 @@
                         <artifactId>mysql-connector-j</artifactId>
                         <version>8.1.0</version>
                     </dependency>
-
+                    <dependency>
+                        <groupId>com.openwjk</groupId>
+                        <artifactId>central-dao</artifactId>
+                        <version>0.0.1-SNAPSHOT</version>
+                    </dependency>
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
                         <artifactId>mybatis-generator-core</artifactId>

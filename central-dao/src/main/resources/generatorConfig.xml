@@ -13,6 +13,8 @@
         <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
         <!--序列化-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!--拓展文件-->
+        <plugin type="com.openwjk.central.dao.plugins.FileExtPlugin"/>
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
