@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.openwjk.central.dao.mapper.ConfigDOMapper">
   <resultMap id="BaseResultMap" type="com.openwjk.central.dao.model.ConfigDO">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
     <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="MODIFIER" jdbcType="VARCHAR" property="modifier" />
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, CREATOR, GMT_CREATE, MODIFIER, GMT_MODIFIED, IS_DELETED, GROUP_CODE, GROUP_NAME, 
+    ID, CREATOR, GMT_CREATE, MODIFIER, GMT_MODIFIED, IS_DELETED, GROUP_CODE, GROUP_NAME, 
     CODE, VALUE
   </sql>
   <select id="selectByExample" parameterType="com.openwjk.central.dao.model.ConfigDOExample" resultMap="BaseResultMap">
@@ -94,10 +94,10 @@
     select 
     <include refid="Base_Column_List" />
     from ct_config
-    where id = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.openwjk.central.dao.model.ConfigDO">
-    insert into ct_config (id, CREATOR, GMT_CREATE, 
+    insert into ct_config (ID, CREATOR, GMT_CREATE, 
       MODIFIER, GMT_MODIFIED, IS_DELETED, 
       GROUP_CODE, GROUP_NAME, CODE, 
       VALUE)
@@ -110,7 +110,7 @@
     insert into ct_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        id,
+        ID,
       </if>
       <if test="creator != null">
         CREATOR,
@@ -183,7 +183,7 @@
     update ct_config
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        ID = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.creator != null">
         CREATOR = #{record.creator,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update ct_config
-    set id = #{record.id,jdbcType=BIGINT},
+    set ID = #{record.id,jdbcType=BIGINT},
       CREATOR = #{record.creator,jdbcType=VARCHAR},
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
       MODIFIER = #{record.modifier,jdbcType=VARCHAR},
@@ -264,7 +264,7 @@
         VALUE = #{value,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.openwjk.central.dao.model.ConfigDO">
     update ct_config
@@ -277,6 +277,6 @@
       GROUP_NAME = #{groupName,jdbcType=VARCHAR},
       CODE = #{code,jdbcType=VARCHAR},
       VALUE = #{value,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
