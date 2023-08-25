@@ -1,5 +1,6 @@
 package com.openwjk.central.dao.handler;
 
+import com.openwjk.commons.utils.EncryptUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
@@ -16,36 +17,27 @@ import java.util.Objects;
  * @description
  * @date 2023/8/24 17:27
  */
-public class Base64CryptTypeHandler implements TypeHandler<String> {
+public class Md5CryptTypeHandler implements TypeHandler<String> {
     @Override
     public void setParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
         if (Objects.nonNull(parameter))
-            ps.setString(i, Base64.encodeBase64String(parameter.getBytes(StandardCharsets.UTF_8)));
+            ps.setString(i, EncryptUtil.md5(parameter));
         else
             ps.setNull(i, jdbcType.TYPE_CODE);
     }
 
     @Override
     public String getResult(ResultSet rs, String columnName) throws SQLException {
-        String value = rs.getString(columnName);
-        if (Objects.nonNull(value))
-            return new String(Base64.decodeBase64(value), StandardCharsets.UTF_8);
-        return null;
+        return rs.getString(columnName);
     }
 
     @Override
     public String getResult(ResultSet rs, int columnIndex) throws SQLException {
-        String value = rs.getString(columnIndex);
-        if (Objects.nonNull(value))
-            return new String(Base64.decodeBase64(value), StandardCharsets.UTF_8);
-        return null;
+        return rs.getString(columnIndex);
     }
 
     @Override
     public String getResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String value = cs.getString(columnIndex);
-        if (Objects.nonNull(value))
-            return new String(Base64.decodeBase64(value), StandardCharsets.UTF_8);
-        return null;
+        return cs.getString(columnIndex);
     }
 }
