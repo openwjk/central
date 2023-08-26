@@ -13,7 +13,7 @@
         <module>central-dao</module>
         <module>central-remote</module>
         <module>central-commons</module>
-        <module>central-dubbo-swimlane</module>
+        <module>central-dubbo-extension</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
@@ -55,6 +55,12 @@
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>3.2.5</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
                 <version>3.2.5</version>
             </dependency>
             <dependency>
