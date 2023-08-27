@@ -18,7 +18,7 @@ spring:
       minIdle: 1
       timeBetweenEvictionRunsMillis: 60000
       minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
+      validationQuery: select 1
       testWhileIdle: true
       testOnBorrow: false
       testOnReturn: false
@@ -26,7 +26,7 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
     cluster:
-      nodes: 172.22.0.21:7001,172.22.0.21:7002,172.22.0.21:7003,172.22.0.21:7004,172.22.0.21:7005,172.22.0.21:7000
+      nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
     lettuce:
       pool:
         max-active: 300
@@ -35,7 +35,26 @@ spring:
         min-idle: 20
     database: 0
     timeout: 60000ms
-
+  dubbo:
+    application:
+      id: central
+      name: central
+      owner: openwjk
+      organization: openwjk
+    registry:
+      address: zk.openwjk.com:2181
+      protocol: zookeeper
+    provider:
+      protocol: tri
+      threads: 500
+      thread-pool: fixed
+      timeout: 5000
+      load-balance: random
+      delay: -1
+      retries: 2
+    protocol:
+      name: tri
+      port: 20880
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件
 mybatis:

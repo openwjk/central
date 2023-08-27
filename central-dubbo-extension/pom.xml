@@ -5,7 +5,7 @@
     <groupId>com.openwjk</groupId>
     <artifactId>central-dubbo-extension</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>central-dubbo-swimlane</name>
+    <name>central-dubbo-extension</name>
     <description>Demo project for Spring Boot</description>
     <parent>
         <artifactId>central</artifactId>
@@ -36,19 +36,6 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-                <executions>
-                    <execution>
-                        <id>repackage</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

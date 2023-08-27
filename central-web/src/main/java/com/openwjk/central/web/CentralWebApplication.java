@@ -1,5 +1,6 @@
 package com.openwjk.central.web;
 
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @ComponentScan("com.openwjk.central")
 @EnableScheduling
 @EnableCaching
+@EnableDubbo(scanBasePackages = {"com.openwjk.central.service"})
 @EnableSwagger2WebMvc
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.openwjk.central.dao.mapper"}, annotationClass = Mapper.class)
