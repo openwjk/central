@@ -19,11 +19,9 @@
         <spring-boot.version>2.6.13</spring-boot.version>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>3.2.5</version>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 
