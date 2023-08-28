@@ -1,6 +1,8 @@
 package com.openwjk.central;
 
 import com.openwjk.central.service.impl.DubboTestServiceImpl;
+import com.openwjk.central.service.service.DubboTestService;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = BaseTest.class)
 @RunWith(SpringRunner.class)
 public class DubboTest {
-    DubboTestServiceImpl dubboTestService;
+    @DubboReference
+    DubboTestService dubboTestService;
     @Test
     public void test() {
         System.out.println(dubboTestService.test());

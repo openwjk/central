@@ -12,6 +12,7 @@ import org.apache.dubbo.remoting.zookeeper.ZookeeperTransporter;
  * @description
  * @date 2023/8/27 10:27
  */
+@Deprecated
 public class SwimLaneZookeeperRegistry extends ZookeeperRegistry {
 
     public SwimLaneZookeeperRegistry(URL url, ZookeeperTransporter zookeeperTransporter) {
@@ -22,7 +23,7 @@ public class SwimLaneZookeeperRegistry extends ZookeeperRegistry {
     public void doRegister(URL url) {
         String swinLaneNo = SwimLaneUtil.getSwimLaneNo();
         if (StringUtils.isNotBlank(swinLaneNo)) {
-            url.addParameter("SWIM_LANE_NO", swinLaneNo);
+            url = url.addParameter("SWIM_LANE_NO", swinLaneNo);
         }
         super.doRegister(url);
     }

@@ -25,13 +25,9 @@
             <groupId>com.openwjk</groupId>
             <artifactId>central-dao</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.openwjk</groupId>-->
-<!--            <artifactId>central-dubbo-extension</artifactId>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <groupId>com.openwjk</groupId>
+            <artifactId>central-dubbo-extension</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

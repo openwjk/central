@@ -2,25 +2,25 @@ package com.openwjk.cds.registry;
 
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.extension.DisableInject;
-import org.apache.dubbo.registry.Registry;
-import org.apache.dubbo.registry.zookeeper.ZookeeperRegistryFactory;
+import org.apache.dubbo.metadata.report.MetadataReport;
+import org.apache.dubbo.metadata.store.zookeeper.ZookeeperMetadataReportFactory;
 import org.apache.dubbo.remoting.zookeeper.ZookeeperTransporter;
 import org.apache.dubbo.rpc.model.ApplicationModel;
 
 /**
  * @author wangjunkai
  * @description
- * @date 2023/8/27 10:08
+ * @date 2023/8/28 17:26
  */
-@Deprecated
-public class SwimLaneZookeeperRegistryFactory extends ZookeeperRegistryFactory {
+public class SwimLaneMetadataReportFactory extends ZookeeperMetadataReportFactory {
+
+
     private ZookeeperTransporter zookeeperTransporter;
 
-    public SwimLaneZookeeperRegistryFactory() {
-        this(ApplicationModel.defaultModel());
-    }
+    private ApplicationModel applicationModel;
 
-    public SwimLaneZookeeperRegistryFactory(ApplicationModel applicationModel) {
+    public SwimLaneMetadataReportFactory(ApplicationModel applicationModel) {
+        super(applicationModel);
         this.applicationModel = applicationModel;
         this.zookeeperTransporter = ZookeeperTransporter.getExtension(applicationModel);
     }
@@ -32,7 +32,7 @@ public class SwimLaneZookeeperRegistryFactory extends ZookeeperRegistryFactory {
     }
 
     @Override
-    public Registry createRegistry(URL url) {
-        return new SwimLaneZookeeperRegistry(url, zookeeperTransporter);
+    public MetadataReport createMetadataReport(URL url) {
+        return new SwimLaneMetadataReport(url, zookeeperTransporter);
     }
 }

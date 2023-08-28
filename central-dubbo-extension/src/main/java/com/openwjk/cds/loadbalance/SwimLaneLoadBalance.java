@@ -13,6 +13,7 @@ import org.apache.dubbo.rpc.cluster.LoadBalance;
 import org.apache.dubbo.rpc.cluster.loadbalance.AbstractLoadBalance;
 import org.apache.dubbo.rpc.model.ApplicationModel;
 import org.apache.dubbo.rpc.model.ScopeModelUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,9 +27,11 @@ import static org.apache.dubbo.common.constants.CommonConstants.DEFAULT_LOADBALA
  * @description
  * @date 2023/8/26 20:20
  */
+@Deprecated
 public class SwimLaneLoadBalance extends AbstractLoadBalance {
     public static final String NAME = "swimlane";
     private static final Logger logger = LoggerFactory.getLogger(SwimLaneLoadBalance.class);
+    @Override
     protected <T> Invoker<T> doSelect(List<Invoker<T>> invokers, URL url, Invocation invocation) {
         String swimLaneNo = SwimLaneUtil.getSwimLaneNo();
         String swimLog = SwimLaneUtil.getSwimLog();

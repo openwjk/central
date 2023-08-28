@@ -35,26 +35,31 @@ spring:
         min-idle: 20
     database: 0
     timeout: 60000ms
-  dubbo:
-    application:
-      id: central
-      name: central
-      owner: openwjk
-      organization: openwjk
-    registry:
-      address: 172.17.0.3:2181
-      protocol: zookeeper
-    provider:
-      protocol: dubbo
-      threads: 500
-      thread-pool: fixed
-      timeout: 5000
-      load-balance: leastactive
-      delay: -1
-      retries: 2
-    protocol:
-      name: dubbo
-      port: 20880
+dubbo:
+  application:
+    id: central
+    name: central
+    owner: openwjk
+    organization: openwjk
+  registry:
+    address: zk.openwjk.com:2181
+    protocol: swimlanezookeeper
+  metadata-report:
+    address: zk.openwjk.com:2181
+    protocol: swimlane
+    parameters:
+      SWIM_LANE_NO: wjk
+  provider:
+    protocol: tri
+    threads: 500
+    thread-pool: fixed
+    timeout: 5000
+    load-balance: swimlane
+    delay: -1
+    retries: 2
+  protocol:
+    name: tri
+    port: 20880
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件
 mybatis:
