@@ -12,7 +12,6 @@ import org.apache.dubbo.remoting.zookeeper.ZookeeperTransporter;
  * @description
  * @date 2023/8/27 10:27
  */
-@Deprecated
 public class SwimLaneZookeeperRegistry extends ZookeeperRegistry {
 
     public SwimLaneZookeeperRegistry(URL url, ZookeeperTransporter zookeeperTransporter) {

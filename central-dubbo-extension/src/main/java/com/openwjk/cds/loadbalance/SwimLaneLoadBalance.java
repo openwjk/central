@@ -27,7 +27,6 @@ import static org.apache.dubbo.common.constants.CommonConstants.DEFAULT_LOADBALA
  * @description
  * @date 2023/8/26 20:20
  */
-@Deprecated
 public class SwimLaneLoadBalance extends AbstractLoadBalance {
     public static final String NAME = "swimlane";
     private static final Logger logger = LoggerFactory.getLogger(SwimLaneLoadBalance.class);

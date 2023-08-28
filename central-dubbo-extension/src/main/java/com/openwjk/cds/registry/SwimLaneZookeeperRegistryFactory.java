@@ -12,7 +12,6 @@ import org.apache.dubbo.rpc.model.ApplicationModel;
  * @description
  * @date 2023/8/27 10:08
  */
-@Deprecated
 public class SwimLaneZookeeperRegistryFactory extends ZookeeperRegistryFactory {
     private ZookeeperTransporter zookeeperTransporter;
 
