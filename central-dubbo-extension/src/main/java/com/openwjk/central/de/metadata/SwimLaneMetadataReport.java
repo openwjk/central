@@ -1,7 +1,7 @@
-package com.openwjk.cds.metadata;
+package com.openwjk.central.de.metadata;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.openwjk.cds.utils.SwimLaneUtil;
+import com.openwjk.central.de.utils.SwimLaneUtil;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.metadata.report.identifier.MetadataIdentifier;

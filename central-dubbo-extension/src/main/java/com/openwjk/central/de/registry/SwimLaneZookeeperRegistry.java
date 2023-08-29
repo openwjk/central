@@ -1,6 +1,6 @@
-package com.openwjk.cds.registry;
+package com.openwjk.central.de.registry;
 
-import com.openwjk.cds.utils.SwimLaneUtil;
+import com.openwjk.central.de.utils.SwimLaneUtil;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.registry.zookeeper.ZookeeperRegistry;

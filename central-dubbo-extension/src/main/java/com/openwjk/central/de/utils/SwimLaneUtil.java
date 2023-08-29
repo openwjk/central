@@ -1,4 +1,4 @@
-package com.openwjk.cds.utils;
+package com.openwjk.central.de.utils;
 
 import org.apache.dubbo.common.logger.Logger;
 import org.apache.dubbo.common.logger.LoggerFactory;

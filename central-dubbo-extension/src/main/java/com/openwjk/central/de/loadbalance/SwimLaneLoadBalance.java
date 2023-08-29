@@ -1,6 +1,6 @@
-package com.openwjk.cds.loadbalance;
+package com.openwjk.central.de.loadbalance;
 
-import com.openwjk.cds.utils.SwimLaneUtil;
+import com.openwjk.central.de.utils.SwimLaneUtil;
 import org.apache.dubbo.common.Node;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.logger.Logger;
@@ -13,7 +13,6 @@ import org.apache.dubbo.rpc.cluster.LoadBalance;
 import org.apache.dubbo.rpc.cluster.loadbalance.AbstractLoadBalance;
 import org.apache.dubbo.rpc.model.ApplicationModel;
 import org.apache.dubbo.rpc.model.ScopeModelUtil;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
