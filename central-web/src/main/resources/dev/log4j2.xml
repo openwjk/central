@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <Properties>
-        <Property name="LOG_HOME">E:\\logs</Property>
+        <Property name="LOG_HOME">${sys:catalina.home}/logs</Property>
     </Properties>
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
