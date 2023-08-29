@@ -1,6 +1,5 @@
 package com.openwjk.central;
 
-import com.openwjk.central.service.impl.DubboTestServiceImpl;
 import com.openwjk.central.service.service.DubboTestService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.junit.Test;

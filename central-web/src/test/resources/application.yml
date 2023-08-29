@@ -43,17 +43,26 @@ dubbo:
     organization: openwjk
   registry:
     address: zk.openwjk.com:2181
-    protocol: swimlanezookeeper
+    protocol: zookeeper
+  #  metadata-report:
+  #    address: zk.openwjk.com:2181
+  #    protocol: swimlane
+  #    parameters:
+  #      SWIM_LANE_NO: wjk
   provider:
-    protocol: dubbo
+    protocol: tri
     threads: 500
     thread-pool: fixed
     timeout: 5000
-    load-balance: swimlane
+    load-balance: random
     delay: -1
     retries: 2
+    tag: wjk4
+  consumer:
+    tag: wjk5
+    timeout: 300000
   protocol:
-    name: dubbo
+    name: tri
     port: 20880
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件

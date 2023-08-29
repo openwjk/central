@@ -14,7 +14,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 public class DubboTestServiceImpl implements DubboTestService {
     @Override
     public String test() {
-        log.info("DubboTestServiceImpl.tset success ");
+        log.info("DubboTestServiceImpl.test success ");
         return "success.";
     }
 }

@@ -57,8 +57,7 @@ dubbo:
     load-balance: random
     delay: -1
     retries: 2
-    parameters:
-      SWIM_LANE_NO: wjk1
+    tag: wjk4
   protocol:
     name: tri
     port: 20880
@@ -81,5 +80,5 @@ qw:
      agentId: 1000002
 auth:
   enable: 1
-  ignore-url: /account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**
+  ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**
 
