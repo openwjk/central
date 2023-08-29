@@ -1,4 +1,4 @@
-package com.openwjk.cds.registry;
+package com.openwjk.cds.metadata;
 
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.extension.DisableInject;

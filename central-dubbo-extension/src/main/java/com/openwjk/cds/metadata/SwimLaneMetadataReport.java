@@ -1,4 +1,4 @@
-package com.openwjk.cds.registry;
+package com.openwjk.cds.metadata;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.openwjk.cds.utils.SwimLaneUtil;
@@ -24,7 +24,7 @@ public class SwimLaneMetadataReport extends ZookeeperMetadataReport {
         String swinLaneNo = SwimLaneUtil.getSwimLaneNo();
         if (StringUtils.isNotBlank(serviceDefinitions) && StringUtils.isNotBlank(swinLaneNo)) {
             try {
-                
+
                 JSONObject object = JSONObject.parseObject(serviceDefinitions);
                 if (object.containsKey("parameters")) {
                     JSONObject paramObj = (JSONObject) object.get("parameters");
