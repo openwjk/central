@@ -43,20 +43,22 @@ dubbo:
     organization: openwjk
   registry:
     address: zk.openwjk.com:2181
-    protocol: swimlanezookeeper
-  metadata-report:
-    address: zk.openwjk.com:2181
-    protocol: swimlane
-    parameters:
-      SWIM_LANE_NO: wjk
+    protocol: zookeeper
+#  metadata-report:
+#    address: zk.openwjk.com:2181
+#    protocol: swimlane
+#    parameters:
+#      SWIM_LANE_NO: wjk
   provider:
     protocol: tri
     threads: 500
     thread-pool: fixed
     timeout: 5000
-    load-balance: swimlane
+    load-balance: random
     delay: -1
     retries: 2
+    parameters:
+      SWIM_LANE_NO: wjk1
   protocol:
     name: tri
     port: 20880
