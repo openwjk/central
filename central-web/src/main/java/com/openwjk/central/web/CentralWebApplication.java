@@ -1,5 +1,6 @@
 package com.openwjk.central.web;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {DruidDataSourceAutoConfigure.class})
 @ComponentScan("com.openwjk.central")
 @EnableScheduling
 @EnableCaching

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @date 2023/7/29 18:35
  */
 @Configuration
-public class Swagger {
+public class SwaggerConfig {
     @Bean
     public Docket docket(){
         return new Docket(DocumentationType.SWAGGER_2)
