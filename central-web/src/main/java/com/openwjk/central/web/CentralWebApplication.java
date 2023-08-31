@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 
-@SpringBootApplication(exclude = {DruidDataSourceAutoConfigure.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan("com.openwjk.central")
 @EnableScheduling
 @EnableCaching

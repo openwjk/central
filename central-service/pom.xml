@@ -20,6 +20,12 @@
         <dependency>
             <groupId>com.openwjk</groupId>
             <artifactId>central-remote</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>fastjson2</artifactId>
+                    <groupId>com.alibaba.fastjson2</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.openwjk</groupId>
@@ -28,6 +34,12 @@
         <dependency>
             <groupId>com.openwjk</groupId>
             <artifactId>central-dubbo-extension</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -52,6 +64,12 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--pop3和imap4的邮件服务-->
         <dependency>

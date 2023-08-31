@@ -9,6 +9,7 @@ import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardS
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ public class DataSourceConfig {
     DataSourceProperties dataSourceProperties;
 
     @Bean
+    @Primary
     public DataSource dataSource() {
         // 配置真实数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>();
@@ -49,7 +51,7 @@ public class DataSourceConfig {
         dataSourceMap.put("ds1", dataSource2);*/
 
         // 配置 t_order 表规则
-        ShardingTableRuleConfiguration orderTableRuleConfig = new ShardingTableRuleConfiguration("test", "ds0.test_${0..1}");
+        ShardingTableRuleConfiguration orderTableRuleConfig = new ShardingTableRuleConfiguration("test", "ds0.test${0..1}");
 
         // 配置分库策略
 //        orderTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("column_id", "dbShardingAlgorithm"));
@@ -71,7 +73,7 @@ public class DataSourceConfig {
 
         // 配置分表算法
         Properties tableShardingAlgorithmrProps = new Properties();
-        tableShardingAlgorithmrProps.setProperty("algorithm-expression", "test_${id % 2}");
+        tableShardingAlgorithmrProps.setProperty("algorithm-expression", "test${id % 2}");
         shardingRuleConfig.getShardingAlgorithms().put("tableShardingAlgorithm", new AlgorithmConfiguration("INLINE", tableShardingAlgorithmrProps));
 
         DataSource dataSource = null;

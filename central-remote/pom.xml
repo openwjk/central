@@ -25,6 +25,12 @@
         <dependency>
             <groupId>com.openwjk</groupId>
             <artifactId>central-commons</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>joda-time</artifactId>
+                    <groupId>joda-time</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.openwjk</groupId>
