@@ -6,6 +6,7 @@ import org.apache.shardingsphere.infra.config.algorithm.AlgorithmConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,6 +24,9 @@ import java.util.Properties;
  */
 @Configuration
 public class DataSourceConfig {
+    @Autowired
+    DataSourceProperties dataSourceProperties;
+
     @Bean
     public DataSource dataSource() {
         // 配置真实数据源
@@ -30,10 +34,10 @@ public class DataSourceConfig {
 
         // 配置第 1 个数据源
         DruidDataSource dataSource1 = new DruidDataSource();
-        dataSource1.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource1.setUrl("jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC");
-        dataSource1.setUsername("root");
-        dataSource1.setPassword("root");
+        dataSource1.setDriverClassName(dataSourceProperties.getShardingJdbc().get(0).getDriverClassName());
+        dataSource1.setUrl(dataSourceProperties.getShardingJdbc().get(0).getUrl());
+        dataSource1.setUsername(dataSourceProperties.getShardingJdbc().get(0).getUsername());
+        dataSource1.setPassword(dataSourceProperties.getShardingJdbc().get(0).getPassword());
         dataSourceMap.put("ds0", dataSource1);
 
         // 配置第 2 个数据源
