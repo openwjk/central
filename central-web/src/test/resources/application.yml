@@ -57,10 +57,7 @@ dubbo:
     load-balance: random
     delay: -1
     retries: 2
-    tag: wjk4
-  consumer:
-    tag: wjk5
-    timeout: 300000
+  #    tag: wjk
   protocol:
     name: tri
     port: 20880
@@ -83,5 +80,5 @@ qw:
       agentId: 1000002
 auth:
   enable: 1
-  ignore-url: /account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**
+  ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**
 

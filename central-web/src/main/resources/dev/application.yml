@@ -57,7 +57,7 @@ dubbo:
     load-balance: random
     delay: -1
     retries: 2
-    tag: wjk4
+#    tag: wjk
   protocol:
     name: tri
     port: 20880
