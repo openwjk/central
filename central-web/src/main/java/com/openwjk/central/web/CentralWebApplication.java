@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @ComponentScan("com.openwjk.central")
 @EnableScheduling
 @EnableCaching
-@EnableDubbo(scanBasePackages = {"com.openwjk.central.service"})
+@EnableDubbo(scanBasePackages = {"com.openwjk.central"})
 @EnableSwagger2WebMvc
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.openwjk.central.dao.mapper"}, annotationClass = Mapper.class)
