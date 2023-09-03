@@ -1,5 +1,7 @@
 package com.openwjk.central.service.impl;
 
+import com.openwjk.central.commons.domain.Result;
+import com.openwjk.central.commons.domain.Status;
 import com.openwjk.central.commons.utils.Constants;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.dao.mapper.AccountDOMapper;
@@ -38,6 +40,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountTypeDOMapper accountTypeDOMapper;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    SnowflakeService snowflakeService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -46,7 +50,13 @@ public class AccountServiceImpl implements AccountService {
         if (CollectionUtils.isNotEmpty(accountTypeDOS)) {
             throw new ParamInvalidException("", "", null, "该账号已存在，请重新输入账号！");
         }
-        String uId = RandomCodeUtil.getUuId();
+        Result result = snowflakeService.getId();
+        Long uId = null;
+        if (StringUtils.equals(result.getStatus().name(), Status.SUCCESS.name())) {
+            uId = result.getId();
+        } else {
+            throw new ParamInvalidException("", "", null, "注册失败，请重试");
+        }
         String password = EncryptUtil.md5(EncryptUtil.md5(reqVO.getPassword()));
         AccountDO accountDO = new AccountDO();
         accountDO.setuId(uId);
@@ -78,7 +88,7 @@ public class AccountServiceImpl implements AccountService {
             throw new ParamInvalidException("", "", null, "该账号不存在，请重新输入账号或注册！");
         }
         AccountTypeDO accountType = accountTypeDOS.get(Constant.INT_ZERO);
-        String uId = accountType.getuId();
+        Long uId = accountType.getuId();
         String password = EncryptUtil.md5(EncryptUtil.md5(reqVO.getPassword()));
         AccountDOExample example = new AccountDOExample();
         example.createCriteria().andUIdEqualTo(uId).andPasswordEqualTo(password).andIsDeletedEqualTo(Constant.STR_N);

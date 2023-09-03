@@ -9,7 +9,7 @@
     <result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="IS_DELETED" jdbcType="VARCHAR" property="isDeleted" />
     <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
-    <result column="U_ID" jdbcType="VARCHAR" property="uId" />
+    <result column="U_ID" jdbcType="BIGINT" property="uId" />
     <result column="TYPE" jdbcType="VARCHAR" property="type" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -100,7 +100,7 @@
       ACCOUNT, U_ID, TYPE)
     values (#{id,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{modifier,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=VARCHAR}, 
-      #{account,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+      #{account,jdbcType=VARCHAR}, #{uId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.AccountTypeDO">
     insert into ct_account_type
@@ -156,7 +156,7 @@
         #{account,jdbcType=VARCHAR},
       </if>
       <if test="uId != null">
-        #{uId,jdbcType=VARCHAR},
+        #{uId,jdbcType=BIGINT},
       </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
@@ -194,7 +194,7 @@
         ACCOUNT = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.uId != null">
-        U_ID = #{record.uId,jdbcType=VARCHAR},
+        U_ID = #{record.uId,jdbcType=BIGINT},
       </if>
       <if test="record.type != null">
         TYPE = #{record.type,jdbcType=VARCHAR},
@@ -213,7 +213,7 @@
       GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       IS_DELETED = #{record.isDeleted,jdbcType=VARCHAR},
       ACCOUNT = #{record.account,jdbcType=VARCHAR},
-      U_ID = #{record.uId,jdbcType=VARCHAR},
+      U_ID = #{record.uId,jdbcType=BIGINT},
       TYPE = #{record.type,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -241,7 +241,7 @@
         ACCOUNT = #{account,jdbcType=VARCHAR},
       </if>
       <if test="uId != null">
-        U_ID = #{uId,jdbcType=VARCHAR},
+        U_ID = #{uId,jdbcType=BIGINT},
       </if>
       <if test="type != null">
         TYPE = #{type,jdbcType=VARCHAR},
@@ -257,7 +257,7 @@
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       IS_DELETED = #{isDeleted,jdbcType=VARCHAR},
       ACCOUNT = #{account,jdbcType=VARCHAR},
-      U_ID = #{uId,jdbcType=VARCHAR},
+      U_ID = #{uId,jdbcType=BIGINT},
       TYPE = #{type,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
