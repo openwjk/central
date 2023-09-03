@@ -27,16 +27,16 @@ spring:
     sharding-jdbc:
       -
         name: central
-        url: jdbc:mysql://mysql.openwjk.com:3306/central
+        url: jdbc:mysql://mysql.openwjk.com:3306/central0
         username: root
         password: Qq-999999
         driver-class-name: com.mysql.cj.jdbc.Driver
-  #      - ds:
-  #          name: central
-  #          url: jdbc:mysql://mysql.openwjk.com:3306/central
-  #          username: root
-  #          password: 123456
-  #          driver-class-name: com.mysql.cj.jdbc.Driver
+#      -
+#        name: central
+#        url: jdbc:mysql://mysql.openwjk.com:3306/central1
+#        username: root
+#        password: Qq-999999
+#        driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     cluster:
       nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
