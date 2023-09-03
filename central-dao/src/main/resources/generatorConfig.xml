@@ -27,7 +27,7 @@
         <!-- 配置数据库连接 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://mysql.openwjk.com:3306/central"
-                        userId="root" password="123456">
+                        userId="root" password="Qq-999999">
         </jdbcConnection>
         <!--不使用BigDecimal类型 java类型解析器-->
         <javaTypeResolver>
@@ -61,6 +61,7 @@
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
+            <columnOverride column="U_ID" property="uId" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
         <table tableName="ct_account_type" domainObjectName="AccountTypeDO"
@@ -68,6 +69,7 @@
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
+            <columnOverride column="U_ID" property="uId" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
         <table tableName="ct_config" domainObjectName="ConfigDO"
