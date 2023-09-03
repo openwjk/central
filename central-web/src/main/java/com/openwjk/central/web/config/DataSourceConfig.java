@@ -1,9 +1,11 @@
 package com.openwjk.central.web.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.google.common.collect.Lists;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.algorithm.AlgorithmConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
+import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableReferenceRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,42 +45,52 @@ public class DataSourceConfig {
         dataSourceMap.put("ds0", dataSource1);
 
         // 配置第 2 个数据源
-/*        DruidDataSource dataSource2 = new DruidDataSource();
-        dataSource2.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource2.setUrl("jdbc:mysql://127.0.0.1:3306/zhaohy1?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC");
-        dataSource2.setUsername("root");
-        dataSource2.setPassword("root");
-        dataSourceMap.put("ds1", dataSource2);*/
+        DruidDataSource dataSource2 = new DruidDataSource();
+        dataSource1.setDriverClassName(dataSourceProperties.getShardingJdbc().get(0).getDriverClassName());
+        dataSource1.setUrl(dataSourceProperties.getShardingJdbc().get(0).getUrl());
+        dataSource1.setUsername(dataSourceProperties.getShardingJdbc().get(0).getUsername());
+        dataSource1.setPassword(dataSourceProperties.getShardingJdbc().get(0).getPassword());
+        dataSourceMap.put("ds1", dataSource2);
 
-        // 配置 t_order 表规则
-        ShardingTableRuleConfiguration orderTableRuleConfig = new ShardingTableRuleConfiguration("test", "ds0.test${0..1}");
 
-        // 配置分库策略
-//        orderTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("column_id", "dbShardingAlgorithm"));
 
+
+
+        // 配置表
+        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds0.ct_account_${0..1}");
+        ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds0.ct_account_type_${0..1}");
         // 配置分表策略
-        orderTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("id", "tableShardingAlgorithm"));
-
-        // 省略配置 t_order_item 表规则...
-        // ...
-
-        // 配置分片规则
-        ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getTables().add(orderTableRuleConfig);
-
-        // 配置分库算法
-//        Properties dbShardingAlgorithmrProps = new Properties();
-//        dbShardingAlgorithmrProps.setProperty("algorithm-expression", "ds${column_id % 2}");
-//        shardingRuleConfig.getShardingAlgorithms().put("dbShardingAlgorithm", new ShardingSphereAlgorithmConfiguration("INLINE", dbShardingAlgorithmrProps));
-
+        accountTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountShardingAlgorithm"));
+        accountTypeTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountTypeShardingAlgorithm"));
         // 配置分表算法
-        Properties tableShardingAlgorithmrProps = new Properties();
-        tableShardingAlgorithmrProps.setProperty("algorithm-expression", "test${id % 2}");
-        shardingRuleConfig.getShardingAlgorithms().put("tableShardingAlgorithm", new AlgorithmConfiguration("INLINE", tableShardingAlgorithmrProps));
+        Properties accountShardingAlgorithmrProps = new Properties();
+        accountShardingAlgorithmrProps.setProperty("algorithm-expression", "ct_account_${U_ID % 2}");
+        Properties accountTypeShardingAlgorithmrProps = new Properties();
+        accountTypeShardingAlgorithmrProps.setProperty("algorithm-expression", "ct_account_type_${U_ID % 2}");
+        // 配置分片规则
+        ShardingRuleConfiguration tableShardingRuleConfig = new ShardingRuleConfiguration();
+        tableShardingRuleConfig.getTables().add(accountTableRuleConfig);
+        tableShardingRuleConfig.getShardingAlgorithms()
+                .put("accountShardingAlgorithm", new AlgorithmConfiguration("INLINE", accountShardingAlgorithmrProps));
+
+        tableShardingRuleConfig.getTables().add(accountTypeTableRuleConfig);
+        tableShardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", new AlgorithmConfiguration("INLINE", accountTypeShardingAlgorithmrProps));
+
+        //配置绑定关系，避免出现笛卡尔集
+        tableShardingRuleConfig.getBindingTableGroups()
+                .add(new ShardingTableReferenceRuleConfiguration("ct_account", "ct_account_type"));
+
+
+//        // 配置分库策略
+//        accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "dbShardingAlgorithm"));
+//        // 配置分库算法
+//        Properties dbShardingAlgorithmrProps = new Properties();
+//        dbShardingAlgorithmrProps.setProperty("algorithm-expression", "ds${U_ID % 2}");
+//        tableShardingRuleConfig.getShardingAlgorithms().put("dbShardingAlgorithm", new AlgorithmConfiguration("INLINE", dbShardingAlgorithmrProps));
 
         DataSource dataSource = null;
         try {
-            dataSource = ShardingSphereDataSourceFactory.createDataSource(dataSourceMap, Collections.singleton(shardingRuleConfig), new Properties());
+            dataSource = ShardingSphereDataSourceFactory.createDataSource(dataSourceMap, Lists.newArrayList(tableShardingRuleConfig), new Properties());
         } catch (SQLException e) {
             e.printStackTrace();
         }
