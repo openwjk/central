@@ -35,8 +35,8 @@ public class LeafTest {
     public void accountTest() {
         for (Long i = 1L; i < 100; i++) {
             LoginAccountReqVO reqVO = new LoginAccountReqVO();
-            reqVO.setAccount("ss" + i);
-            reqVO.setPassword("cc" + i);
+            reqVO.setAccount("ss" +i);
+            reqVO.setPassword("cc"+i);
             accountController.register(reqVO);
         }
     }
