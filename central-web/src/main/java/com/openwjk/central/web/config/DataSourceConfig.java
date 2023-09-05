@@ -8,7 +8,6 @@ import org.apache.shardingsphere.infra.config.algorithm.AlgorithmConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableReferenceRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfiguration;
-import org.apache.shardingsphere.sharding.api.config.strategy.sharding.NoneShardingStrategyConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -64,6 +63,7 @@ public class DataSourceConfig {
 
         // 配置分库策略
         accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "dbShardingAlgorithm"));
+        accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "dbShardingAlgorithm"));
         // 配置分库算法
         Properties dbShardingAlgorithmrProps = new Properties();
         dbShardingAlgorithmrProps.setProperty("algorithm-expression", "ds${U_ID % 2}");
@@ -76,13 +76,6 @@ public class DataSourceConfig {
             e.printStackTrace();
         }
         return dataSource;
-    }
-
-    private ShardingTableRuleConfiguration getTableRuleConfig() {
-        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account");
-        accountTableRuleConfig.setTableShardingStrategy(new NoneShardingStrategyConfiguration());
-        accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountDbShardingAlgorithm"));
-        return accountTableRuleConfig;
     }
 
     private Map<String, DataSource> createDataSources() {
