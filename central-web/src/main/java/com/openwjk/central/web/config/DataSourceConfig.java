@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -66,8 +65,9 @@ public class DataSourceConfig {
         accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "dbShardingAlgorithm"));
         // 配置分库算法
         Properties dbShardingAlgorithmrProps = new Properties();
-        dbShardingAlgorithmrProps.setProperty("algorithm-expression", "ds${U_ID % 2}");
-        tableShardingRuleConfig.getShardingAlgorithms().put("dbShardingAlgorithm", new AlgorithmConfiguration("INLINE", dbShardingAlgorithmrProps));
+        dbShardingAlgorithmrProps.setProperty("strategy", "STANDARD");
+        dbShardingAlgorithmrProps.setProperty("algorithmClassName", "com.openwjk.central.web.config.DbShardingAlgorithm");
+        tableShardingRuleConfig.getShardingAlgorithms().put("dbShardingAlgorithm", new AlgorithmConfiguration("CLASS_BASED", dbShardingAlgorithmrProps));
 
         DataSource dataSource = null;
         try {
