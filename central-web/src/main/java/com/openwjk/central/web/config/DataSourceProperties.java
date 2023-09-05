@@ -13,62 +13,28 @@ import java.util.List;
  */
 @Component
 @ConfigurationProperties("spring.datasource")
+@Data
 public class DataSourceProperties {
     private List<ShardingJdbc> shardingJdbc;
-
-    public List<ShardingJdbc> getShardingJdbc() {
-        return shardingJdbc;
-    }
-
-    public void setShardingJdbc(List<ShardingJdbc> shardingJdbc) {
-        this.shardingJdbc = shardingJdbc;
-    }
-
+    @Data
     public static class ShardingJdbc {
         private String name;
         private String url;
         private String username;
         private String password;
         private String driverClassName;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getDriverClassName() {
-            return driverClassName;
-        }
-
-        public void setDriverClassName(String driverClassName) {
-            this.driverClassName = driverClassName;
-        }
+        private String filters;
+        private int maxActive;
+        private int initialSize;
+        private long maxWait;
+        private int minIdle;
+        private long timeBetweenEvictionRunsMillis;
+        private long minEvictableIdleTimeMillis;
+        private String validationQuery;
+        private boolean testWhileIdle;
+        private boolean testOnBorrow;
+        private boolean testOnReturn;
+        private boolean poolPreparedStatements;
+        private String connectionProperties;
     }
 }
