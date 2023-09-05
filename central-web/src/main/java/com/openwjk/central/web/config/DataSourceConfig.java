@@ -31,7 +31,6 @@ public class DataSourceConfig {
     DataSourceProperties dataSourceProperties;
 
     @Bean
-    @Primary
     public DataSource dataSource() {
         // 配置真实数据源
         Map<String, DataSource> dataSourceMap = createDataSources();
