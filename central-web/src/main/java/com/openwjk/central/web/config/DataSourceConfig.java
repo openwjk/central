@@ -1,13 +1,22 @@
 package com.openwjk.central.web.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.google.common.collect.Lists;
+import com.openwjk.central.commons.utils.IpUtils;
+import com.openwjk.central.commons.utils.RedisLockUtil;
+import com.openwjk.central.commons.utils.RedisUtil;
+import com.openwjk.commons.utils.Constant;
+import com.openwjk.commons.utils.RandomCodeUtil;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.algorithm.AlgorithmConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableReferenceRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfiguration;
+import org.apache.shardingsphere.sharding.api.config.strategy.keygen.KeyGenerateStrategyConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +38,8 @@ import java.util.Properties;
 public class DataSourceConfig {
     @Autowired
     DataSourceProperties dataSourceProperties;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Bean
     public DataSource dataSource() {
@@ -42,7 +53,7 @@ public class DataSourceConfig {
         shardingRuleConfig.getShardingAlgorithms().put("accountShardingAlgorithm", getAlgorithmConfig("INLINE", "accountShardingAlgorithm"));
         shardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", getAlgorithmConfig("INLINE", "accountTypeShardingAlgorithm"));
         shardingRuleConfig.getShardingAlgorithms().put("accountDBShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "accountDBShardingAlgorithm"));
-
+        shardingRuleConfig.getKeyGenerators().put("snowflakeAlgorithm", getAlgorithmConfig("SNOWFLAKE", "snowflakeAlgorithm"));
         //配置绑定关系，避免出现笛卡尔集
         shardingRuleConfig.getBindingTableGroups().add(new ShardingTableReferenceRuleConfiguration("ct_account", "ct_account_type"));
 
@@ -69,11 +80,50 @@ public class DataSourceConfig {
                 properties.setProperty("strategy", "STANDARD");
                 properties.setProperty("algorithmClassName", "com.openwjk.central.web.config.DbShardingAlgorithm");
                 break;
+            case "snowflakeAlgorithm":
+                properties.setProperty("worker-id", getWorkId());
+                break;
             default:
                 break;
         }
 
         return new AlgorithmConfiguration(type, properties);
+    }
+
+    private static final String SNOWFLAKE_WORK_ID = "SNOWFLAKE_WORK_ID";
+    private static final String SNOWFLAKE_WORK_ID_LOCK = "SNOWFLAKE_WORK_ID_LOCK";
+    @Autowired
+    private RedisLockUtil redisLockUtil;
+
+    @SneakyThrows
+    private String getWorkId() {
+        String value = RandomCodeUtil.generateCode(Constant.INT_TEN);
+        try {
+            if (redisLockUtil.tryLock(SNOWFLAKE_WORK_ID_LOCK, value, Constant.INT_THIRTY)) {
+                String ip = IpUtils.getIp();
+                String ipsStr = redisUtil.get(SNOWFLAKE_WORK_ID);
+                List<String> ips = Lists.newArrayList();
+                if (StringUtils.isNotBlank(ipsStr)) {
+                    ips = JSONArray.parseArray(ipsStr, String.class);
+                    if (ips.contains(ip)) {
+                        return String.valueOf(ips.indexOf(ip) + Constant.INT_ONE);
+                    } else {
+                        ips.add(ip);
+                        redisUtil.set(SNOWFLAKE_WORK_ID, JSON.toJSONString(ips));
+                        return String.valueOf(ips.size());
+                    }
+
+                } else {
+                    ips.add(ip);
+                    redisUtil.set(SNOWFLAKE_WORK_ID, JSON.toJSONString(ips));
+                    return String.valueOf(ips.size());
+                }
+            } else {
+                throw new Exception("获取锁失败");
+            }
+        } finally {
+            redisLockUtil.releaseLock(SNOWFLAKE_WORK_ID_LOCK, value);
+        }
     }
 
     //表配置
@@ -88,7 +138,11 @@ public class DataSourceConfig {
         // 配置分库策略
         accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountDBShardingAlgorithm"));
         accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountDBShardingAlgorithm"));
-        return Lists.newArrayList(accountTableRuleConfig,accountTypeTableRuleConfig);
+
+        // 配置id生成策略
+        accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
+        accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
+        return Lists.newArrayList(accountTableRuleConfig, accountTypeTableRuleConfig);
     }
 
 
