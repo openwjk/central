@@ -36,24 +36,24 @@ import java.util.Properties;
  */
 @Configuration
 public class DataSourceConfig {
+    private static final String SNOWFLAKE_WORK_ID = "SNOWFLAKE_WORK_ID";
+    private static final String SNOWFLAKE_WORK_ID_LOCK = "SNOWFLAKE_WORK_ID_LOCK";
     @Autowired
     DataSourceProperties dataSourceProperties;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    private RedisLockUtil redisLockUtil;
 
     @Bean
     public DataSource dataSource() {
         // 配置真实数据源
         Map<String, DataSource> dataSourceMap = createDataSources();
-        // 配置分片规则
-        List<ShardingTableRuleConfiguration> tableRuleConfigList = getTableRuleConfig();
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getTables().addAll(tableRuleConfigList);
+        // 配置分片规则
+        setTableRuleConfig(shardingRuleConfig);
         //算法配置
-        shardingRuleConfig.getShardingAlgorithms().put("accountShardingAlgorithm", getAlgorithmConfig("INLINE", "accountShardingAlgorithm"));
-        shardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", getAlgorithmConfig("INLINE", "accountTypeShardingAlgorithm"));
-        shardingRuleConfig.getShardingAlgorithms().put("accountDBShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "accountDBShardingAlgorithm"));
-        shardingRuleConfig.getKeyGenerators().put("snowflakeAlgorithm", getAlgorithmConfig("SNOWFLAKE", "snowflakeAlgorithm"));
+        setShardingAlgorithms(shardingRuleConfig);
         //配置绑定关系，避免出现笛卡尔集
         shardingRuleConfig.getBindingTableGroups().add(new ShardingTableReferenceRuleConfiguration("ct_account", "ct_account_type"));
 
@@ -66,15 +66,22 @@ public class DataSourceConfig {
         return dataSource;
     }
 
+    private void setShardingAlgorithms(ShardingRuleConfiguration shardingRuleConfig) {
+        shardingRuleConfig.getShardingAlgorithms().put("accountShardingAlgorithm", getAlgorithmConfig("INLINE", "accountShardingAlgorithm"));
+        shardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", getAlgorithmConfig("INLINE", "accountTypeShardingAlgorithm"));
+        shardingRuleConfig.getShardingAlgorithms().put("accountDBShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "accountDBShardingAlgorithm"));
+        shardingRuleConfig.getKeyGenerators().put("snowflakeAlgorithm", getAlgorithmConfig("SNOWFLAKE", "snowflakeAlgorithm"));
+    }
+
     //获取算法配置
     private AlgorithmConfiguration getAlgorithmConfig(String type, String code) {
         Properties properties = new Properties();
         switch (code) {
             case "accountShardingAlgorithm":
-                properties.setProperty("algorithm-expression", "ct_account_${U_ID % 2}");
+                properties.setProperty("algorithm-expression", "ct_account_${ID % 3}");
                 break;
             case "accountTypeShardingAlgorithm":
-                properties.setProperty("algorithm-expression", "ct_account_type_${U_ID % 2}");
+                properties.setProperty("algorithm-expression", "ct_account_type_${ID % 3}");
                 break;
             case "accountDBShardingAlgorithm":
                 properties.setProperty("strategy", "STANDARD");
@@ -82,6 +89,7 @@ public class DataSourceConfig {
                 break;
             case "snowflakeAlgorithm":
                 properties.setProperty("worker-id", getWorkId());
+                properties.setProperty("max-tolerate-time-difference-milliseconds", Constant.STRING_ZERO);
                 break;
             default:
                 break;
@@ -89,11 +97,6 @@ public class DataSourceConfig {
 
         return new AlgorithmConfiguration(type, properties);
     }
-
-    private static final String SNOWFLAKE_WORK_ID = "SNOWFLAKE_WORK_ID";
-    private static final String SNOWFLAKE_WORK_ID_LOCK = "SNOWFLAKE_WORK_ID_LOCK";
-    @Autowired
-    private RedisLockUtil redisLockUtil;
 
     @SneakyThrows
     private String getWorkId() {
@@ -126,26 +129,28 @@ public class DataSourceConfig {
         }
     }
 
+    // 配置分片规则
     //表配置
-    private List<ShardingTableRuleConfiguration> getTableRuleConfig() {
+    private void setTableRuleConfig(ShardingRuleConfiguration shardingRuleConfig) {
 
         //配置逻辑表映射
-        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account_${0..1}");
-        ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds${0..1}.ct_account_type_${0..1}");
+        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account_${0..2}");
+        ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds${0..1}.ct_account_type_${0..2}");
         // 配置分表策略
-        accountTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountShardingAlgorithm"));
-        accountTypeTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountTypeShardingAlgorithm"));
+        accountTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountShardingAlgorithm"));
+        accountTypeTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountTypeShardingAlgorithm"));
         // 配置分库策略
-        accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountDBShardingAlgorithm"));
-        accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("U_ID", "accountDBShardingAlgorithm"));
-
+        accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountDBShardingAlgorithm"));
+        accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountDBShardingAlgorithm"));
         // 配置id生成策略
+        //结合业务思考，如果并发不大不建议使用，并发不大的情况下生成的几乎全为偶数
         accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
         accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
-        return Lists.newArrayList(accountTableRuleConfig, accountTypeTableRuleConfig);
+
+        shardingRuleConfig.getTables().addAll(Lists.newArrayList(accountTableRuleConfig, accountTypeTableRuleConfig));
     }
 
-
+    // 配置真实数据源
     private Map<String, DataSource> createDataSources() {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         for (int i = 0; i < dataSourceProperties.getShardingJdbc().size(); i++) {
