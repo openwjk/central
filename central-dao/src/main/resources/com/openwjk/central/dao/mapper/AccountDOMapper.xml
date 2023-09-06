@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.openwjk.central.dao.model.AccountDO">
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="IS_DELETED" jdbcType="VARCHAR" property="isDeleted" />
-    <result column="U_ID" jdbcType="BIGINT" property="uId" />
+    <result column="U_ID" jdbcType="VARCHAR" property="uId" />
     <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
   </resultMap>
@@ -93,7 +93,7 @@
   <insert id="insert" parameterType="com.openwjk.central.dao.model.AccountDO">
     insert into ct_account (ID, IS_DELETED, U_ID, 
       PASSWORD, STATUS)
-    values (#{id,jdbcType=BIGINT}, #{isDeleted,jdbcType=VARCHAR}, #{uId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{isDeleted,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.AccountDO">
@@ -123,7 +123,7 @@
         #{isDeleted,jdbcType=VARCHAR},
       </if>
       <if test="uId != null">
-        #{uId,jdbcType=BIGINT},
+        #{uId,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -149,7 +149,7 @@
         IS_DELETED = #{record.isDeleted,jdbcType=VARCHAR},
       </if>
       <if test="record.uId != null">
-        U_ID = #{record.uId,jdbcType=BIGINT},
+        U_ID = #{record.uId,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         PASSWORD = #{record.password,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
     update ct_account
     set ID = #{record.id,jdbcType=BIGINT},
       IS_DELETED = #{record.isDeleted,jdbcType=VARCHAR},
-      U_ID = #{record.uId,jdbcType=BIGINT},
+      U_ID = #{record.uId,jdbcType=VARCHAR},
       PASSWORD = #{record.password,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -180,7 +180,7 @@
         IS_DELETED = #{isDeleted,jdbcType=VARCHAR},
       </if>
       <if test="uId != null">
-        U_ID = #{uId,jdbcType=BIGINT},
+        U_ID = #{uId,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         PASSWORD = #{password,jdbcType=VARCHAR},
@@ -194,7 +194,7 @@
   <update id="updateByPrimaryKey" parameterType="com.openwjk.central.dao.model.AccountDO">
     update ct_account
     set IS_DELETED = #{isDeleted,jdbcType=VARCHAR},
-      U_ID = #{uId,jdbcType=BIGINT},
+      U_ID = #{uId,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}

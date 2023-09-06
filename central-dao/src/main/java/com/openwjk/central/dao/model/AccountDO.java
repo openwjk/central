@@ -7,7 +7,7 @@ public class AccountDO implements Serializable {
 
     private String isDeleted;
 
-    private Long uId;
+    private String uId;
 
     private String password;
 
@@ -31,12 +31,12 @@ public class AccountDO implements Serializable {
         this.isDeleted = isDeleted == null ? null : isDeleted.trim();
     }
 
-    public Long getuId() {
+    public String getuId() {
         return uId;
     }
 
-    public void setuId(Long uId) {
-        this.uId = uId;
+    public void setuId(String uId) {
+        this.uId = uId == null ? null : uId.trim();
     }
 
     public String getPassword() {

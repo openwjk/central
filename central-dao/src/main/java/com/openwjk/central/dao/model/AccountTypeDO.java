@@ -18,7 +18,7 @@ public class AccountTypeDO implements Serializable {
 
     private String account;
 
-    private Long uId;
+    private String uId;
 
     private String type;
 
@@ -80,12 +80,12 @@ public class AccountTypeDO implements Serializable {
         this.account = account == null ? null : account.trim();
     }
 
-    public Long getuId() {
+    public String getuId() {
         return uId;
     }
 
-    public void setuId(Long uId) {
-        this.uId = uId;
+    public void setuId(String uId) {
+        this.uId = uId == null ? null : uId.trim();
     }
 
     public String getType() {
