@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -68,7 +69,7 @@ public class RateLimiterAspect extends AbstractAop {
     }
 
     private void checkRateLimit(Map<String, RateLimiter> rateMap, String key) {
-        if (!rateMap.get(key).tryAcquire()) {
+        if (!rateMap.get(key).tryAcquire(1, TimeUnit.SECONDS)) {
             throw new RateLimitException(ResponseEnum.NETWORK_BUSY.getMsg());
         }
     }

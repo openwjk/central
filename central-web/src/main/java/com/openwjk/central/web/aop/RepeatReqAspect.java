@@ -96,7 +96,7 @@ public class RepeatReqAspect extends AbstractAop {
         try {
             return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         } catch (Exception e) {
-            log.warn("call RepeatReqAspect.getRequestObj, occur exception");
+            log.info("call RepeatReqAspect.getRequestObj, occur exception");
             return null;
         }
     }

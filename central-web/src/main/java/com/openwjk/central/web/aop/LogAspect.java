@@ -70,7 +70,7 @@ public class LogAspect extends AbstractAop {
                 retObj = new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg());
             }
         }
-        doApiLogEnd(uri, beginTs);
+        doApiLogEnd(uri, beginTs,retObj);
 
         removeThreadLocal();
         return retObj;
@@ -86,9 +86,9 @@ public class LogAspect extends AbstractAop {
         log.info("call uri: {} begin, params: {}", uri, JSON.toJSONString(tempArgs));
     }
 
-    private void doApiLogEnd(String uri, long beginTs) {
+    private void doApiLogEnd(String uri, long beginTs, Object retObj) {
         long endTs = DateUtil.getCurrentTimeMillis();
-        log.info("call uri: {} end, takes {}ms", uri, endTs - beginTs);
+        log.info("call uri: {} end, takes: {}ms, data: {}", uri, endTs - beginTs,JSON.toJSONString(retObj));
     }
 
     private void doApiLogIp(String uri, String ip) {
