@@ -61,7 +61,6 @@
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
-            <columnOverride column="U_ID" property="uId" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
         <table tableName="ct_account_type" domainObjectName="AccountTypeDO"
@@ -69,7 +68,6 @@
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
             <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
-            <columnOverride column="U_ID" property="uId" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
         <table tableName="ct_config" domainObjectName="ConfigDO"
