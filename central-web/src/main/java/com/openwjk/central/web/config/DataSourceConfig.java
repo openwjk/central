@@ -70,7 +70,7 @@ public class DataSourceConfig {
         shardingRuleConfig.getShardingAlgorithms().put("accountShardingAlgorithm", getAlgorithmConfig("INLINE", "accountShardingAlgorithm"));
         shardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", getAlgorithmConfig("INLINE", "accountTypeShardingAlgorithm"));
         shardingRuleConfig.getShardingAlgorithms().put("accountDBShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "accountDBShardingAlgorithm"));
-        shardingRuleConfig.getKeyGenerators().put("snowflakeAlgorithm", getAlgorithmConfig("SNOWFLAKE", "snowflakeAlgorithm"));
+        shardingRuleConfig.getKeyGenerators().put("customSnowflakeAlgorithm", getAlgorithmConfig("CUSTOM_SNOWFLAKE", "customSnowflakeAlgorithm"));
     }
 
     //获取算法配置
@@ -85,11 +85,13 @@ public class DataSourceConfig {
                 break;
             case "accountDBShardingAlgorithm":
                 properties.setProperty("strategy", "STANDARD");
-                properties.setProperty("algorithmClassName", "com.openwjk.central.web.config.DbShardingAlgorithm");
+                properties.setProperty("algorithmClassName", "com.openwjk.central.sje.algorithm.DbShardingAlgorithm");
                 break;
             case "snowflakeAlgorithm":
                 properties.setProperty("worker-id", getWorkId());
                 properties.setProperty("max-tolerate-time-difference-milliseconds", Constant.STRING_ZERO);
+                break;
+            case "customSnowflakeAlgorithm":
                 break;
             default:
                 break;
@@ -143,10 +145,11 @@ public class DataSourceConfig {
         accountTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountDBShardingAlgorithm"));
         accountTypeTableRuleConfig.setDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountDBShardingAlgorithm"));
         // 配置id生成策略
-        //结合业务思考，如果并发不大不建议使用，并发不大的情况下生成的几乎全为偶数
-        accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
-        accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
-
+        //结合业务思考，如果并发不大不建议使用自带的雪花id，并发不大的情况下生成的几乎全为偶数
+//        accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
+//        accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
+        accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "customSnowflakeAlgorithm"));
+        accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "customSnowflakeAlgorithm"));
         shardingRuleConfig.getTables().addAll(Lists.newArrayList(accountTableRuleConfig, accountTypeTableRuleConfig));
     }
 

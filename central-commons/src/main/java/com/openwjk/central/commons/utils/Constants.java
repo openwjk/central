@@ -11,7 +11,6 @@ public class Constants {
     public static final String LOCAL_LOGIN_DTO = "loginDto";
     public static final String LOGIN_PREFIX = "LOGIN_";
 
-    public static final String LEAF_SNOWFLAKE_ENABLE = "leaf.snowflake.enable";
-    public static final String LEAF_SNOWFLAKE_PORT = "leaf.snowflake.port";
-    public static final String LEAF_SNOWFLAKE_ZK_ADDRESS = "leaf.snowflake.zk.address";
+    public static final String LEAF_SNOWFLAKE_PORT = "leaf.zk.port";
+    public static final String LEAF_SNOWFLAKE_ZK_ADDRESS = "leaf.zk.address";
 }

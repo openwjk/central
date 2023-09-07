@@ -30,13 +30,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-@Service
 public class SnowflakeZookeeperHolder {
     private static final Logger LOGGER = LoggerFactory.getLogger(SnowflakeZookeeperHolder.class);
-    @Value("${leaf.zk.address}")
-    private String address;
-    @Value("${leaf.zk.port}")
-    private String port;
     private String zk_AddressNode = null;//保存自身的key  ip:port-000000001
     private String listenAddress = null;//保存自身的key ip:port
     private int workerID;
@@ -44,30 +39,18 @@ public class SnowflakeZookeeperHolder {
     private static final String PROP_PATH = System.getProperty("java.io.tmpdir") + File.separator + "com.openwjk.leaf/leafconf/{port}/workerID.properties";
     private static final String PATH_FOREVER = PREFIX_ZK_PATH + "/forever";//保存所有数据持久的节点
     private String ip;
+    private String port;
     private String connectionString;
     private long lastUpdateTime;
-    public static final long twepoch = 1693627594000L;
 
-    private final long workerIdBits = 10L;
-    private final long maxWorkerId = ~(-1L << workerIdBits);//最大能够分配的workerid =1023
-
-    @PostConstruct
-    public void init() {
-        Preconditions.checkArgument(System.currentTimeMillis() > twepoch, "Snowflake not support twepoch gt currentTime");
-        LOGGER.info("twepoch:{} ,ip:{} ,zkAddress:{} port:{}", twepoch, ip, address, port);
-        this.ip = IpUtils.getIp();
+    public SnowflakeZookeeperHolder(String ip, String port, String connectionString) {
+        this.ip = ip;
+        this.port = port;
         this.listenAddress = ip + ":" + port;
-        this.connectionString = address;
-        boolean initFlag = initZK();
-        if (initFlag) {
-            LOGGER.info("START SUCCESS USE ZK WORKERID-{}", workerID);
-        } else {
-            Preconditions.checkArgument(initFlag, "Snowflake Id Gen is not init ok");
-        }
-        Preconditions.checkArgument(workerID >= 0 && workerID <= maxWorkerId, "workerID must gte 0 and lte 1023");
+        this.connectionString = connectionString;
     }
 
-    public boolean initZK() {
+    public boolean init() {
         try {
             CuratorFramework curator = createWithOptions(connectionString, new RetryUntilElapsed(1000, 4), 10000, 6000);
             curator.start();
