@@ -1,4 +1,4 @@
-package com.openwjk.central.web.config;
+package com.openwjk.central.sje.algorithm;
 
 import org.apache.shardingsphere.infra.util.exception.ShardingSpherePreconditions;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
