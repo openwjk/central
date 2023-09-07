@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
 import com.openwjk.central.commons.annotation.ApiLog;
 import com.openwjk.central.commons.utils.ThreadLocalUtil;
+import com.openwjk.central.commons.snowflake.SnowflakeService;
 import com.openwjk.central.web.utils.IpUtil;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
@@ -37,11 +38,11 @@ import java.util.List;
 @Order(0)
 @Log4j2
 public class LogAspect extends AbstractAop {
+
     @Around("(execution(* com.openwjk.central.web.controller.*.*(..)))")
     public Object aroundApi(ProceedingJoinPoint pjp) throws Throwable {
         long beginTs = DateUtil.getCurrentTimeMillis();
-        String logId = generateLogId();
-        setThreadLocal(logId);
+        setThreadLocal();
         Method targetMethod = getTargetMethod(pjp);
 
         Object[] args = pjp.getArgs();
@@ -70,7 +71,7 @@ public class LogAspect extends AbstractAop {
                 retObj = new ResponseVO(ResponseEnum.SYSTEM_ERROR.getCode(), ResponseEnum.SYSTEM_ERROR.getMsg());
             }
         }
-        doApiLogEnd(uri, beginTs,retObj);
+        doApiLogEnd(uri, beginTs, retObj);
 
         removeThreadLocal();
         return retObj;
@@ -88,7 +89,7 @@ public class LogAspect extends AbstractAop {
 
     private void doApiLogEnd(String uri, long beginTs, Object retObj) {
         long endTs = DateUtil.getCurrentTimeMillis();
-        log.info("call uri: {} end, takes: {}ms, data: {}", uri, endTs - beginTs,JSON.toJSONString(retObj));
+        log.info("call uri: {} end, takes: {}ms, data: {}", uri, endTs - beginTs, JSON.toJSONString(retObj));
     }
 
     private void doApiLogIp(String uri, String ip) {
@@ -140,8 +141,8 @@ public class LogAspect extends AbstractAop {
     }
 
 
-    private void setThreadLocal(String logId) {
-        ThreadLocalUtil.setLogId(logId);
+    private void setThreadLocal() {
+        ThreadLocalUtil.setLogId(String.valueOf(SnowflakeService.getInstance().getId()));
     }
 
     private String generateLogId() {

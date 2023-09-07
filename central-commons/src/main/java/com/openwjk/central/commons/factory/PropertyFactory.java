@@ -11,7 +11,7 @@ public class PropertyFactory {
     private static final Properties prop = new Properties();
     static {
         try {
-            prop.load(PropertyFactory.class.getClassLoader().getResourceAsStream("leaf.properties"));
+            prop.load(PropertyFactory.class.getClassLoader().getResourceAsStream("application.yml"));
         } catch (IOException e) {
             logger.warn("Load Properties Ex", e);
         }
