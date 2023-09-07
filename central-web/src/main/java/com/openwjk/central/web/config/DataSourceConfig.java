@@ -78,10 +78,10 @@ public class DataSourceConfig {
         Properties properties = new Properties();
         switch (code) {
             case "accountShardingAlgorithm":
-                properties.setProperty("algorithm-expression", "ct_account_${ID % 3}");
+                properties.setProperty("algorithm-expression", "ct_account_${ID % 2}");
                 break;
             case "accountTypeShardingAlgorithm":
-                properties.setProperty("algorithm-expression", "ct_account_type_${ID % 3}");
+                properties.setProperty("algorithm-expression", "ct_account_type_${ID % 2}");
                 break;
             case "accountDBShardingAlgorithm":
                 properties.setProperty("strategy", "STANDARD");
@@ -136,8 +136,8 @@ public class DataSourceConfig {
     private void setTableRuleConfig(ShardingRuleConfiguration shardingRuleConfig) {
 
         //配置逻辑表映射
-        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account_${0..2}");
-        ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds${0..1}.ct_account_type_${0..2}");
+        ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account_${0..1}");
+        ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds${0..1}.ct_account_type_${0..1}");
         // 配置分表策略
         accountTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountShardingAlgorithm"));
         accountTypeTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountTypeShardingAlgorithm"));

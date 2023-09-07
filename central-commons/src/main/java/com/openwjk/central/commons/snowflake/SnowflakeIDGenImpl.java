@@ -32,7 +32,7 @@ public class SnowflakeIDGenImpl implements IDGen {
     private static final Random RANDOM = new Random();
 
     public SnowflakeIDGenImpl(String zkAddress, int port) {
-        //Thu Nov 04 2010 09:42:54 GMT+0800 (中国标准时间)
+        // (中国标准时间)
         this(zkAddress, port, 1694075455008L);
     }
 
