@@ -30,6 +30,10 @@
             <groupId>com.openwjk</groupId>
             <artifactId>central-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.openwjk</groupId>
+            <artifactId>central-sharding-jdbc-extension</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
