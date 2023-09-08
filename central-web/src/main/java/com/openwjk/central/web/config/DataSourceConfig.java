@@ -39,7 +39,7 @@ public class DataSourceConfig {
     private static final String SNOWFLAKE_WORK_ID = "SNOWFLAKE_WORK_ID";
     private static final String SNOWFLAKE_WORK_ID_LOCK = "SNOWFLAKE_WORK_ID_LOCK";
     @Autowired
-    DataSourceProperties dataSourceProperties;
+    DataSourceShardingProperties dataSourceProperties;
     @Autowired
     RedisUtil redisUtil;
     @Autowired
@@ -164,7 +164,7 @@ public class DataSourceConfig {
     }
 
     @SneakyThrows
-    private DruidDataSource getDataSource(DataSourceProperties.ShardingJdbc shardingJdbc) {
+    private DruidDataSource getDataSource(DataSourceShardingProperties.ShardingJdbc shardingJdbc) {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(shardingJdbc.getDriverClassName());
         dataSource.setUrl(shardingJdbc.getUrl());

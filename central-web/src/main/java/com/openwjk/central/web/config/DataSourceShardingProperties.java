@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 @ConfigurationProperties("spring.datasource")
 @Data
-public class DataSourceProperties {
+public class DataSourceShardingProperties {
     private List<ShardingJdbc> shardingJdbc;
     @Data
     public static class ShardingJdbc {
