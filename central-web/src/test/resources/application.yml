@@ -120,7 +120,5 @@ qw:
 auth:
   enable: 1
   ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**
-leaf:
-  zk:
-    address: zk.openwjk.com
-    port: 2181
+leaf.zk.address: zk.openwjk.com
+leaf.zk.port: 2181
