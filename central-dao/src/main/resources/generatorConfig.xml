@@ -56,25 +56,31 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="ct_account" domainObjectName="AccountDO"
+        <table tableName="ct_map" domainObjectName="MapDO"
                enableCountByExample="true" enableUpdateByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
-            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
         </table>
 
-        <table tableName="ct_account_type" domainObjectName="AccountTypeDO"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"
-               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
-            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
-        </table>
+<!--        <table tableName="ct_account" domainObjectName="AccountDO"-->
+<!--               enableCountByExample="true" enableUpdateByExample="true"-->
+<!--               enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">-->
+<!--            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>-->
+<!--        </table>-->
 
-        <table tableName="ct_config" domainObjectName="ConfigDO"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"
-               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
-            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
-        </table>
+<!--        <table tableName="ct_account_type" domainObjectName="AccountTypeDO"-->
+<!--               enableCountByExample="true" enableUpdateByExample="true"-->
+<!--               enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">-->
+<!--            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ct_config" domainObjectName="ConfigDO"-->
+<!--               enableCountByExample="true" enableUpdateByExample="true"-->
+<!--               enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">-->
+<!--            <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>-->
+<!--        </table>-->
     </context>
 </generatorConfiguration>
