@@ -56,11 +56,11 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="ct_map" domainObjectName="MapDO"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"
-               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
-        </table>
+<!--        <table tableName="ct_map" domainObjectName="MapDO"-->
+<!--               enableCountByExample="true" enableUpdateByExample="true"-->
+<!--               enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--               enableDeleteByPrimaryKey="false" enableDeleteByExample="false">-->
+<!--        </table>-->
 
 <!--        <table tableName="ct_account" domainObjectName="AccountDO"-->
 <!--               enableCountByExample="true" enableUpdateByExample="true"-->
