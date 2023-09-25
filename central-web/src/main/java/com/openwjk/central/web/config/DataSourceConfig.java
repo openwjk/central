@@ -56,6 +56,9 @@ public class DataSourceConfig {
         setShardingAlgorithms(shardingRuleConfig);
         //配置绑定关系，避免出现笛卡尔集
         shardingRuleConfig.getBindingTableGroups().add(new ShardingTableReferenceRuleConfiguration("ct_account", "ct_account_type"));
+        //
+        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("IS_DELETED", "defaultDbShardingAlgorithm"));
+
 
         DataSource dataSource = null;
         try {
@@ -71,6 +74,7 @@ public class DataSourceConfig {
         shardingRuleConfig.getShardingAlgorithms().put("accountTypeShardingAlgorithm", getAlgorithmConfig("INLINE", "accountTypeShardingAlgorithm"));
         shardingRuleConfig.getShardingAlgorithms().put("accountDBShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "accountDBShardingAlgorithm"));
         shardingRuleConfig.getKeyGenerators().put("customSnowflakeAlgorithm", getAlgorithmConfig("CUSTOM_SNOWFLAKE", "customSnowflakeAlgorithm"));
+        shardingRuleConfig.getShardingAlgorithms().put("defaultDbShardingAlgorithm", getAlgorithmConfig("CLASS_BASED", "defaultDbShardingAlgorithm"));
     }
 
     //获取算法配置
@@ -90,6 +94,10 @@ public class DataSourceConfig {
             case "snowflakeAlgorithm":
                 properties.setProperty("worker-id", getWorkId());
                 properties.setProperty("max-tolerate-time-difference-milliseconds", Constant.STRING_ZERO);
+                break;
+            case "defaultDbShardingAlgorithm":
+                properties.setProperty("strategy", "STANDARD");
+                properties.setProperty("algorithmClassName", "com.openwjk.central.sje.algorithm.DefaultDbShardingAlgorithm");
                 break;
             case "customSnowflakeAlgorithm":
                 break;
@@ -156,9 +164,10 @@ public class DataSourceConfig {
     // 配置真实数据源
     private Map<String, DataSource> createDataSources() {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
-        for (int i = 0; i < dataSourceProperties.getShardingJdbc().size(); i++) {
+        dataSourceMap.put("ds", getDataSource(dataSourceProperties.getShardingJdbc().get(Constant.INT_ZERO)));
+        for (int i = 1; i < dataSourceProperties.getShardingJdbc().size(); i++) {
             DruidDataSource dataSource = getDataSource(dataSourceProperties.getShardingJdbc().get(i));
-            dataSourceMap.put("ds" + i, dataSource);
+            dataSourceMap.put("ds" + (i - 1), dataSource);
         }
         return dataSourceMap;
     }
