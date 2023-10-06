@@ -1,7 +1,6 @@
 package com.openwjk.central.commons.utils;
 
 import com.google.common.collect.Lists;
-import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.RandomCodeUtil;
 
 import java.util.List;

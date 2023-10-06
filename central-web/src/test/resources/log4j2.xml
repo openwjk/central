@@ -41,11 +41,11 @@
     <loggers>
         <logger name="org.springframework" level="ERROR" additivity="true" includeLocation="true">
         </logger>
-        <logger name="org.mybatis" level="ERROR" additivity="true" includeLocation="true">
+        <logger name="org.mybatis" level="DEBUG" additivity="true" includeLocation="true">
         </logger>
-        <logger name="com.alibaba.druid" level="ERROR" additivity="true" includeLocation="true">
+        <logger name="com.alibaba.druid" level="DEBUG" additivity="true" includeLocation="true">
         </logger>
-        <logger name="org.apache.ibatis" level="ERROR" additivity="true" includeLocation="true">
+        <logger name="org.apache.ibatis" level="DEBUG" additivity="true" includeLocation="true">
         </logger>
 
         <root level="INFO" includeLocation="true">
