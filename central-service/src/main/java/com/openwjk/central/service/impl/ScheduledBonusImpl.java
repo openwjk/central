@@ -50,10 +50,11 @@ public class ScheduledBonusImpl implements ScheduledService {
         List<ConfigDO> configDOS = configHelper.getConfigByGroup(ScheduledTaskEnum.BONUS.getCode());
         if (CollectionUtils.isEmpty(configDOS)) return;
         List<String> verbalTrickList = Lists.newArrayList();
+        int sort = Constant.INT_ZERO;
         for (int i = 0; i < configDOS.size(); i++) {
             ScheduleNoticeDomain domain = JSON.parseObject(configDOS.get(i).getValue(), ScheduleNoticeDomain.class);
             if (scheduledHelper.checkIsRun(domain.getArgs().get(Constant.INT_ZERO), tdate)) {
-                verbalTrickList.add((i + 1) + Constant.POINT + domain.getVerbalTrick());
+                verbalTrickList.add((++sort) + Constant.POINT + domain.getVerbalTrick());
             }
         }
         if (CollectionUtils.isEmpty(verbalTrickList)) return;
