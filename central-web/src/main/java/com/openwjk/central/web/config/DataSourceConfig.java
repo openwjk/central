@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static sun.net.www.MimeTable.getDefaultTable;
+
 /**
  * @author wangjunkai
  * @description
@@ -144,8 +146,11 @@ public class DataSourceConfig {
     private void setTableRuleConfig(ShardingRuleConfiguration shardingRuleConfig) {
 
         //配置逻辑表映射
+        List<ShardingTableRuleConfiguration> list = getDefaultShardingTable();
         ShardingTableRuleConfiguration accountTableRuleConfig = new ShardingTableRuleConfiguration("ct_account", "ds${0..1}.ct_account_${0..1}");
         ShardingTableRuleConfiguration accountTypeTableRuleConfig = new ShardingTableRuleConfiguration("ct_account_type", "ds${0..1}.ct_account_type_${0..1}");
+        list.add(accountTableRuleConfig);
+        list.add(accountTypeTableRuleConfig);
         // 配置分表策略
         accountTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountShardingAlgorithm"));
         accountTypeTableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("ID", "accountTypeShardingAlgorithm"));
@@ -158,7 +163,12 @@ public class DataSourceConfig {
 //        accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "snowflakeAlgorithm"));
         accountTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "customSnowflakeAlgorithm"));
         accountTypeTableRuleConfig.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("ID", "customSnowflakeAlgorithm"));
-        shardingRuleConfig.getTables().addAll(Lists.newArrayList(accountTableRuleConfig, accountTypeTableRuleConfig));
+        shardingRuleConfig.getTables().addAll(list);
+    }
+
+    private List<ShardingTableRuleConfiguration> getDefaultShardingTable() {
+        ShardingTableRuleConfiguration configTableRuleConfig = new ShardingTableRuleConfiguration("ct_config", "ds.ct_config");
+        return Lists.newArrayList(configTableRuleConfig);
     }
 
     // 配置真实数据源
