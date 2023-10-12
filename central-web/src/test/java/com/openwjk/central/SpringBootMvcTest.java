@@ -2,8 +2,11 @@ package com.openwjk.central;
 
 
 import com.openwjk.central.service.domain.req.DdnsWebhookReqVO;
+import com.openwjk.central.service.domain.req.LoginAccountReqVO;
+import com.openwjk.central.web.controller.AccountController;
 import com.openwjk.central.web.controller.MsgTranspondController;
 import com.openwjk.central.web.controller.SystemController;
+import com.openwjk.commons.utils.RandomCodeUtil;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +34,23 @@ public class SpringBootMvcTest {
     @Autowired
     @Qualifier("pool")
     ThreadPoolTaskExecutor poolTaskExecutor;
+    @Autowired
+    AccountController accountController;
 
     @Test
     public void test() {
         System.out.println(systemController.checkRun());
+    }
+
+    @Test
+    public void registerTest() {
+        for (int i = 0; i < 100; i++) {
+            LoginAccountReqVO reqVO = new LoginAccountReqVO();
+            reqVO.setAccount(RandomCodeUtil.generateCode(10));
+            reqVO.setPassword(RandomCodeUtil.generateCode(10));
+            accountController.register(reqVO);
+        }
+
     }
 
     @Test
@@ -46,8 +62,8 @@ public class SpringBootMvcTest {
         reqVO.setKey("123");
         reqVO.setMsgType("text");
         reqVO.setToUser("@all");
-        for(int i=0;i<10;i++){
-            poolTaskExecutor.execute(()->{
+        for (int i = 0; i < 10; i++) {
+            poolTaskExecutor.execute(() -> {
                 log.info(msgTranspondController.transpond(reqVO, new MockHttpServletResponse()));
             });
         }
