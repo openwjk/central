@@ -174,34 +174,34 @@ public class DataSourceConfig {
     // 配置真实数据源
     private Map<String, DataSource> createDataSources() {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
-        dataSourceMap.put("ds", getDataSource(dataSourceProperties.getShardingJdbc().get(Constant.INT_ZERO)));
-        for (int i = 1; i < dataSourceProperties.getShardingJdbc().size(); i++) {
-            DruidDataSource dataSource = getDataSource(dataSourceProperties.getShardingJdbc().get(i));
+        dataSourceMap.put("ds", getDataSource(dataSourceProperties.getDataSource().get(Constant.INT_ZERO)));
+        for (int i = 1; i < dataSourceProperties.getDataSource().size(); i++) {
+            DruidDataSource dataSource = getDataSource(dataSourceProperties.getDataSource().get(i));
             dataSourceMap.put("ds" + (i - 1), dataSource);
         }
         return dataSourceMap;
     }
 
     @SneakyThrows
-    private DruidDataSource getDataSource(DataSourceShardingProperties.ShardingJdbc shardingJdbc) {
+    private DruidDataSource getDataSource(DataSourceShardingProperties.DataSource dsCfg) {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setDriverClassName(shardingJdbc.getDriverClassName());
-        dataSource.setUrl(shardingJdbc.getUrl());
-        dataSource.setUsername(shardingJdbc.getUsername());
-        dataSource.setPassword(shardingJdbc.getPassword());
-        dataSource.setFilters(shardingJdbc.getFilters());
-        dataSource.setMaxActive(shardingJdbc.getMaxActive());
-        dataSource.setInitialSize(shardingJdbc.getInitialSize());
-        dataSource.setMaxWait(shardingJdbc.getMaxWait());
-        dataSource.setMinIdle(shardingJdbc.getMinIdle());
-        dataSource.setTimeBetweenEvictionRunsMillis(shardingJdbc.getTimeBetweenEvictionRunsMillis());
-        dataSource.setMinEvictableIdleTimeMillis(shardingJdbc.getMinEvictableIdleTimeMillis());
-        dataSource.setValidationQuery(shardingJdbc.getValidationQuery());
-        dataSource.setTestWhileIdle(shardingJdbc.isTestWhileIdle());
-        dataSource.setTestOnBorrow(shardingJdbc.isTestOnBorrow());
-        dataSource.setTestOnReturn(shardingJdbc.isTestOnReturn());
-        dataSource.setPoolPreparedStatements(shardingJdbc.isPoolPreparedStatements());
-        dataSource.setConnectProperties(getProperties(shardingJdbc.getConnectionProperties()));
+        dataSource.setDriverClassName(dsCfg.getDriverClassName());
+        dataSource.setUrl(dsCfg.getUrl());
+        dataSource.setUsername(dsCfg.getUsername());
+        dataSource.setPassword(dsCfg.getPassword());
+        dataSource.setFilters(dsCfg.getFilters());
+        dataSource.setMaxActive(dsCfg.getMaxActive());
+        dataSource.setInitialSize(dsCfg.getInitialSize());
+        dataSource.setMaxWait(dsCfg.getMaxWait());
+        dataSource.setMinIdle(dsCfg.getMinIdle());
+        dataSource.setTimeBetweenEvictionRunsMillis(dsCfg.getTimeBetweenEvictionRunsMillis());
+        dataSource.setMinEvictableIdleTimeMillis(dsCfg.getMinEvictableIdleTimeMillis());
+        dataSource.setValidationQuery(dsCfg.getValidationQuery());
+        dataSource.setTestWhileIdle(dsCfg.isTestWhileIdle());
+        dataSource.setTestOnBorrow(dsCfg.isTestOnBorrow());
+        dataSource.setTestOnReturn(dsCfg.isTestOnReturn());
+        dataSource.setPoolPreparedStatements(dsCfg.isPoolPreparedStatements());
+        dataSource.setConnectProperties(getProperties(dsCfg.getConnectionProperties()));
         return dataSource;
     }
 
