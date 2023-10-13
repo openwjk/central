@@ -12,12 +12,12 @@ import java.util.List;
  * @date 2023/8/31 14:49
  */
 @Component
-@ConfigurationProperties("spring.datasource")
+@ConfigurationProperties("spring")
 @Data
 public class DataSourceShardingProperties {
-    private List<ShardingJdbc> shardingJdbc;
+    private List<DataSource> dataSource;
     @Data
-    public static class ShardingJdbc {
+    public static class DataSource {
         private String name;
         private String url;
         private String username;
