@@ -3,7 +3,7 @@ package com.openwjk.central.web.controller;
 import com.alibaba.fastjson2.JSON;
 import com.openwjk.central.service.enums.WebhookEnum;
 import com.openwjk.central.service.domain.req.DdnsWebhookReqVO;
-import com.openwjk.central.service.service.QwMsgService;
+import com.openwjk.central.service.impl.QwMsgService;
 import com.openwjk.commons.domain.ResponseVO;
 import com.openwjk.commons.enums.ResponseEnum;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MsgTranspondController {
 
     @Autowired
-    QwMsgService qwAppMsgService;
+    QwMsgService qwMsgService;
 
     @PostMapping("/ddns/transpond")
     @ApiOperation("ddns预警消息转发")
@@ -38,7 +38,8 @@ public class MsgTranspondController {
             return new ResponseVO(ResponseEnum.DENY_ACCESS);
         }
         log.info(JSON.toJSONString(reqVO));
-        qwAppMsgService.sendDdnsMsg(reqVO);
+//        qwMsgService.sendAppMsg(reqVO);
+        qwMsgService.sendRobotMsg(reqVO);
         return new ResponseVO();
     }
 }
