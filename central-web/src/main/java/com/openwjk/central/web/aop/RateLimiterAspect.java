@@ -35,8 +35,6 @@ public class RateLimiterAspect extends AbstractAop {
     private static final Map<String, RateLimiter> rateMap = Maps.newConcurrentMap();
 
     @Autowired
-    SpelHelper spelHelper;
-    @Autowired
     RedisLockUtil redisLockUtil;
 
     @Around("execution(* com.openwjk.central.web.controller.*.*(..))")
