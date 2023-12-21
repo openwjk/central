@@ -6,7 +6,7 @@ package com.openwjk.central.commons.enums;
  * @date 2023/7/27 21:35
  */
 public enum QwRobotEnum {
-    WLCJDIYS("WLCJDIYS", "群:万里长江第一帅>机器人"),
+    XXW("XXW", "群:万里长江第一帅>机器人"),
     GNLQ("GNLQ", "群:给你两拳>机器人");
 
     QwRobotEnum(String code, String desc) {

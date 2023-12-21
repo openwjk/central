@@ -57,9 +57,9 @@ public class SpringBootMvcTest {
     public void aopTest() {
         DdnsWebhookReqVO reqVO = new DdnsWebhookReqVO();
         DdnsWebhookReqVO.Content content = new DdnsWebhookReqVO.Content();
-        content.setContent("xxx");
+        content.setContent("老子明天不上班，巴适的板，巴适得板");
         reqVO.setText(content);
-        reqVO.setKey("123");
+        reqVO.setKey("AE1A71CEAB454A428B6AB5E29999DCFD");
         reqVO.setMsgType("text");
         reqVO.setToUser("@all");
         for (int i = 0; i < 10; i++) {
