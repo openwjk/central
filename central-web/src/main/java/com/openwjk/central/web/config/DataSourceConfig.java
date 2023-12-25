@@ -23,13 +23,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import static sun.net.www.MimeTable.getDefaultTable;
 
 /**
  * @author wangjunkai
@@ -166,9 +165,32 @@ public class DataSourceConfig {
         shardingRuleConfig.getTables().addAll(list);
     }
 
+    @SneakyThrows
     private List<ShardingTableRuleConfiguration> getDefaultShardingTable() {
-        ShardingTableRuleConfiguration configTableRuleConfig = new ShardingTableRuleConfiguration("ct_config", "ds.ct_config");
-        return Lists.newArrayList(configTableRuleConfig);
+        List<ShardingTableRuleConfiguration> list = Lists.newArrayList();
+        DataSourceShardingProperties.DataSource dataSource = dataSourceProperties.getDataSource().get(Constant.INT_ZERO);
+        Class clazz = Class.forName("com.mysql.cj.jdbc.Driver");
+        Driver driver = (Driver) clazz.newInstance();
+        DriverManager.registerDriver(driver);
+        // 建立数据库连接
+        try (Connection connection = DriverManager.getConnection(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword())) {
+            // 执行SQL查询
+            String sql = "SELECT TABLE_NAME from information_schema.`TABLES` where TABLE_SCHEMA='central'";
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+                // 处理查询结果
+                while (resultSet.next()) {
+                    // 从结果集中获取数据
+                    String tableName = resultSet.getString("TABLE_NAME");
+                    ShardingTableRuleConfiguration configTableRuleConfig = new ShardingTableRuleConfiguration(tableName, "ds." + tableName);
+                    list.add(configTableRuleConfig);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     // 配置真实数据源
