@@ -34,13 +34,13 @@ public class SearchBaiduTest {
     private static final Map<Integer, String> weekMap = Maps.newHashMap();
 
     static {
-        weekMap.put(1,"周日");
-        weekMap.put(2,"周一");
-        weekMap.put(3,"周二");
-        weekMap.put(4,"周三");
-        weekMap.put(5,"周四");
-        weekMap.put(6,"周五");
-        weekMap.put(7,"周六");
+        weekMap.put(1, "周日");
+        weekMap.put(2, "周一");
+        weekMap.put(3, "周二");
+        weekMap.put(4, "周三");
+        weekMap.put(5, "周四");
+        weekMap.put(6, "周五");
+        weekMap.put(7, "周六");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class SearchBaiduTest {
         // 解析页面元素，方便后面定位
         Document document = Jsoup.parse(content);
         // 找出我们上面说的那个class所在的div标签
-        Elements elements = document.getElementsByClass("item_uMLQg");
+        Elements elements = document.getElementsByClass("footer_3iz2Q");
 //        // 去 class所在的div标签中找出需要的 字段信息
 //        for (int i = 0; i < elements.size(); i++) {
 //            Element element = elements.get(i);
@@ -83,13 +83,39 @@ public class SearchBaiduTest {
 //            }
 //            System.out.println(1);
 //        }
-        System.out.println(findTomorrowTag(elements));
+        System.out.println(findTodayTag(elements));
     }
 
-    @Test
-    void name2() {
-        System.out.println(DateUtil.formatDate(DateUtil.plusDays(new Date(),5),"yyyy.M.d"));
+    private String findTodayTag(Elements elements) {
+        String ver = "今天是" + DateUtil.formatNow(DateUtil.FORMAT_DATE_NORMAL);
+        if (CollectionUtils.isNotEmpty(elements)) {
+            String lunarDate = elements.get(0).getElementsByClass("date_1NCuX").text();
+            if (StringUtils.isNotBlank(lunarDate)) {
+                ver = ver + "，农历" + lunarDate;
+            }
+            Elements cuEle = elements.get(0).getElementsByClass("cu-ml-base");
+            if (CollectionUtils.isNotEmpty(elements)) {
+                for(Element element:cuEle){
+                    if(element.text().contains("距离")){
+                        ver = ver + "\n" + element.text();
+                    }
+                }
+            }
+            String good = elements.get(0).getElementsByClass("flex_47rSm cu-line-clamp-1").text();
+            if (StringUtils.isNotBlank(good)) {
+                good = good.replaceFirst("宜", "宜：");
+                ver = ver + "\n" + good;
+            }
+            String bad = elements.get(0).getElementsByClass("flex_47rSm cu-line-clamp-1 cu-mt-sm").text();
+            if (StringUtils.isNotBlank(bad)) {
+                bad = bad.replaceFirst("忌", "忌：");
+                ver = ver + "\n" + bad;
+            }
+
+        }
+        return ver;
     }
+
 
     private String findTomorrowTag(Elements elements) {
         for (int i = 0; i < elements.size(); i++) {
