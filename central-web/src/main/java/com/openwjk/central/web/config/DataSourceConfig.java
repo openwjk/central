@@ -205,6 +205,7 @@ public class DataSourceConfig {
     }
 
     @SneakyThrows
+    @SuppressWarnings("squid:S2095")
     private DruidDataSource getDataSource(DataSourceShardingProperties.DataSource dsCfg) {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(dsCfg.getDriverClassName());
