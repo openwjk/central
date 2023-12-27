@@ -38,17 +38,7 @@ import java.util.Map;
  */
 @Service
 public class ScheduleTodayReminderImpl implements ScheduledService {
-    private static final Map<Integer, String> weekMap = Maps.newHashMap();
 
-    static {
-        weekMap.put(1, "周日");
-        weekMap.put(2, "周一");
-        weekMap.put(3, "周二");
-        weekMap.put(4, "周三");
-        weekMap.put(5, "周四");
-        weekMap.put(6, "周五");
-        weekMap.put(7, "周六");
-    }
 
     @Autowired
     @Qualifier("qwRobotService")
