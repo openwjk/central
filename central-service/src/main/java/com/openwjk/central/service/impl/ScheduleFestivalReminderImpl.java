@@ -80,7 +80,7 @@ public class ScheduleFestivalReminderImpl implements ScheduledService {
         // 初始化浏览器相关
         BrowserFetcher.downloadIfNotExist(null);
         ArrayList<String> argList = new ArrayList<>();
-        LaunchOptions options = new LaunchOptionsBuilder().withArgs(argList).withHeadless(false).build();
+        LaunchOptions options = new LaunchOptionsBuilder().withArgs(argList).withHeadless(true).build();
         argList.add("--no-sandbox");
         argList.add("--disable-setuid-sandbox");
         Browser browser = Puppeteer.launch(options);
