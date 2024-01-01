@@ -110,10 +110,10 @@ public class ScheduleFestivalReminderImpl implements ScheduledService {
         for (int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
             String baiduDate = element.getElementsByClass("WA_LOG_BTN").attr("data-module");
-            if (!StringUtils.equals("2024.2.4", baiduDate)) {
+            if (!StringUtils.equals(DateUtil.formatDate(DateUtil.getTomorrowAtStart(),"yyyy.M.d"), baiduDate)) {
                 continue;
             }
-            String tomorrow = "2024-02-04";
+            String tomorrow = DateUtil.formatDate(DateUtil.getTomorrowAtStart(),DateUtil.FORMAT_DATE_NORMAL);
             int week = getDayOfWeek(tomorrow);
             Elements tagEles = element.getElementsByClass("tag_4m9Nx");
             if (CollectionUtils.isNotEmpty(tagEles)) {
