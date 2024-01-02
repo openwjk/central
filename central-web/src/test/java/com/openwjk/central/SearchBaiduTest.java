@@ -10,6 +10,7 @@ import com.ruiyun.jvppeteer.core.page.ElementHandle;
 import com.ruiyun.jvppeteer.core.page.Page;
 import com.ruiyun.jvppeteer.options.LaunchOptions;
 import com.ruiyun.jvppeteer.options.LaunchOptionsBuilder;
+import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -58,7 +59,7 @@ public class SearchBaiduTest {
         page.goTo("https://www.baidu.com/");
         // 模拟人工搜索关键字
         ElementHandle inputField = page.$("#kw");
-        inputField.type("今天");
+        inputField.type("今天天气");
         // 模拟人工点击搜索按钮
         ElementHandle confirmSearch = page.$("#su");
         confirmSearch.click();
@@ -68,22 +69,38 @@ public class SearchBaiduTest {
         // 解析页面元素，方便后面定位
         Document document = Jsoup.parse(content);
         // 找出我们上面说的那个class所在的div标签
-        Elements elements = document.getElementsByClass("footer_3iz2Q");
-//        // 去 class所在的div标签中找出需要的 字段信息
-//        for (int i = 0; i < elements.size(); i++) {
-//            Element element = elements.get(i);
-//            String date = element.getElementsByClass("WA_LOG_BTN").attr("data-module");
-//            System.out.println(date);
-//            if (!StringUtils.equals(DateUtil.formatDate(DateUtil.getNow(), "yyyy.MM.dd"), date)) {
-//                continue;
-//            }
-//            Elements tagEles =  element.getElementsByClass("tag_4m9Nx");
-//            if(CollectionUtils.isNotEmpty(tagEles)){
-//                System.out.println(tagEles.get(Constant.INT_ZERO).text());
-//            }
-//            System.out.println(1);
-//        }
-        System.out.println(findTodayTag(elements));
+        Elements elements = document.getElementsByAttributeValue("id", "content_left");
+        findTodayWeather(elements, page);
+    }
+
+    @SneakyThrows
+    private void findTodayWeather(Elements elements, Page page) {
+        if (CollectionUtils.isEmpty(elements)) return;
+        String weather = "天气：";
+        Element element = elements.get(Constant.INT_ZERO);
+        Elements weatherEles = element.getElementsByClass("cu-mr-base");
+        for (Element ele : weatherEles) {
+            weather += ele.text() + Constant.SPACE;
+        }
+        for(Element ele:element.getElementsByClass("cos-col item-box_5uby1")){
+            if(ele.text().contains("穿衣")){
+                String href = element.getElementsByClass("cos-col item-box_5uby1").get(0).getElementsByAttribute("href").attr("href");
+                page.goTo(href);
+                Thread.sleep(5000);
+                // 获取页面所有内容(HTML格式)
+                String content = page.content();
+                // 解析页面元素，方便后面定位
+                Document document = Jsoup.parse(content);
+                Elements ws = document.getElementsByTag("li");
+                for (Element temp : ws) {
+                    if (temp.text().contains("穿衣")) {
+                        weather += document.getElementsByClass("sfc-weather-number-today-desc c-color-gray-a c-gap-top").text().replace("。","");
+                    }
+                }
+            }
+        }
+
+        System.out.println(weather);
     }
 
     private String findTodayTag(Elements elements) {
@@ -95,8 +112,8 @@ public class SearchBaiduTest {
             }
             Elements cuEle = elements.get(0).getElementsByClass("cu-ml-base");
             if (CollectionUtils.isNotEmpty(elements)) {
-                for(Element element:cuEle){
-                    if(element.text().contains("距离")){
+                for (Element element : cuEle) {
+                    if (element.text().contains("距离")) {
                         ver = ver + "\n" + element.text();
                     }
                 }
