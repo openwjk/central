@@ -99,8 +99,6 @@ public class SearchBaiduTest {
                 }
             }
         }
-
-        System.out.println(weather);
     }
 
     private String findTodayTag(Elements elements) {
