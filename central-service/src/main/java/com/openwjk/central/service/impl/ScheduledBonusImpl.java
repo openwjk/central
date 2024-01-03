@@ -4,18 +4,23 @@ import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
 import com.openwjk.central.commons.enums.QwAppEnum;
 import com.openwjk.central.commons.enums.QwAppMsgTypeEnum;
+import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.request.QwAppSendTextMsgReqDTO;
+import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.QwAppService;
+import com.openwjk.central.remote.service.QwRobotService;
 import com.openwjk.central.service.domain.ScheduleNoticeDomain;
 import com.openwjk.central.service.helper.ScheduledHelper;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +41,9 @@ public class ScheduledBonusImpl implements ScheduledService {
     ScheduledHelper scheduledHelper;
     @Autowired
     QwAppService qwAppService;
+    @Autowired
+    @Qualifier("qwRobotService")
+    QwRobotService qwRobotService;
     @Value("${qw.sendAppMsg.notice.agentId}")
     private String agentId;
 
@@ -71,16 +79,22 @@ public class ScheduledBonusImpl implements ScheduledService {
 
 
     private void sendMsg(String verbalTrick) {
-        QwAppSendTextMsgReqDTO reqDTO = new QwAppSendTextMsgReqDTO();
-        reqDTO.setQwAppEnum(QwAppEnum.NOTIFICATION);
-        reqDTO.setToUser("@all");
-        reqDTO.setMsgType(QwAppMsgTypeEnum.TEXT.getValue());
-        reqDTO.setAgentId(agentId);
-        QwAppSendTextMsgReqDTO.Content text = new QwAppSendTextMsgReqDTO.Content();
-        text.setContent(verbalTrick);
-        reqDTO.setText(text);
-        reqDTO.setSafe(Constant.STRING_ONE);
-        qwAppService.appSendTextMsg(reqDTO);
+//        QwAppSendTextMsgReqDTO reqDTO = new QwAppSendTextMsgReqDTO();
+//        reqDTO.setQwAppEnum(QwAppEnum.NOTIFICATION);
+//        reqDTO.setToUser("@all");
+//        reqDTO.setMsgType(QwAppMsgTypeEnum.TEXT.getValue());
+//        reqDTO.setAgentId(agentId);
+//        QwAppSendTextMsgReqDTO.Content text = new QwAppSendTextMsgReqDTO.Content();
+//        text.setContent(verbalTrick);
+//        reqDTO.setText(text);
+//        reqDTO.setSafe(Constant.STRING_ONE);
+//        qwAppService.appSendTextMsg(reqDTO);
+        if(StringUtils.isNotBlank(verbalTrick)){
+            QwRobotReqDTO reqDTO = new QwRobotReqDTO();
+            reqDTO.setRobotEnum(QwRobotEnum.XXW);
+            reqDTO.setVerbalTrick(verbalTrick);
+            qwRobotService.sendTextRobot(reqDTO);
+        }
     }
 
 }
