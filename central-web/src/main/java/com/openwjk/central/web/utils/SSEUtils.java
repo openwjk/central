@@ -1,5 +1,6 @@
 package com.openwjk.central.web.utils;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description
  * @date 2024/6/25 17:51
  */
+@Log4j2
 public class SSEUtils {
     // 默认超时时间
     private static Long DEFAULT_TIME_OUT = 5 * 60 * 1000L;
@@ -30,13 +32,13 @@ public class SSEUtils {
 
             emitter.onTimeout(() -> {
                 // 注册超时回调，超时后触发
-                System.out.println("onTimeout,subId=" + subId);
+                log.info("onTimeout,subId={}", subId);
                 closeSub(subId);
             });
 
             emitter.onCompletion(() -> {
                 // 注册完成回调，调用 emitter.complete() 触发
-                System.out.println("onCompletion,subId=" + subId);
+                log.info("onCompletion,subId={}", subId);
                 closeSub(subId);
             });
             subscribeMap.put(subId, emitter);
