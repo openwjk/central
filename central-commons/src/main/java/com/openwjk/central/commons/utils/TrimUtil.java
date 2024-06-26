@@ -17,12 +17,12 @@ public class TrimUtil {
     private static final String STRING_PACKAGE = "java.lang.String";
     private static final String GET_METHOD_PREFIX = "get";
     private static final String SET_METHOD_PREFIX = "set";
+    private static final Pattern REG_BLANK_PATTERN = Pattern.compile("[\\s*|\t|\r|\n]");
 
     public static String replaceBlank(String str) {
         String dest = "";
         if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(str);
+            Matcher m = REG_BLANK_PATTERN.matcher(str);
             dest = m.replaceAll("");
         }
         return dest;
