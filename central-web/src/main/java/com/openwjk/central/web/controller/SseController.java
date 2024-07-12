@@ -14,6 +14,7 @@ import com.openwjk.commons.utils.DateUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -47,7 +48,7 @@ public class SseController {
         SseEmitter emitter = SSEUtils.addSub(id);
         threadPoolTaskExecutor.execute(() -> {
             try {
-                for(int i=0;i<60;i++){
+                for (int i = 0; i < 60; i++) {
                     SSEUtils.pubMsg(id, "test", String.valueOf(DateUtil.formatDate(new Date(), DateUtil.FORMAT_DATETIME_NORMAL)), i);
                     Thread.sleep(1000);
                 }
@@ -58,6 +59,8 @@ public class SseController {
 //                        SSEUtils.pubMsg(id, "", String.valueOf(DateUtil.formatDate(new Date(), DateUtil.FORMAT_DATETIME_NORMAL)), msg);
 //                    }
 //                });
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
