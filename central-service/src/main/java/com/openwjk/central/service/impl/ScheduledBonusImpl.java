@@ -2,12 +2,9 @@ package com.openwjk.central.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
-import com.openwjk.central.commons.enums.QwAppEnum;
-import com.openwjk.central.commons.enums.QwAppMsgTypeEnum;
 import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
 import com.openwjk.central.dao.model.ConfigDO;
-import com.openwjk.central.remote.dto.request.QwAppSendTextMsgReqDTO;
 import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
 import com.openwjk.central.remote.service.QwAppService;
@@ -17,6 +14,7 @@ import com.openwjk.central.service.helper.ScheduledHelper;
 import com.openwjk.central.service.service.ScheduledService;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,7 @@ import java.util.stream.Collectors;
  * @date 2023/7/28 13:38
  */
 @Service
+@Slf4j
 public class ScheduledBonusImpl implements ScheduledService {
     @Autowired
     ConfigHelper configHelper;
@@ -54,6 +53,7 @@ public class ScheduledBonusImpl implements ScheduledService {
 
     @Override
     public void execute(Date date) {
+        log.info(DateUtil.formatDate(date, DateUtil.FORMAT_DATETIME_NORMAL));
         Date tdate = DateUtil.plusMinutes(date, Constant.INT_THREE);
         List<ConfigDO> configDOS = configHelper.getConfigByGroup(ScheduledTaskEnum.BONUS.getCode());
         if (CollectionUtils.isEmpty(configDOS)) return;
@@ -67,6 +67,7 @@ public class ScheduledBonusImpl implements ScheduledService {
         }
         if (CollectionUtils.isEmpty(verbalTrickList)) return;
         String verbalTrick = mergeVerbalTrick(verbalTrickList, tdate);
+        log.info(verbalTrick);
         sendMsg(verbalTrick);
     }
 
@@ -89,7 +90,7 @@ public class ScheduledBonusImpl implements ScheduledService {
 //        reqDTO.setText(text);
 //        reqDTO.setSafe(Constant.STRING_ONE);
 //        qwAppService.appSendTextMsg(reqDTO);
-        if(StringUtils.isNotBlank(verbalTrick)){
+        if (StringUtils.isNotBlank(verbalTrick)) {
             QwRobotReqDTO reqDTO = new QwRobotReqDTO();
             reqDTO.setRobotEnum(QwRobotEnum.XXW);
             reqDTO.setVerbalTrick(verbalTrick);
