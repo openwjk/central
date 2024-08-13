@@ -15,19 +15,25 @@ public class SerializationUtils {
      * @return 深拷贝后的新对象
      */
     public static <T> T clone(T original) {
-        try {
+        ObjectInputStream in = null;
+        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream(); ObjectOutputStream out = new ObjectOutputStream(byteOut)) {
             // 将对象写入字节流
-            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(byteOut);
             out.writeObject(original);
             out.close();
-
             // 从字节流中读取对象
             ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
-            ObjectInputStream in = new ObjectInputStream(byteIn);
+            in = new ObjectInputStream(byteIn);
             return (T) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new IllegalStateException("Unable to serialize or deserialize object", e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
