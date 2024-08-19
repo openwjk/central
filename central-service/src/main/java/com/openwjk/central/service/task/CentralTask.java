@@ -37,19 +37,15 @@ public class CentralTask {
         Date date = DateUtil.getNow();
         String key = CtConfigGroupEnum.SCHEDULED_TASK.getCode() + DateUtil.formatDate(date, DateUtil.FORMAT_DATETIME_COMPACT_MINUTE);
         String value = RandomCodeUtil.generateCode(Constant.INT_TEN);
-        try {
-            if (redisLockUtil.tryLock(key, value, Constant.INT_TEN)) {
-                List<ConfigDO> configDOS = configHelper.getConfigByGroup(CtConfigGroupEnum.SCHEDULED_TASK.getCode());
-                if (CollectionUtils.isEmpty(configDOS)) return;
-                for (ConfigDO configDO : configDOS) {
-                    if (scheduledHelper.checkIsRun(configDO.getValue(), date)) {
-                        ScheduledService scheduledService = scheduledFactory.getScheduledService(ScheduledTaskEnum.get(configDO.getCode()));
-                        scheduledService.execute(date);
-                    }
+        if (redisLockUtil.tryLock(key, value, Constant.INT_TEN)) {
+            List<ConfigDO> configDOS = configHelper.getConfigByGroup(CtConfigGroupEnum.SCHEDULED_TASK.getCode());
+            if (CollectionUtils.isEmpty(configDOS)) return;
+            for (ConfigDO configDO : configDOS) {
+                if (scheduledHelper.checkIsRun(configDO.getValue(), date)) {
+                    ScheduledService scheduledService = scheduledFactory.getScheduledService(ScheduledTaskEnum.get(configDO.getCode()));
+                    scheduledService.execute(date);
                 }
             }
-        } finally {
-            redisLockUtil.releaseLock(key, value);
         }
     }
 }
