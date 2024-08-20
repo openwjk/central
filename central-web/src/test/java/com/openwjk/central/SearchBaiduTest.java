@@ -44,6 +44,13 @@ public class SearchBaiduTest {
         weekMap.put(7, "周六");
     }
 
+    /**
+     * centos更新yum源 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+     * centos安装依赖 yum install pango.x86_64 libXcomposite.x86_64 libXcursor.x86_64 libXdamage.x86_64 libXext.x86_64 libXi.x86_64 libXtst.x86_64 cups-libs.x86_64 libXScrnSaver.x86_64 libXrandr.x86_64 GConf2.x86_64 alsa-lib.x86_64 atk.x86_64 gtk3.x86_64 nss -y
+     * @throws InterruptedException
+     * @throws IOException
+     * @throws ExecutionException
+     */
     @Test
     void name() throws InterruptedException, IOException, ExecutionException {
         // 初始化浏览器相关https://cdn.npmmirror.com/binaries/chromium-browser-snapshots/Linux_x64/494755/chrome-linux.zip
