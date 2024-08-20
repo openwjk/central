@@ -46,7 +46,8 @@ public class SearchBaiduTest {
 
     @Test
     void name() throws InterruptedException, IOException, ExecutionException {
-        // 初始化浏览器相关
+        // 初始化浏览器相关https://cdn.npmmirror.com/binaries/chromium-browser-snapshots/Linux_x64/494755/chrome-linux.zip
+        BrowserFetcher.downloadURLs.get("chrome").put("host", "https://cdn.npmmirror.com/binaries");
         BrowserFetcher.downloadIfNotExist(null);
         ArrayList<String> argList = new ArrayList<>();
         LaunchOptions options = new LaunchOptionsBuilder().withArgs(argList).withHeadless(false).build();

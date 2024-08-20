@@ -65,6 +65,7 @@ public class ScheduleTodayReminderImpl implements ScheduledService {
     @SneakyThrows
     private String getBaiduData() {
         // 初始化浏览器相关
+        BrowserFetcher.downloadURLs.get("chrome").put("host", "https://cdn.npmmirror.com/binaries");
         BrowserFetcher.downloadIfNotExist(null);
         ArrayList<String> argList = new ArrayList<>();
         LaunchOptions options = new LaunchOptionsBuilder().withArgs(argList).withHeadless(true).build();
