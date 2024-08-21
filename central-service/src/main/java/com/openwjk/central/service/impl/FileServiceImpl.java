@@ -22,9 +22,10 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileDOMapperExt fileDOMapperExt;
+
     @Override
     public List<FileDO> getFileByGroupCode(String groupCode, Pageable pageable) {
-        if(pageable!=null)
+        if (pageable != null)
             PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
         FileDOExample example = new FileDOExample();
         FileDOExample.Criteria criteria = example.createCriteria();
