@@ -12,6 +12,7 @@
     <result column="BIZ_CODE" jdbcType="VARCHAR" property="bizCode" />
     <result column="BIZ_NAME" jdbcType="VARCHAR" property="bizName" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     ID, CREATOR, GMT_CREATE, MODIFIER, GMT_MODIFIED, IS_DELETED, PARENT_ID, BIZ_CODE, 
-    BIZ_NAME, NAME
+    BIZ_NAME, NAME, CODE
   </sql>
   <select id="selectByExample" parameterType="com.openwjk.central.dao.model.MenuDOExample" resultMap="BaseResultMap">
     select
@@ -100,11 +101,11 @@
     insert into ct_menu (ID, CREATOR, GMT_CREATE, 
       MODIFIER, GMT_MODIFIED, IS_DELETED, 
       PARENT_ID, BIZ_CODE, BIZ_NAME, 
-      NAME)
+      NAME, CODE)
     values (#{id,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{modifier,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=VARCHAR}, 
       #{parentId,jdbcType=BIGINT}, #{bizCode,jdbcType=VARCHAR}, #{bizName,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR})
+      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.MenuDO">
     insert into ct_menu
@@ -139,6 +140,9 @@
       <if test="name != null">
         NAME,
       </if>
+      <if test="code != null">
+        CODE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -170,6 +174,9 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -212,6 +219,9 @@
       <if test="record.name != null">
         NAME = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.code != null">
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -228,7 +238,8 @@
       PARENT_ID = #{record.parentId,jdbcType=BIGINT},
       BIZ_CODE = #{record.bizCode,jdbcType=VARCHAR},
       BIZ_NAME = #{record.bizName,jdbcType=VARCHAR},
-      NAME = #{record.name,jdbcType=VARCHAR}
+      NAME = #{record.name,jdbcType=VARCHAR},
+      CODE = #{record.code,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -263,6 +274,9 @@
       <if test="name != null">
         NAME = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
@@ -276,7 +290,8 @@
       PARENT_ID = #{parentId,jdbcType=BIGINT},
       BIZ_CODE = #{bizCode,jdbcType=VARCHAR},
       BIZ_NAME = #{bizName,jdbcType=VARCHAR},
-      NAME = #{name,jdbcType=VARCHAR}
+      NAME = #{name,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

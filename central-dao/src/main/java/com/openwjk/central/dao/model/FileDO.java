@@ -26,7 +26,7 @@ public class FileDO implements Serializable {
 
     private String md5Digest;
 
-    private Long menuId;
+    private String groupCode;
 
     private static final long serialVersionUID = 1L;
 
@@ -118,11 +118,11 @@ public class FileDO implements Serializable {
         this.md5Digest = md5Digest == null ? null : md5Digest.trim();
     }
 
-    public Long getMenuId() {
-        return menuId;
+    public String getGroupCode() {
+        return groupCode;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode == null ? null : groupCode.trim();
     }
 }

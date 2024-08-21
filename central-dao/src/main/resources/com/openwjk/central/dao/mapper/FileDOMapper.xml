@@ -13,7 +13,7 @@
     <result column="ORIGINAL_NAME" jdbcType="VARCHAR" property="originalName" />
     <result column="CONTENT_TYPE" jdbcType="VARCHAR" property="contentType" />
     <result column="MD5_DIGEST" jdbcType="VARCHAR" property="md5Digest" />
-    <result column="MENU_ID" jdbcType="BIGINT" property="menuId" />
+    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     ID, CREATOR, GMT_CREATE, MODIFIER, GMT_MODIFIED, IS_DELETED, FILE_STORE_BUCKET, FILE_STORE_KEY, 
-    ORIGINAL_NAME, CONTENT_TYPE, MD5_DIGEST, MENU_ID
+    ORIGINAL_NAME, CONTENT_TYPE, MD5_DIGEST, GROUP_CODE
   </sql>
   <select id="selectByExample" parameterType="com.openwjk.central.dao.model.FileDOExample" resultMap="BaseResultMap">
     select
@@ -102,12 +102,12 @@
     insert into ct_file (ID, CREATOR, GMT_CREATE, 
       MODIFIER, GMT_MODIFIED, IS_DELETED, 
       FILE_STORE_BUCKET, FILE_STORE_KEY, ORIGINAL_NAME, 
-      CONTENT_TYPE, MD5_DIGEST, MENU_ID
+      CONTENT_TYPE, MD5_DIGEST, GROUP_CODE
       )
     values (#{id,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{modifier,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=VARCHAR}, 
       #{fileStoreBucket,jdbcType=VARCHAR}, #{fileStoreKey,jdbcType=VARCHAR}, #{originalName,jdbcType=VARCHAR}, 
-      #{contentType,jdbcType=VARCHAR}, #{md5Digest,jdbcType=VARCHAR}, #{menuId,jdbcType=BIGINT}
+      #{contentType,jdbcType=VARCHAR}, #{md5Digest,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.openwjk.central.dao.model.FileDO">
@@ -146,8 +146,8 @@
       <if test="md5Digest != null">
         MD5_DIGEST,
       </if>
-      <if test="menuId != null">
-        MENU_ID,
+      <if test="groupCode != null">
+        GROUP_CODE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -184,8 +184,8 @@
       <if test="md5Digest != null">
         #{md5Digest,jdbcType=VARCHAR},
       </if>
-      <if test="menuId != null">
-        #{menuId,jdbcType=BIGINT},
+      <if test="groupCode != null">
+        #{groupCode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,8 +231,8 @@
       <if test="record.md5Digest != null">
         MD5_DIGEST = #{record.md5Digest,jdbcType=VARCHAR},
       </if>
-      <if test="record.menuId != null">
-        MENU_ID = #{record.menuId,jdbcType=BIGINT},
+      <if test="record.groupCode != null">
+        GROUP_CODE = #{record.groupCode,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -252,7 +252,7 @@
       ORIGINAL_NAME = #{record.originalName,jdbcType=VARCHAR},
       CONTENT_TYPE = #{record.contentType,jdbcType=VARCHAR},
       MD5_DIGEST = #{record.md5Digest,jdbcType=VARCHAR},
-      MENU_ID = #{record.menuId,jdbcType=BIGINT}
+      GROUP_CODE = #{record.groupCode,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -290,8 +290,8 @@
       <if test="md5Digest != null">
         MD5_DIGEST = #{md5Digest,jdbcType=VARCHAR},
       </if>
-      <if test="menuId != null">
-        MENU_ID = #{menuId,jdbcType=BIGINT},
+      <if test="groupCode != null">
+        GROUP_CODE = #{groupCode,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
@@ -308,7 +308,7 @@
       ORIGINAL_NAME = #{originalName,jdbcType=VARCHAR},
       CONTENT_TYPE = #{contentType,jdbcType=VARCHAR},
       MD5_DIGEST = #{md5Digest,jdbcType=VARCHAR},
-      MENU_ID = #{menuId,jdbcType=BIGINT}
+      GROUP_CODE = #{groupCode,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

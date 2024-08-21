@@ -845,63 +845,73 @@ public class FileDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdIsNull() {
-            addCriterion("MENU_ID is null");
+        public Criteria andGroupCodeIsNull() {
+            addCriterion("GROUP_CODE is null");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdIsNotNull() {
-            addCriterion("MENU_ID is not null");
+        public Criteria andGroupCodeIsNotNull() {
+            addCriterion("GROUP_CODE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdEqualTo(Long value) {
-            addCriterion("MENU_ID =", value, "menuId");
+        public Criteria andGroupCodeEqualTo(String value) {
+            addCriterion("GROUP_CODE =", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdNotEqualTo(Long value) {
-            addCriterion("MENU_ID <>", value, "menuId");
+        public Criteria andGroupCodeNotEqualTo(String value) {
+            addCriterion("GROUP_CODE <>", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdGreaterThan(Long value) {
-            addCriterion("MENU_ID >", value, "menuId");
+        public Criteria andGroupCodeGreaterThan(String value) {
+            addCriterion("GROUP_CODE >", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("MENU_ID >=", value, "menuId");
+        public Criteria andGroupCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("GROUP_CODE >=", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdLessThan(Long value) {
-            addCriterion("MENU_ID <", value, "menuId");
+        public Criteria andGroupCodeLessThan(String value) {
+            addCriterion("GROUP_CODE <", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdLessThanOrEqualTo(Long value) {
-            addCriterion("MENU_ID <=", value, "menuId");
+        public Criteria andGroupCodeLessThanOrEqualTo(String value) {
+            addCriterion("GROUP_CODE <=", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdIn(List<Long> values) {
-            addCriterion("MENU_ID in", values, "menuId");
+        public Criteria andGroupCodeLike(String value) {
+            addCriterion("GROUP_CODE like", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdNotIn(List<Long> values) {
-            addCriterion("MENU_ID not in", values, "menuId");
+        public Criteria andGroupCodeNotLike(String value) {
+            addCriterion("GROUP_CODE not like", value, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdBetween(Long value1, Long value2) {
-            addCriterion("MENU_ID between", value1, value2, "menuId");
+        public Criteria andGroupCodeIn(List<String> values) {
+            addCriterion("GROUP_CODE in", values, "groupCode");
             return (Criteria) this;
         }
 
-        public Criteria andMenuIdNotBetween(Long value1, Long value2) {
-            addCriterion("MENU_ID not between", value1, value2, "menuId");
+        public Criteria andGroupCodeNotIn(List<String> values) {
+            addCriterion("GROUP_CODE not in", values, "groupCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupCodeBetween(String value1, String value2) {
+            addCriterion("GROUP_CODE between", value1, value2, "groupCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupCodeNotBetween(String value1, String value2) {
+            addCriterion("GROUP_CODE not between", value1, value2, "groupCode");
             return (Criteria) this;
         }
     }
