@@ -1,8 +1,10 @@
 package com.openwjk.central.service.service;
 
 import com.openwjk.central.dao.model.FileDO;
+import com.openwjk.central.service.domain.req.FileReqVO;
 import org.springframework.data.domain.Pageable;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -13,4 +15,6 @@ import java.util.List;
 public interface FileService {
 
     List<FileDO> getFileByGroupCode(String groupCode, Pageable pageable);
+
+    void upload(InputStream inputStream, FileReqVO fileReqVO);
 }

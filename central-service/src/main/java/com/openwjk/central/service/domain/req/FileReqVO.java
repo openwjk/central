@@ -20,4 +20,8 @@ public class FileReqVO {
     private String bizCode;
     @ApiModelProperty(value = "文件夹节点",required = true)
     private Long code;
+    @ApiModelProperty(value = "content-Type",required = true)
+    private String contentType;
+    @ApiModelProperty(value = "文件名称",required = true)
+    private String fileName;
 }
