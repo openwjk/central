@@ -2,10 +2,7 @@ package com.openwjk.central.commons.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -56,7 +53,7 @@ public class FileUtils {
      * 获取文件头前缀,
      */
     public static String getFileHeader(File file) {
-        try (FileInputStream is = new FileInputStream(file)) {
+        try (BufferedInputStream is = new BufferedInputStream(new FileInputStream(file))) {
             return getFileHeader(is);
         } catch (Exception e) {
             log.error("{}", e.getMessage(), e);
@@ -67,8 +64,9 @@ public class FileUtils {
     /**
      * 获取文件头前缀,
      */
-    public static String getFileHeader(InputStream is) {
+    public static String getFileHeader(BufferedInputStream is) {
         try {
+            is.mark(20);
             byte[] b = new byte[20];
             is.read(b, 0, b.length);
             StringBuilder stringBuilder = new StringBuilder();
@@ -80,11 +78,30 @@ public class FileUtils {
                 }
                 stringBuilder.append(hv);
             }
+            is.reset();
             return stringBuilder.toString().toUpperCase();
         } catch (Exception e) {
             log.error("{}", e.getMessage(), e);
         }
         return null;
+    }
+
+    public static String md5InputStream(BufferedInputStream bis) {
+        byte buffer[] = new byte[2048];
+        int len;
+        try {
+            bis.mark(2048);
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            while ((len = bis.read(buffer)) != -1) {
+                digest.update(buffer, 0, len);
+            }
+            byte[] b = digest.digest();
+            bis.reset();
+            return byteToHexString(b);
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String md5File(File file) {

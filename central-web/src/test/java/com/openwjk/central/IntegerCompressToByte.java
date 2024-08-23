@@ -13,11 +13,11 @@ import java.util.Stack;
 public class IntegerCompressToByte {
     @Test
     void test() {
-        String s1 = "121071";
+        String s1 = "1";
         String s2 = "131071";
         String s3 = "11283";
         String s4 = "2095";
-        String s5 = "34";
+        String s5 = "0";
         System.out.println(get2Bit(s1, +17) + "---" + get2Bit(s1, +17).length());
         System.out.println(get2Bit(s2, +17) + "---" + get2Bit(s2, +17).length());
         System.out.println(get2Bit(s3, +14) + "---" + get2Bit(s3, +14).length());
@@ -35,8 +35,8 @@ public class IntegerCompressToByte {
         for (int x : bts) {
             res2Str += get2BitBySymbol(x);
         }
-        res2Str=res2Str.substring(2);
         System.out.println(res2Str);
+        res2Str=res2Str.substring(2);
         System.out.println(to10(res2Str.substring(0, 17)));
         System.out.println(to10(res2Str.substring(17, 34)));
         System.out.println(to10(res2Str.substring(34, 48)));

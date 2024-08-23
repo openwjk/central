@@ -1,7 +1,5 @@
 package com.openwjk.central.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.openwjk.central.commons.utils.Constants;
 import com.openwjk.central.dao.mapper.FileDOMapperExt;
 import com.openwjk.central.dao.model.FileDO;
 import com.openwjk.central.dao.model.FileDOExample;
@@ -25,8 +23,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<FileDO> getFileByGroupCode(String groupCode, Pageable pageable) {
-        if (pageable != null)
-            PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
         FileDOExample example = new FileDOExample();
         FileDOExample.Criteria criteria = example.createCriteria();
         criteria.andGroupCodeEqualTo(groupCode).andIsDeletedEqualTo(Constant.STR_N);

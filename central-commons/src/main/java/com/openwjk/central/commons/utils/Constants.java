@@ -13,4 +13,6 @@ public class Constants {
 
     public static final String LEAF_SNOWFLAKE_PORT = "leaf.zk.port";
     public static final String LEAF_SNOWFLAKE_ZK_ADDRESS = "leaf.zk.address";
+
+    public static final String XG = "/";
 }
