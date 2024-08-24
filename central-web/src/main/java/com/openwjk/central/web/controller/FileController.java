@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2024/8/23 17:14
  */
 @RestController
-@RequestMapping("/config")
+@RequestMapping("/file")
 @ApiOperation("文件")
 public class FileController {
     @Autowired
@@ -30,11 +30,11 @@ public class FileController {
     @PostMapping("/upload")
     @ApiOperation("上传文件")
     @SneakyThrows
-    public ResponseVO upload(@ApiParam(name = "file", type = "multipart/form-data") MultipartFile file, @RequestBody FileReqVO fileReqVO) {
-        if (StringUtils.isBlank(file.getContentType()))
+    public ResponseVO upload(@ApiParam(name = "file", type = "multipart/form-data") MultipartFile file, FileReqVO fileReqVO) {
+        if (StringUtils.isBlank(fileReqVO.getContentType()))
             fileReqVO.setContentType(file.getContentType());
-        if (StringUtils.isBlank(file.getOriginalFilename()))
-            fileReqVO.setContentType(file.getOriginalFilename());
+        if (StringUtils.isBlank(fileReqVO.getFileName()))
+            fileReqVO.setFileName(file.getOriginalFilename());
         fileService.upload(file.getInputStream(), fileReqVO);
         return new ResponseVO();
     }

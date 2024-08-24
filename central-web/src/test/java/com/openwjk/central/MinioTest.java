@@ -1,7 +1,6 @@
 package com.openwjk.central;
 
 import com.alibaba.fastjson2.JSON;
-import com.openwjk.central.service.config.MinioConfig;
 import com.openwjk.central.service.impl.MinioService;
 import io.minio.Result;
 import io.minio.errors.*;
@@ -36,14 +35,13 @@ public class MinioTest {
     @Test
     public void test() {
         System.out.println(minioService.listBuckets());
-        ;
         System.out.println(1);
     }
 
     @Test
     public void putObject() throws FileNotFoundException {
-        File file = new File("C:\\Users\\junkai.wang\\Desktop\\22.png");
-        minioService.putObject(new FileInputStream(file), "photo", file.getName());
+        File file = new File("C:\\Users\\51342\\Desktop\\IMG_3934.MOV");
+        minioService.putObject(new FileInputStream(file), "album", file.getName());
         System.out.println(1);
     }
 

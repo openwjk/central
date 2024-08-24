@@ -1,12 +1,10 @@
 package com.openwjk.central.service.impl;
 
-import com.github.xiaoymin.knife4j.core.util.StrUtil;
 import com.openwjk.central.commons.utils.Constants;
 import com.openwjk.central.commons.utils.FileUtils;
 import com.openwjk.central.service.config.MinioConfig;
 import com.openwjk.central.service.domain.OssFile;
 import com.openwjk.commons.exception.ParamInvalidException;
-import com.openwjk.commons.utils.DateUtil;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import io.minio.*;
 import io.minio.http.Method;
@@ -17,16 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.metadata.rest.media.MediaType;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -131,10 +126,13 @@ public class MinioService {
      */
     @SneakyThrows
     public OssFile putObject(InputStream inputStream, String bucketName, String originalFileName) {
-        BufferedInputStream bis = new BufferedInputStream(inputStream);
-        String md5Str = FileUtils.md5InputStream(bis);
+        String path = System.getProperty("java.io.tmpdir") + File.separator + "central" + File.separator + RandomCodeUtil.generateCode(16) + File.separator;
+        String filePath = path + originalFileName;
+        org.apache.commons.io.FileUtils.copyInputStreamToFile(inputStream, new File(filePath));
+        String md5Str = FileUtils.md5File(new File(filePath));
         if (StringUtils.isBlank(md5Str))
             throw new ParamInvalidException("", "", null, "获取文件MD5失败");
+        inputStream = Files.newInputStream(Paths.get(filePath));
         String fileName = generateFileInMinioName(originalFileName, md5Str);
         try {
             if (ObjectUtils.isEmpty(bucketName)) {
@@ -144,7 +142,7 @@ public class MinioService {
                     PutObjectArgs.builder()
                             .bucket(bucketName)
                             .object(fileName)
-                            .stream(bis, bis.available(), -1)
+                            .stream(inputStream, inputStream.available(), -1)
                             .build());
 
 
@@ -153,6 +151,7 @@ public class MinioService {
             if (inputStream != null) {
                 inputStream.close();
             }
+            FileUtils.deleteFile(path);
         }
     }
 

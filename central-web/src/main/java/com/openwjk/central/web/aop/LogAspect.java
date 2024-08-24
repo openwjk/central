@@ -18,6 +18,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -80,7 +81,7 @@ public class LogAspect extends AbstractAop {
     private void doApiLogBegin(String uri, Object[] args) {
         List<Object> tempArgs = Lists.newArrayList();
         for (Object obj : args) {
-            if (!(obj instanceof HttpServletResponse)) {
+            if (!((obj instanceof HttpServletResponse) || InputStreamSource.class.isAssignableFrom(obj.getClass()))) {
                 tempArgs.add(obj);
             }
         }

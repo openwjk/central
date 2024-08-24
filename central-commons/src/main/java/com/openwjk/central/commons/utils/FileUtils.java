@@ -53,7 +53,7 @@ public class FileUtils {
      * 获取文件头前缀,
      */
     public static String getFileHeader(File file) {
-        try (BufferedInputStream is = new BufferedInputStream(new FileInputStream(file))) {
+        try (InputStream is = new FileInputStream(file)) {
             return getFileHeader(is);
         } catch (Exception e) {
             log.error("{}", e.getMessage(), e);
@@ -64,9 +64,8 @@ public class FileUtils {
     /**
      * 获取文件头前缀,
      */
-    public static String getFileHeader(BufferedInputStream is) {
+    public static String getFileHeader(InputStream is) {
         try {
-            is.mark(20);
             byte[] b = new byte[20];
             is.read(b, 0, b.length);
             StringBuilder stringBuilder = new StringBuilder();
@@ -78,7 +77,6 @@ public class FileUtils {
                 }
                 stringBuilder.append(hv);
             }
-            is.reset();
             return stringBuilder.toString().toUpperCase();
         } catch (Exception e) {
             log.error("{}", e.getMessage(), e);
@@ -86,17 +84,15 @@ public class FileUtils {
         return null;
     }
 
-    public static String md5InputStream(BufferedInputStream bis) {
+    public static String md5InputStream(InputStream bis) {
         byte buffer[] = new byte[2048];
         int len;
         try {
-            bis.mark(2048);
             MessageDigest digest = MessageDigest.getInstance("MD5");
             while ((len = bis.read(buffer)) != -1) {
                 digest.update(buffer, 0, len);
             }
             byte[] b = digest.digest();
-            bis.reset();
             return byteToHexString(b);
 
         } catch (Exception e) {

@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: central
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
   dataSource:
     - name: central
       url: jdbc:mysql://mysql.openwjk.com:3306/central
@@ -120,3 +124,9 @@ auth:
   ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**,/sse/sub
 leaf.zk.address: zk.openwjk.com
 leaf.zk.port: 2181
+
+minio:
+  host: http://172.22.0.126:9000
+  access-key: 2XhFK0Zv5kGRTlHmdzVQ
+  secret-key: UaRsab11k00EEzGJqJ7MT6U6Bv4ztvAQ3RZNZBve
+  bucket: album

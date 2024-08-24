@@ -59,7 +59,7 @@ public class FileServiceImpl implements FileService {
         fileDO.setMd5Digest(ossFile.getMd5());
         fileDO.setGroupCode(fileReqVO.getBizCode() + Constant.SPLIT_UNION + fileReqVO.getCode());
         fileDO.setOriginalName(fileReqVO.getFileName());
-        fileDOMapperExt.insert(fileDO);
+        fileDOMapperExt.insertSelective(fileDO);
     }
 
     private void checkParam(InputStream inputStream, FileReqVO fileReqVO) {
