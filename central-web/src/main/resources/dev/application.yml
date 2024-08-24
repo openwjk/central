@@ -126,7 +126,7 @@ leaf.zk.address: zk.openwjk.com
 leaf.zk.port: 2181
 
 minio:
-  host: http://172.22.0.126:9000
+  host: 'http://172.22.0.126:9000'
   access-key: 2XhFK0Zv5kGRTlHmdzVQ
   secret-key: UaRsab11k00EEzGJqJ7MT6U6Bv4ztvAQ3RZNZBve
   bucket: album
