@@ -24,8 +24,6 @@ public class MenuDO implements Serializable {
 
     private String name;
 
-    private String code;
-
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -106,13 +104,5 @@ public class MenuDO implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
     }
 }
