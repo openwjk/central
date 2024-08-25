@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
 import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.enums.ScheduledTaskEnum;
+import com.openwjk.central.commons.utils.IpUtils;
 import com.openwjk.central.dao.model.ConfigDO;
 import com.openwjk.central.remote.dto.request.QwRobotReqDTO;
 import com.openwjk.central.remote.helper.ConfigHelper;
@@ -68,7 +69,7 @@ public class ScheduledBonusImpl implements ScheduledService {
         if (CollectionUtils.isEmpty(verbalTrickList)) return;
         String verbalTrick = mergeVerbalTrick(verbalTrickList, tdate);
         log.info(verbalTrick);
-        sendMsg(verbalTrick);
+        sendMsg(IpUtils.getIp() + verbalTrick);
     }
 
     private String mergeVerbalTrick(List<String> verbalTrickList, Date date) {
