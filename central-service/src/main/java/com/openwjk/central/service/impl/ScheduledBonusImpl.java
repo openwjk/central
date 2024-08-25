@@ -69,7 +69,7 @@ public class ScheduledBonusImpl implements ScheduledService {
         if (CollectionUtils.isEmpty(verbalTrickList)) return;
         String verbalTrick = mergeVerbalTrick(verbalTrickList, tdate);
         log.info(verbalTrick);
-        sendMsg(IpUtils.getIp() + verbalTrick);
+        sendMsg(verbalTrick);
     }
 
     private String mergeVerbalTrick(List<String> verbalTrickList, Date date) {
