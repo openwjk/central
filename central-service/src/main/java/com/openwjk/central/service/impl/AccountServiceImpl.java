@@ -48,6 +48,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     @Qualifier("qwRobotService")
     QwRobotService qwRobotService;
+    @Autowired
+    RedisLockUtil redisLockUtil;
 
 
     @Override
@@ -106,8 +108,6 @@ public class AccountServiceImpl implements AccountService {
         redisUtil.del(token);
     }
 
-    @Autowired
-    RedisLockUtil redisLockUtil;
 
     @Override
     public void getAuthCode(LoginAccountReqVO reqVO, String type) {
