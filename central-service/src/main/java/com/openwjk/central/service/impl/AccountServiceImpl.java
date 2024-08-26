@@ -83,6 +83,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String loginAccount(LoginAccountReqVO reqVO, String type) {
+        if(StringUtils.isBlank(type))
+            throw new ParamInvalidException("", "", null, "类型不能为空！");
+        if(StringUtils.isBlank(reqVO.getPassword()))
+            throw new ParamInvalidException("", "", null, "密码不能为空！");
         List<AccountTypeDO> accountTypeDOS = getAccountType(reqVO, type);
         if (CollectionUtils.isEmpty(accountTypeDOS)) {
             throw new ParamInvalidException("", "", null, "该账号不存在，请重新输入账号或注册！");
