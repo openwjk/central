@@ -4,6 +4,7 @@ import com.openwjk.central.commons.domain.Result;
 import com.openwjk.central.commons.domain.Status;
 import com.openwjk.central.commons.enums.QwRobotEnum;
 import com.openwjk.central.commons.utils.Constants;
+import com.openwjk.central.commons.utils.RedisLockUtil;
 import com.openwjk.central.commons.utils.RedisUtil;
 import com.openwjk.central.dao.mapper.AccountDOMapper;
 import com.openwjk.central.dao.mapper.AccountTypeDOMapper;
@@ -83,9 +84,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String loginAccount(LoginAccountReqVO reqVO, String type) {
-        if(StringUtils.isBlank(type))
+        if (StringUtils.isBlank(type))
             throw new ParamInvalidException("", "", null, "类型不能为空！");
-        if(StringUtils.isBlank(reqVO.getPassword()))
+        if (StringUtils.isBlank(reqVO.getPassword()))
             throw new ParamInvalidException("", "", null, "密码不能为空！");
         List<AccountTypeDO> accountTypeDOS = getAccountType(reqVO, type);
         if (CollectionUtils.isEmpty(accountTypeDOS)) {
@@ -105,18 +106,35 @@ public class AccountServiceImpl implements AccountService {
         redisUtil.del(token);
     }
 
+    @Autowired
+    RedisLockUtil redisLockUtil;
+
     @Override
     public void getAuthCode(LoginAccountReqVO reqVO, String type) {
-        List<AccountTypeDO> accountTypeDOS = getAccountType(reqVO, type);
-        if (CollectionUtils.isEmpty(accountTypeDOS)) {
-            throw new ParamInvalidException("", "", null, "该账号不存在，请重新输入账号或注册！");
+        String key = "LOGIN_AUTH_CODE_" + type + Constant.BOTTOM_LINE + reqVO.getAccount();
+        String value = RandomCodeUtil.generateCode(16);
+        try {
+            if (redisLockUtil.tryLock(key, value, Constant.INT_THIRTY)) {
+                if (!redisUtil.hasKey(key))
+                    throw new ParamInvalidException("", "", null, "已获取验证码，请稍后再试！");
+                List<AccountTypeDO> accountTypeDOS = getAccountType(reqVO, type);
+                if (CollectionUtils.isEmpty(accountTypeDOS)) {
+                    throw new ParamInvalidException("", "", null, "该账号不存在，请重新输入账号或注册！");
+                }
+                AccountTypeDO accountType = accountTypeDOS.get(Constant.INT_ZERO);
+                String uId = accountType.getuId();
+                accountVerify(uId, null);
+                String authCode = RandomCodeUtil.generateNum(6);
+                redisUtil.set("LOGIN_AUTH_CODE_" + type + Constant.BOTTOM_LINE + reqVO.getAccount(), authCode, Constant.INT_ONE, TimeUnit.MINUTES);
+                sendMsg("验证码：" + authCode);
+            }else{
+                throw new ParamInvalidException("", "", null, "请勿重复点击！");
+            }
+        } finally {
+            redisLockUtil.releaseLock(key, value);
         }
-        AccountTypeDO accountType = accountTypeDOS.get(Constant.INT_ZERO);
-        String uId = accountType.getuId();
-        accountVerify(uId, null);
-        String authCode = RandomCodeUtil.generateNum(6);
-        redisUtil.set("LOGIN_AUTH_CODE_" + type + Constant.BOTTOM_LINE + reqVO.getAccount(), authCode, Constant.INT_ONE, TimeUnit.MINUTES);
-        sendMsg("验证码：" + authCode);
+
+
     }
 
     @Override
