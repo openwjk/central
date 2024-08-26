@@ -1,5 +1,6 @@
 package com.openwjk.central.web.controller;
 
+import com.openwjk.central.commons.annotation.ApplyCheckParam;
 import com.openwjk.central.commons.annotation.RepeatReq;
 import com.openwjk.central.service.domain.req.LoginAccountReqVO;
 import com.openwjk.central.service.service.AccountService;
@@ -32,6 +33,7 @@ public class AccountController {
 
     @PostMapping("/login")
     @ApiOperation("账户登录")
+    @ApplyCheckParam(complex = "reqVo")
     public ResponseVO<String> login(LoginAccountReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
         String token = accountService.loginAccount(reqVO, Constant.DEFAULT);
         CookieUtil.addCookie(response, Constant.COOKIE_KEY_TOKEN, token, request);
@@ -52,5 +54,21 @@ public class AccountController {
     @RepeatReq(key = {"#reqVO.account"})
     public ResponseVO<String> register(LoginAccountReqVO reqVO) {
         return new ResponseVO(accountService.registerAccount(reqVO, Constant.DEFAULT));
+    }
+
+    @PostMapping("/getAuthCode")
+    @ApiOperation("获取验证码")
+    public ResponseVO getAuthCode(LoginAccountReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
+        accountService.getAuthCode(reqVO, Constant.DEFAULT);
+        return new ResponseVO();
+    }
+
+    @PostMapping("/authCode/login")
+    @ApiOperation("账号验证码登录")
+    @ApplyCheckParam(complex = "reqVo")
+    public ResponseVO<String> authCodeLogin(LoginAccountReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
+        String token = accountService.verifyAuthCode(reqVO, Constant.DEFAULT);
+        CookieUtil.addCookie(response, Constant.COOKIE_KEY_TOKEN, token, request);
+        return new ResponseVO(token);
     }
 }

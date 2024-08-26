@@ -128,7 +128,7 @@ public class CheckParamService implements ApplicationContextAware {
             }
             if (paramValue instanceof String) {
                 String temp = (String) paramValue;
-                if (StringUtils.isEmpty(temp)) {
+                if (StringUtils.isBlank(temp)) {
                     throw new ParamInvalidException(String.format("call CheckParamService.checkNotEmpty, paramName:%s is empty."
                             , paramName), paramName, "null");
                 }

@@ -13,4 +13,8 @@ public interface AccountService {
     String loginAccount(LoginAccountReqVO reqVO,String type);
 
     void logout(String token);
+
+    void getAuthCode(LoginAccountReqVO reqVO,String type);
+
+    String verifyAuthCode(LoginAccountReqVO reqVO,String type);
 }
