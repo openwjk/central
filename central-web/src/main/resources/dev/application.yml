@@ -11,63 +11,6 @@ spring:
     multipart:
       max-file-size: 200MB
       max-request-size: 200MB
-  dataSource:
-    - name: central
-      url: jdbc:mysql://mysql.openwjk.com:3306/central
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: false
-      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    -
-      name: central_0
-      url: jdbc:mysql://mysql.openwjk.com:3306/central_0
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: false
-      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    -
-      name: central_1
-      url: jdbc:mysql://mysql.openwjk.com:3306/central_1
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: false
-      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
     cluster:
       nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
