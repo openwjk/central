@@ -28,7 +28,7 @@
             <id>prod</id>
             <properties>
                 <profiles.active>prod</profiles.active>
-                <env.config.dir>/software/deploy-prod/env_config/rcm/prod</env.config.dir>
+                <env.config.dir>src/main/resources/prod</env.config.dir>
                 <maven.plugin.skip.test>true</maven.plugin.skip.test>
             </properties>
         </profile>
@@ -90,6 +90,7 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>dev/**</exclude>
+                    <exclude>prod/**</exclude>
                     <exclude>generatorConfig.xml</exclude>
                 </excludes>
             </resource>

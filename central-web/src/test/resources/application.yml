@@ -6,9 +6,9 @@ spring:
     name: central
   dataSource:
     - name: central
-      url: jdbc:mysql://mysql.openwjk.com:3306/central
+      url: jdbc:mysql://124.222.180.77:3306/central
       username: root
-      password: 123456
+      password: Qq-999999
       driver-class-name: com.mysql.cj.jdbc.Driver
       filters: stat
       maxActive: 20
@@ -25,9 +25,9 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     -
       name: central_0
-      url: jdbc:mysql://mysql.openwjk.com:3306/central_0
+      url: jdbc:mysql://124.222.180.77:3306/central_0
       username: root
-      password: 123456
+      password: Qq-999999
       driver-class-name: com.mysql.cj.jdbc.Driver
       filters: stat
       maxActive: 20
@@ -44,9 +44,9 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     -
       name: central_1
-      url: jdbc:mysql://mysql.openwjk.com:3306/central_1
+      url: jdbc:mysql://124.222.180.77:3306/central_1
       username: root
-      password: 123456
+      password: Qq-999999
       driver-class-name: com.mysql.cj.jdbc.Driver
       filters: stat
       maxActive: 20
@@ -63,7 +63,7 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
     cluster:
-      nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
+      nodes: 172.22.0.33:7001,172.22.0.33:7002,172.22.0.33:7003,172.22.0.33:7004,172.22.0.33:7005,172.22.0.33:7000
     lettuce:
       pool:
         max-active: 300
@@ -79,7 +79,7 @@ dubbo:
     owner: openwjk
     organization: openwjk
   registry:
-    address: zk.openwjk.com:2181
+    address: 172.22.0.36:2181
     protocol: zookeeper
   #  metadata-report:
   #    address: zk.openwjk.com:2181
@@ -122,7 +122,7 @@ leaf.zk.address: zk.openwjk.com
 leaf.zk.port: 2181
 
 minio:
-  host: http://172.22.0.126:9000
-  access-key: 2XhFK0Zv5kGRTlHmdzVQ
-  secret-key: UaRsab11k00EEzGJqJ7MT6U6Bv4ztvAQ3RZNZBve
+  host: http://124.222.180.77:9000
+  access-key: hspp5dcZo4vmzlXjTiM4
+  secret-key: nBpWrIzH5mBSH3sFrgZszPEGcvGftlvcKwcPi7xC
   bucket: album

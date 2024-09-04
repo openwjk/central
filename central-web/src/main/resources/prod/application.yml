@@ -1,0 +1,78 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+spring:
+  profiles:
+    include:
+      - datasource
+  application:
+    name: central
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+  redis:
+    cluster:
+      nodes: redis.openwjk.com:7001,redis.openwjk.com:7002,redis.openwjk.com:7003,redis.openwjk.com:7004,redis.openwjk.com:7005,redis.openwjk.com:7000
+    lettuce:
+      pool:
+        max-active: 300
+        max-wait: 3000ms
+        max-idle: 100
+        min-idle: 20
+    database: 0
+    timeout: 60000ms
+dubbo:
+  application:
+    id: central
+    name: central
+    owner: openwjk
+    organization: openwjk
+  registry:
+    address: zk.openwjk.com:2181
+    protocol: zookeeper
+  #  metadata-report:
+  #    address: zk.openwjk.com:2181
+  #    protocol: swimlane
+  #    parameters:
+  #      SWIM_LANE_NO: wjk
+  provider:
+    protocol: tri
+    threads: 500
+    thread-pool: fixed
+    timeout: 5000
+    load-balance: random
+    delay: -1
+    retries: 2
+  #    tag: wjk
+  protocol:
+    name: tri
+    port: 20880
+#下面这些内容是为了让MyBatis映射
+#指定Mybatis的Mapper文件
+mybatis:
+  mapper-locations: classpath:com/openwjk/central/dao/mapper/*xml
+  #指定Mybatis的实体目录
+  type-aliases-package: com/openwjk/central/dao/model
+
+qw:
+  #获取accessToken
+  accessToken:
+    url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  #发送应用消息
+  sendAppMsg:
+    url: https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=
+    #《通知》应用
+    notice:
+      agentId: 1000002
+auth:
+  enable: 1
+  ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**,/sse/sub
+leaf.zk.address: zk.openwjk.com
+leaf.zk.port: 2181
+
+minio:
+  host: 'http://172.22.0.126:9000'
+  access-key: 2XhFK0Zv5kGRTlHmdzVQ
+  secret-key: UaRsab11k00EEzGJqJ7MT6U6Bv4ztvAQ3RZNZBve
+  bucket: album
