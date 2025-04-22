@@ -162,11 +162,11 @@ public class ScheduleTodayReminderImpl implements ScheduledService {
                 good = good.replaceFirst("宜", "宜：");
                 map.put("good", good);
             }
-            String bad = elements.get(0).getElementsByClass("flex_47rSm cu-line-clamp-1 cu-mt-sm").text();
-            if (StringUtils.isNotBlank(bad)) {
-                bad = bad.replaceFirst("忌", "忌：");
-                map.put("bad", bad);
-            }
+//            String bad = elements.get(0).getElementsByClass("flex_47rSm cu-line-clamp-1 cu-mt-sm").text();
+//            if (StringUtils.isNotBlank(bad)) {
+//                bad = bad.replaceFirst("忌", "忌：");
+//                map.put("bad", bad);
+//            }
 
         }
         return map;
