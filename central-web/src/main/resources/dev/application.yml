@@ -67,7 +67,7 @@ qw:
       agentId: 1000002
 auth:
   enable: 1
-  ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**,/sse/sub
+  ignore-url: /check.htm,/account/login,/account/register,/swagger-resources/**,/webjars/**,/v2/api-docs,/doc.html,/msg/**,/wx/**,/qw/**,/sse/sub,/wxmini/**
 leaf.zk.address: zk.openwjk.com
 leaf.zk.port: 2181
 
@@ -76,3 +76,6 @@ minio:
   access-key: hspp5dcZo4vmzlXjTiM4
   secret-key: nBpWrIzH5mBSH3sFrgZszPEGcvGftlvcKwcPi7xC
   bucket: album
+wxmini:
+  session:
+    url: https://api.weixin.qq.com/sns/jscode2session

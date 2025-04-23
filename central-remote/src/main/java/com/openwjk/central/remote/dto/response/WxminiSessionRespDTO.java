@@ -16,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class WxminiSessionRespDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String session_key;
+    private String sessionKey;
     private String unionid;
     private String errmsg;
     private String openid;

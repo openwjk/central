@@ -10,7 +10,8 @@ public enum RemoteTypeEnum {
     QW_MARK_DOWN_ROBOT("QW_MARK_DOWN_ROBOT","企业微信机器人发送markdown消息"),
     QW_ACCESS_TOKEN("QW_ACCESS_TOKEN","企业微信accessToken"),
     QW_APP_NOTICE_TEXT_MSG("QW_APP_NOTICE_TEXT_MSG","企业微信应用：通知>发送文本消息"),
-    QW_APP_NOTICE_MARKDOWN_MSG("QW_APP_NOTICE_MARKDOWN_MSG","企业微信应用：通知>发送文本消息");
+    QW_APP_NOTICE_MARKDOWN_MSG("QW_APP_NOTICE_MARKDOWN_MSG","企业微信应用：通知>发送文本消息"),
+    WX_MINI_SESSION("WX_MINI_SESSION","微信小程序session"),;
 
     RemoteTypeEnum(String code, String desc) {
         this.code = code;

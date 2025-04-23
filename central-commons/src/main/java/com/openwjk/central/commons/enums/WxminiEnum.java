@@ -2,21 +2,20 @@ package com.openwjk.central.commons.enums;
 
 /**
  * @author wangjunkai
- * @description 配置组
+ * @description 微信小程序
  * @date 2023/7/27 21:35
  */
-public enum CtConfigGroupEnum {
-    QW_ROBOT("QW_ROBOT","企业微信机器人组"),
-    QW_APP("QW_APP","企业微信应用组"),
-    SCHEDULED_TASK("SCHEDULED_TASK","定时任务组"),
-    WX_MINI("WX_MINI","微信小程序");
+public enum WxminiEnum {
+    SESSION("SESSION", "获取session");
 
-    CtConfigGroupEnum(String code, String desc) {
+    WxminiEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
 
+    //编码
     private String code;
+    //描述
     private String desc;
 
     public String getCode() {
