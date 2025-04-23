@@ -18,7 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+.smarttomcat
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
