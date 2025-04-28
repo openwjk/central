@@ -24,6 +24,8 @@ public class MenuDO implements Serializable {
 
     private String name;
 
+    private Integer sort;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -104,5 +106,13 @@ public class MenuDO implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

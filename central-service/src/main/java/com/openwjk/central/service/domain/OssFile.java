@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OssFile {
     private String bucket;
-    private String md5;
     private String originName;
     private String objectName;
 }

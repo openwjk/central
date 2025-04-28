@@ -11,13 +11,20 @@ import com.openwjk.central.service.domain.req.FileReqVO;
 import com.openwjk.central.service.service.FileService;
 import com.openwjk.commons.exception.ParamInvalidException;
 import com.openwjk.commons.utils.Constant;
+import com.openwjk.commons.utils.EncryptUtil;
+import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.common.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -39,14 +46,23 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<FileDO> getFileByGroupCode(String groupCode, Pageable pageable) {
         FileDOExample example = new FileDOExample();
-        FileDOExample.Criteria criteria = example.createCriteria();
-        criteria.andGroupCodeEqualTo(groupCode).andIsDeletedEqualTo(Constant.STR_N);
+        example.createCriteria()
+                .andGroupCodeEqualTo(groupCode)
+                .andIsDeletedEqualTo(Constant.STR_N);
         return fileDOMapperExt.selectByExample(example);
     }
 
     @Override
+    @SneakyThrows
     public void upload(InputStream inputStream, FileReqVO fileReqVO) {
         checkParam(inputStream, fileReqVO);
+//        File outputFile = new File("D://1//" + fileReqVO.getFileName());
+//        FileUtils.copyInputStreamToFile(inputStream, outputFile);
+//        OssFile ossFile = new OssFile();
+//        ossFile.setBucket("local");
+//        ossFile.setMd5(EncryptUtil.md5(outputFile.getAbsolutePath()));
+//        ossFile.setObjectName(outputFile.getAbsolutePath());
+//        ossFile.setOriginName(fileReqVO.getFileName());
         OssFile ossFile = minioService.putObject(inputStream, fileReqVO.getBizCode(), fileReqVO.getFileName());
         insertFile(ossFile, fileReqVO);
     }

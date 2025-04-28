@@ -26,7 +26,7 @@
 
         <!-- 配置数据库连接 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.22.0.110:3306/central"
+                        connectionURL="jdbc:mysql://172.22.0.30:3306/central"
                         userId="root" password="123456">
         </jdbcConnection>
         <!--不使用BigDecimal类型 java类型解析器-->
@@ -55,12 +55,12 @@
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-            <table tableName="ct_file" domainObjectName="FileDO"
-                   enableCountByExample="true" enableUpdateByExample="true"
-                   enableSelectByExample="true" selectByExampleQueryId="true"
-                   enableDeleteByPrimaryKey="false" enableDeleteByExample="false">
-                <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>
-            </table>
+<!--            <table tableName="ct_file" domainObjectName="FileDO"-->
+<!--                   enableCountByExample="true" enableUpdateByExample="true"-->
+<!--                   enableSelectByExample="true" selectByExampleQueryId="true"-->
+<!--                   enableDeleteByPrimaryKey="false" enableDeleteByExample="false">-->
+<!--                <columnOverride column="ID" property="id" javaType="Long" jdbcType="BIGINT"/>-->
+<!--            </table>-->
             <table tableName="ct_menu" domainObjectName="MenuDO"
                    enableCountByExample="true" enableUpdateByExample="true"
                    enableSelectByExample="true" selectByExampleQueryId="true"

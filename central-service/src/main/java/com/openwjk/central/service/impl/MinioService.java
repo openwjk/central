@@ -5,6 +5,7 @@ import com.openwjk.central.commons.utils.FileUtils;
 import com.openwjk.central.service.config.MinioConfig;
 import com.openwjk.central.service.domain.OssFile;
 import com.openwjk.commons.exception.ParamInvalidException;
+import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import io.minio.*;
 import io.minio.http.Method;
@@ -24,6 +25,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -126,14 +128,8 @@ public class MinioService {
      */
     @SneakyThrows
     public OssFile putObject(InputStream inputStream, String bucketName, String originalFileName) {
-        String path = System.getProperty("java.io.tmpdir") + File.separator + "central" + File.separator + RandomCodeUtil.generateCode(16) + File.separator;
-        String filePath = path + originalFileName;
-        org.apache.commons.io.FileUtils.copyInputStreamToFile(inputStream, new File(filePath));
-        String md5Str = FileUtils.md5File(new File(filePath));
-        if (StringUtils.isBlank(md5Str))
-            throw new ParamInvalidException("", "", null, "获取文件MD5失败");
-        inputStream = Files.newInputStream(Paths.get(filePath));
-        String fileName = generateFileInMinioName(originalFileName, md5Str);
+        String suffix = getFileSuffix(originalFileName);
+        String objectName = bucketName + "/" + generateFileId() + Constant.SPLIT_UNION + originalFileName + "." + suffix;
         try {
             if (ObjectUtils.isEmpty(bucketName)) {
                 bucketName = minioConfig.getBucketName();
@@ -141,18 +137,39 @@ public class MinioService {
             ObjectWriteResponse resp = minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)
-                            .object(fileName)
+                            .object(originalFileName)
                             .stream(inputStream, inputStream.available(), -1)
                             .build());
 
-
-            return new OssFile(bucketName, md5Str, originalFileName, fileName);
+            return new OssFile(bucketName, originalFileName, objectName);
         } finally {
             if (inputStream != null) {
                 inputStream.close();
             }
-            FileUtils.deleteFile(path);
         }
+    }
+
+    private static String generateFileId() {
+        return UUID.randomUUID().toString();
+    }
+
+    private static String getFileSuffix(String fileName) {
+        String suffix = "";
+        int index = fileName.lastIndexOf(".");
+        if (index != -1) {
+            suffix = fileName.substring(index + 1, fileName.length());
+            suffix = suffix.toLowerCase();
+        }
+        return suffix;
+    }
+
+    private static String getFileOriginalName(String fileName) {
+        String originalName = "";
+        int index = fileName.lastIndexOf(".");
+        if (index != -1) {
+            originalName = fileName.substring(0, index);
+        }
+        return originalName;
     }
 
 
