@@ -1,26 +1,23 @@
 package com.openwjk.central.service.impl;
 
 import com.openwjk.central.commons.utils.Constants;
-import com.openwjk.central.commons.utils.FileUtils;
 import com.openwjk.central.service.config.MinioConfig;
 import com.openwjk.central.service.domain.OssFile;
-import com.openwjk.commons.exception.ParamInvalidException;
 import com.openwjk.commons.utils.Constant;
 import com.openwjk.commons.utils.RandomCodeUtil;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.common.URL;
 import org.apache.dubbo.metadata.rest.media.MediaType;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2024/8/22 15:02
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MinioService {
     /**
      * MinIO 客户端
@@ -44,10 +42,10 @@ public class MinioService {
      */
     private final MinioConfig minioConfig;
 
-    public MinioService(MinioClient minioClient, MinioConfig minioConfig) {
-        this.minioClient = minioClient;
-        this.minioConfig = minioConfig;
-    }
+//    public MinioService(MinioClient minioClient, MinioConfig minioConfig) {
+//        this.minioClient = minioClient;
+//        this.minioConfig = minioConfig;
+//    }
 
     /**
      * 查询所有存储桶
@@ -128,8 +126,7 @@ public class MinioService {
      */
     @SneakyThrows
     public OssFile putObject(InputStream inputStream, String bucketName, String originalFileName) {
-        String suffix = getFileSuffix(originalFileName);
-        String objectName = bucketName + "/" + generateFileId() + Constant.SPLIT_UNION + originalFileName + "." + suffix;
+        String objectName = bucketName + "/" + generateFileId() +  originalFileName;
         try {
             if (ObjectUtils.isEmpty(bucketName)) {
                 bucketName = minioConfig.getBucketName();
@@ -137,7 +134,7 @@ public class MinioService {
             ObjectWriteResponse resp = minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)
-                            .object(originalFileName)
+                            .object(objectName)
                             .stream(inputStream, inputStream.available(), -1)
                             .build());
 
@@ -261,6 +258,7 @@ public class MinioService {
                         .method(Method.GET)
                         .bucket(bucketName)
                         .object(filePath)
+                        .expiry(1,TimeUnit.HOURS)
                         .build());
     }
 

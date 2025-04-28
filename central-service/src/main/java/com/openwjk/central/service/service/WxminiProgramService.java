@@ -1,6 +1,9 @@
 package com.openwjk.central.service.service;
 
 import com.openwjk.central.remote.dto.response.WxminiSessionRespDTO;
+import com.openwjk.central.service.domain.resp.WxminiPhotoVO;
+
+import java.util.List;
 
 /**
  * @author wangjunkai
@@ -14,4 +17,6 @@ public interface WxminiProgramService {
      * @return
      */
     WxminiSessionRespDTO getSession(String jsCode);
+
+    List<WxminiPhotoVO> getPhotos(String groupCode);
 }

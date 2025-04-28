@@ -1,5 +1,6 @@
 package com.openwjk.central.service.impl;
 
+import com.google.common.collect.Maps;
 import com.openwjk.central.dao.mapper.FileDOMapperExt;
 import com.openwjk.central.dao.mapper.MenuDOMapperExt;
 import com.openwjk.central.dao.model.FileDO;
@@ -65,6 +66,11 @@ public class FileServiceImpl implements FileService {
 //        ossFile.setOriginName(fileReqVO.getFileName());
         OssFile ossFile = minioService.putObject(inputStream, fileReqVO.getBizCode(), fileReqVO.getFileName());
         insertFile(ossFile, fileReqVO);
+    }
+
+    @Override
+    public String getUrl(String bucketName, String key) {
+        return minioService.getPresignedObjectUrl(bucketName, key);
     }
 
     private void insertFile(OssFile ossFile, FileReqVO fileReqVO) {

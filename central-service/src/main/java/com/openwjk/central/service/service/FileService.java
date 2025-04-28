@@ -17,4 +17,6 @@ public interface FileService {
     List<FileDO> getFileByGroupCode(String groupCode, Pageable pageable);
 
     void upload(InputStream inputStream, FileReqVO fileReqVO);
+
+    String getUrl(String bucketName, String key);
 }
