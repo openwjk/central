@@ -72,7 +72,6 @@ public class FileServiceImpl implements FileService {
         fileDO.setFileStoreBucket(ossFile.getBucket());
         fileDO.setContentType(fileReqVO.getContentType());
         fileDO.setFileStoreKey(ossFile.getObjectName());
-        fileDO.setMd5Digest(ossFile.getMd5());
         fileDO.setGroupCode(fileReqVO.getBizCode() + Constant.SPLIT_UNION + fileReqVO.getCode());
         fileDO.setOriginalName(fileReqVO.getFileName());
         fileDOMapperExt.insertSelective(fileDO);
