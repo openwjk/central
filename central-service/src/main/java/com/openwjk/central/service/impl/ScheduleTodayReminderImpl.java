@@ -36,7 +36,7 @@ import java.util.*;
  */
 @Service
 public class ScheduleTodayReminderImpl implements ScheduledService {
-    private static final List<String> VERBAL_TRICK_LIST = Lists.newArrayList("today", "lunarday", "nextFestival", "weather", "good", "bad");
+    private static final List<String> VERBAL_TRICK_LIST = Lists.newArrayList("today", "lunarday", "nextFestival", "weather", "good");
 
     @Autowired
     @Qualifier("qwRobotService")
