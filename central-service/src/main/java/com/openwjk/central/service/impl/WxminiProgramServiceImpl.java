@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,9 +36,11 @@ public class WxminiProgramServiceImpl implements WxminiProgramService {
     @Override
     public List<WxminiPhotoVO> getPhotos(String groupCode) {
         List<FileDO> fileDOS = fileService.getFileByGroupCode(groupCode, PageRequest.of(1, 100));
-        return fileDOS.stream()
-                .map(i -> new WxminiPhotoVO(i.getId(), i.getOriginalName(), fileService.getUrl("wxminialbum", i.getFileStoreKey())))
+        List<WxminiPhotoVO> list = fileDOS.stream()
+                .map(i -> new WxminiPhotoVO(i.getId(), i.getOriginalName(), fileService.getUrl("wxminialbum", i.getFileStoreKey()), i.getGmtCreate()))
                 .collect(Collectors.toList());
+        Collections.shuffle(list);
+        return list;
     }
 
 

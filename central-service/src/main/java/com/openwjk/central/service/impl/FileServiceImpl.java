@@ -50,6 +50,7 @@ public class FileServiceImpl implements FileService {
         example.createCriteria()
                 .andGroupCodeEqualTo(groupCode)
                 .andIsDeletedEqualTo(Constant.STR_N);
+        example.setOrderByClause(" id desc");
         return fileDOMapperExt.selectByExample(example);
     }
 

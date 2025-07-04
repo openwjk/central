@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author wangjunkai
  * @description
  * @date 2024/8/23 17:20
  */
-@ApiModel("文件请求对象")
+@ApiModel("小程序照片请求对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +24,6 @@ public class WxminiPhotoVO {
     private String fileName;
     @ApiModelProperty(value = "url",required = true)
     private String url;
+    @ApiModelProperty(value = "日期")
+    private Date date;
 }
